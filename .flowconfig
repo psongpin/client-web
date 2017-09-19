@@ -1,0 +1,26 @@
+[libs]
+flow-typed
+[ignore]
+.*/kefir/.*
+.*/erschema.*
+.*react-simplemde-editor.*
+[options]
+module.name_mapper='^@client' -> '<PROJECT_ROOT>/src/@client'
+module.name_mapper='^ui-kit' -> '<PROJECT_ROOT>/src/ui-kit'
+module.name_mapper='^components' -> '<PROJECT_ROOT>/src/components'
+module.name_mapper='^panels' -> '<PROJECT_ROOT>/src/components/panels'
+module.name_mapper='^.*\.pcss$' -> 'empty/object'
+module.name_mapper='^erschema' -> 'erschema-suite/erschema'
+module.name_mapper='^erschema-normalize$' -> 'erschema-suite/normalize'
+module.name_mapper='^erschema-actions$' -> 'erschema-suite/actions'
+module.name_mapper='^erschema-action-handlers$' -> 'erschema-suite/action-handlers'
+module.name_mapper='^erschema-selectors$' -> 'erschema-suite/selectors'
+module.name_mapper='^erschema-reducer$' -> 'erschema-suite/reducer'
+esproposal.class_static_fields=enable
+esproposal.class_instance_fields=enable
+module.file_ext=.js
+module.file_ext=.json
+module.file_ext=.jsx
+module.file_ext=.css
+module.file_ext=.scss
+module.file_ext=.pcss

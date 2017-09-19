@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="/dist/{{vendor}}"></script>
+    <script src="/dist/{{app}}"></script>
+    <script>
+      // Let's register our serviceworker
+      navigator.serviceWorker.register('sw.js', {
+        // The scope cannot be parent to the script url
+        scope: './'
+      });
+      
+    </script>
+  </body>
+</html>

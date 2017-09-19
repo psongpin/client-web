@@ -1,0 +1,58 @@
+// @flow
+// $FlowFixMe
+import { Actions as ErschemaActions, PageActions as ErschemaPageActions } from 'erschema-actions';
+// $FlowFixMe
+import { relationshipActions } from 'erschema-action-handlers';
+import schema from '@client/schemas';
+import pageSchema from '@client/schemas/pages';
+import { batchActions } from 'redux-batched-actions';
+import { retypeAction } from 'redux-retype-actions';
+import { generateActionName } from 'resource-action-types';
+
+type $relationship = {
+  entityName: string,
+  name: string,
+  id: $$id,
+}
+
+export class Actions extends ErschemaActions {
+  constructor(name: string) {
+    super(schema, name);
+  }
+  createRelated = (entity: {id: $$id}, relationship: $relationship) => retypeAction(
+    `CREATE_RELATED_${generateActionName(this.name)}_${generateActionName(relationship.entityName)}`,
+    batchActions([
+      this.actions.create(entity),
+      relationshipActions.link(
+        relationship.entityName,
+        {
+          relationshipName: relationship.name,
+          id: relationship.id,
+          relationshipValue: entity.id,
+        },
+      ),
+    ]),
+  );
+  paginate = (id: $$id, relationshipName: string, entities: Array<Object>) => retypeAction(
+    `PAGINATE_${generateActionName(this.name)}_${generateActionName(relationshipName)}`,
+    this.actions.concatRelated(id, relationshipName, entities),
+  );
+  createRelatedPage = (
+    entity: {id: $$id},
+    page: string,
+    relationshipName: string,
+  ) => this.createRelated(
+    entity,
+    {
+      entityName: 'pages',
+      name: relationshipName,
+      id: page,
+    },
+  );
+}
+
+export class PageActions extends ErschemaPageActions {
+  constructor(name: string) {
+    super(schema, pageSchema, name);
+  }
+}
