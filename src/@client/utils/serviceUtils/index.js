@@ -33,9 +33,6 @@ const fetch = function fetch(url, options) {
   });
 };
 
-const { API_CONNECTION } = process.env;
-const MAIN_ADDRESS = API_CONNECTION || 'http://localhost:8080/';
-
 const getDefaultOptions = method => ({
   method,
   headers: {
@@ -61,23 +58,24 @@ function processUrl(url) {
   return `/${url}`;
 }
 
-export function getUrl(prefix: string, url?: $url) {
-  return `${MAIN_ADDRESS}${prefix}${processUrl(url)}`;
-}
-
 export class Services {
   prefix: string;
-  constructor(prefix: string) {
+  host: string;
+  constructor(prefix: string, host: string) {
     this.prefix = prefix;
+    this.host = `${host || process.env.API_CONNECTION || 'https://menternship.herokuapp.com/'}/`;
+  }
+  _getUrl(prefix: string, url?: $url) {
+    return `${this.host}${prefix}${processUrl(url)}`;
   }
   get = (url: $url, options?: Object = {}) => {
     const { prefix, ...finalOptions } = options;
-    return get(getUrl(prefix || this.prefix, url), finalOptions);
+    return get(this._getUrl(prefix || this.prefix, url), finalOptions);
   }
   update = (url: $url, body: any = {}, options?: Object = {}) => {
     const { prefix, ...finalOptions } = options;
     return patch(
-      getUrl(
+      this._getUrl(
         prefix || this.prefix, url,
       ),
       { ...finalOptions, body: JSON.stringify(body) },
@@ -85,16 +83,16 @@ export class Services {
   }
   index = (url?: $url, options?: Object = {}) => {
     const { prefix, ...finalOptions } = options;
-    return get(getUrl(prefix || this.prefix, url), finalOptions);
+    return get(this._getUrl(prefix || this.prefix, url), finalOptions);
   }
   del = (url?: $url, options?: Object = {}) => {
     const { prefix, ...finalOptions } = options;
-    return del(getUrl(prefix || this.prefix, url), finalOptions);
+    return del(this._getUrl(prefix || this.prefix, url), finalOptions);
   }
   create = (body: Object, options?: Object = {}) => {
     const { prefix, url, ...finalOptions } = options;
     return post(
-      getUrl(
+      this._getUrl(
         prefix || this.prefix,
         url,
         ),
@@ -104,7 +102,7 @@ export class Services {
   post = (url: string, body: Object, options?: Object = {}) => {
     const { prefix, ...finalOptions } = options;
     return post(
-      getUrl(
+      this._getUrl(
         prefix || this.prefix,
         url,
       ),
@@ -114,7 +112,7 @@ export class Services {
   put = (url: string, body: Object, options?: Object = {}) => {
     const { prefix, ...finalOptions } = options;
     return put(
-      getUrl(
+      this._getUrl(
         prefix || this.prefix,
         url,
       ),

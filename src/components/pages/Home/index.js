@@ -49,7 +49,6 @@ class MainContainer extends PureComponent {
         <SignupUsername />
         <Footer />
       </Panel>
-       
       <Sidebar className="panel" pinned={pinned} width={12}>
         <PanelContainer />
       </Sidebar>

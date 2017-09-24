@@ -21,6 +21,8 @@ class FlashActions {
     dispatch(routerActions.removeQuery({ flash }));
   }
   unsubscribeServer = () => this.create('Subscription Terminated');
+  confirmEmailServer = () => this.create('Your email has been confirmed');
+  getLoginTokenServer = () => this.create('The login code has been sent to your email');
 }
 export default new FlashActions();
 

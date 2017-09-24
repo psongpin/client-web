@@ -11,7 +11,7 @@ const routes = [
   preloginPanel,
   loginPanel,
   // $FlowFixMe
-].reduce((finalResult, { location, component, conditionalLocation = ()=>true }) => {
+].reduce((finalResult, { location, component, conditionalLocation }) => {
   finalResult[location] = [component, conditionalLocation];
   return finalResult;
 }, {});
@@ -27,4 +27,4 @@ export default function (panelLocation: string) {
   return {
     Route: null,
   };
-}
+};

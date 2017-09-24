@@ -5,6 +5,7 @@ import schemaConstants from '@client/schemas/constants';
 import services from '@client/services/users';
 import { locationPush, queryReplace } from '../router';
 import sessionActions from '../pages/session';
+import flashActions from '../flash';
 
 const { users: USERS } = schemaConstants;
 
@@ -34,6 +35,12 @@ class UserActions extends Actions {
   }
   getGoogleAuthUrl = ()=>{
     return services.getGoogleAuthUrl();
+  }
+  getLoginToken = (email)=>dispatch => {
+    return services.getLoginToken(email)
+    .then(()=>{
+      return dispatch(flashActions.create('Please check your email for the login code'));
+    });
   }
   createUsername = (id: string, token: string, username: string) => dispatch => {
     return services.createUsername(id, token, username).then((jwt)=>{
