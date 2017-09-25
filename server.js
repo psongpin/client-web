@@ -5,7 +5,7 @@ const stats = require('./dist/stats.json').assetsByChunkName;
 
 const app = express();
 
-const { PORT } = process.env;
+const { PORT = 3000 } = process.env;
 app.use('/dist', express.static('dist'));
 
 app.get('/dist/vendor*', function(req, res) {
