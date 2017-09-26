@@ -38,3 +38,7 @@ All external data brought into the application is completely normalized. That me
 ### Everything in redux store is immutable
 
 We use the immutablejs library extensively throughout the redux store. This is very important because it's a sophisticated and optimized change manager for javascript objects, and react performance is deeply tied to minimizing changes in objects.
+
+### erschema-suite utility library
+
+I built a custom library for this project called erschema-suite that goes over some of the finer points of the application and have schemas, reducers, selectors, and actions all come together. https://github.com/l2silver/erschema-suite
