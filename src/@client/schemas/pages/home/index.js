@@ -7,15 +7,4 @@ const pageName = 'home';
 export default standardizePage(pageName, {
   Model,
   properties,
-  relationships: {
-    manyRelationships: {
-      mySections: [{
-        name: 'sections',
-      }],
-      myStarredSections: [{
-        name: 'publishedSections',
-      }],
-    },
-    monoRelationships: {},
-  },
 });

@@ -7,7 +7,7 @@ import { getIdParam } from '../router';
 const { users } = require('@client/schemas/constants');
 
 class UserSelectors extends Selector {
-  getUserFromSession = () => this.findEntity(sessionSelectors.findRelatedEntityId('user'))
+  getUserFromSession = () => this.find(sessionSelectors.findRelatedId('user'))
   getUserId = getIdParam(0)
 }
 

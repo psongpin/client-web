@@ -9,11 +9,11 @@ const { sessions } = require('@client/schemas/pages/constants');
 class SessionPageSelector extends PageSelector {
   isLoggedIn = () => createSelector(
     [
-      this.findEntity(),
+      this.find(),
     ],
     (session: Session) => !!session.token,
   )
-  getCurrentUserId = () => this.findRelatedEntityId('user')
+  getCurrentUserId = () => this.findRelatedId('user')
 }
 
 export default new SessionPageSelector(sessions, new Session());

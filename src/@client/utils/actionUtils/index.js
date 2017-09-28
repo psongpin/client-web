@@ -1,8 +1,8 @@
 // @flow
 // $FlowFixMe
-import { Actions as ErschemaActions, PageActions as ErschemaPageActions } from 'erschema-actions';
+import ErschemaActions, { PageActions as ErschemaPageActions } from 'erschema-redux-immutable/Actions';
 // $FlowFixMe
-import { relationshipActions } from 'erschema-action-handlers';
+import { relationshipActions } from 'erschema-redux-immutable/actions-handlers';
 import schema from '@client/schemas';
 import pageSchema from '@client/schemas/pages';
 import { batchActions } from 'redux-batched-actions';
@@ -22,7 +22,7 @@ export class Actions extends ErschemaActions {
   createRelated = (entity: {id: $$id}, relationship: $relationship) => retypeAction(
     `CREATE_RELATED_${generateActionName(this.name)}_${generateActionName(relationship.entityName)}`,
     batchActions([
-      this.actions.create(entity),
+      this.entities.create(entity),
       relationshipActions.link(
         relationship.entityName,
         {
@@ -35,7 +35,7 @@ export class Actions extends ErschemaActions {
   );
   paginate = (id: $$id, relationshipName: string, entities: Array<Object>) => retypeAction(
     `PAGINATE_${generateActionName(this.name)}_${generateActionName(relationshipName)}`,
-    this.actions.concatRelated(id, relationshipName, entities),
+    this.entities.concatRelated(id, relationshipName, entities),
   );
   createRelatedPage = (
     entity: {id: $$id},
