@@ -4,13 +4,7 @@
     ["module-resolver", {
       "root": ["./src"],
       "alias": {
-        "panels": "./components/panels",
-        "erschema": "erschema-suite/erschema",
-        "erschema-actions": "erschema-suite/actions",
-        "erschema-action-handlers": "erschema-suite/action-handlers",
-        "erschema-selectors": "erschema-suite/selectors",
-        "erschema-reducer": "erschema-suite/reducer",
-        "erschema-normalize": "erschema-suite/normalize"
+        "panels": "./components/panels"
       }
     }],
     "transform-flow-strip-types"
