@@ -67,7 +67,7 @@ export class Nav extends PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   user: userSelectors.getUserFromSession(),
-  session: sessionSelectors.findEntity(),
+  session: sessionSelectors.find(),
 });
 
 function mapDispatchToProps(dispatch: $$dispatch) {

@@ -54,13 +54,13 @@ class UserActions extends Actions {
     }
     return services.getUsers(userIds)
     .then(users => {
-      return dispatch(this.actions.index(users));
+      return dispatch(this.entities.index(users));
     });
   }
   goTo = (id: $$id) => dispatch => dispatch(locationPush(`/users/${id}`))
   find = (id: $$id) => dispatch =>
     services.get(id)
-    .then(user => dispatch(this.actions.get(user)));
+    .then(user => dispatch(this.entities.get(user)));
 }
 
 export default new UserActions(USERS);

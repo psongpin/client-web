@@ -8,20 +8,25 @@ import services from '@client/services/sessions';
 const { sessions } = schemaConstants;
 
 class SessionActions extends PageActions {
-  login = (token, user) => {
+  login = (token, user) => dispatch => {
     set('token', token);
-    if (user) {
-      return this.actions.get({ token, user });
+    try {
+      if (user) {
+        return dispatch(this.entities.get({ token, user }));
+      } else {
+        const jwt = decode(token);
+        return dispatch(this.entities.get({ token, user: jwt }));
+      }
+    } catch(e) {
+      console.log(e);
     }
-    const jwt = decode(token);
-    return this.actions.get({ token, user: jwt });
   }
   create = (creds: Object) => (dispatch: $$dispatch) => {
     return services.create(creds)
     .then(({ token, user }) => dispatch(this.login(token, user)));
   }
   checkIfLoggedIn = () => (dispatch: $$dispatch) => services.index()
-    .then(({ token, user }) => dispatch(this.actions.get({ token, user })));
+    .then(({ token, user }) => dispatch(this.entities.get({ token, user })));
   logout = () => (dispatch: $$dispatch) => {
     remove('token');
     dispatch({ type: 'LOGOUT' });

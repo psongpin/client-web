@@ -141,7 +141,7 @@ export function form<$props: *, $fieldsConfig: *, $actionsConfig: *, $config: *>
         fields: fieldsMap,
         ...config,
       };
-      this.actions = {
+      this.entities = {
         submit: {
           disabled: !initialState.isValid,
           onClick: this.submit,
@@ -190,7 +190,7 @@ export function form<$props: *, $fieldsConfig: *, $actionsConfig: *, $config: *>
       return (<WrappedComponent
         {...this.props}
         fields={this.state.fields}
-        actions={this.actions}
+        actions={this.entities}
         isValid={this.state.isValid}
       />);
     }
@@ -204,7 +204,7 @@ export function form<$props: *, $fieldsConfig: *, $actionsConfig: *, $config: *>
       return valid;
     }, true);
     newSubmitAction = (isValid: boolean)=>{
-      this.actions.submit = { ...this.actions.submit, disabled: !isValid };
+      this.entities.submit = { ...this.entities.submit, disabled: !isValid };
     }
     validityCheck(field: Field): {fields: $fields} {
       const errors = field.get('verify').reduce((finalResult, verification) => {

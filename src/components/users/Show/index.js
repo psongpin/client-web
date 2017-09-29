@@ -49,7 +49,7 @@ export class ShowUser extends PureComponent {
 
 export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSelector({
   id: userSelectors.getUserId,
-  user: userSelectors.findEntity(userSelectors.getUserId),
+  user: userSelectors.find(userSelectors.getUserId),
 });
 
 export const mapDispatchToProps = (dispatch: $$dispatch): $Exact<$dispatchProps> => {

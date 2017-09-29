@@ -34,7 +34,7 @@ const mapDispatchToProps = (dispatch: $$dispatch, { id }: $ownProps)=>({
   goToUser: ()=>dispatch(userActions.goTo(id)),
 });
 const mapStateToProps = createStructuredSelector({
-  user: userSelectors.findEntity(),
+  user: userSelectors.find(),
 });
 
 export default flowRight([
