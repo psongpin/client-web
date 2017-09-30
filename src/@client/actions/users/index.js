@@ -3,6 +3,7 @@ import { List } from 'immutable';
 import { Actions } from '@client/utils/actionUtils';
 import schemaConstants from '@client/schemas/constants';
 import services from '@client/services/users';
+import oauthServices from '@client/services/oauth';
 import { locationPush, queryReplace } from '../router';
 import sessionActions from '../pages/session';
 import flashActions from '../flash';
@@ -34,7 +35,10 @@ class UserActions extends Actions {
     return dispatch(this.getUsers([userId]));
   }
   getGoogleAuthUrl = ()=>{
-    return services.getGoogleAuthUrl();
+    return oauthServices.getGoogleAuthUrl();
+  }
+  getLinkedInAuthUrl = ()=>{
+    return oauthServices.getLinkedInAuthUrl();
   }
   getLoginToken = (email)=>dispatch => {
     return services.getLoginToken(email)
