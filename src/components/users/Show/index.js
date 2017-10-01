@@ -42,12 +42,14 @@ export class ShowUser extends PureComponent {
             </CardText>
           </Card>
         </Column>
-        <Column xs={12} size={8}>
-          <Tabs>
-            <Tab label="INTERNSHIPS"><InternshipGrid ids={[0, 1, 2, 3, 4, 5]}/></Tab>
-            <Tab label="PROJECTS"><ProjectGrid ids={[0, 1, 2, 3, 4, 5]}/></Tab>
-          </Tabs>
-        </Column>
+        {
+          <Column xs={12} size={8}>
+            <Tabs>
+              <Tab label="INTERNSHIPS"><InternshipGrid ids={[0, 1, 2, 3, 4, 5]}/></Tab>
+              <Tab label="PROJECTS"><ProjectGrid ids={[0, 1, 2, 3, 4, 5]}/></Tab>
+            </Tabs>
+          </Column>
+        }
       </Row>
     </View>);
   }
