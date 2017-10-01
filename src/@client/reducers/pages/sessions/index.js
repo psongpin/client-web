@@ -5,7 +5,7 @@ const { sessions } = require('@client/schemas/pages/constants');
 
 export const LOGOUT = (state: any) => {
   remove('token');
-  return state.updateIn(['data', sessions], (ent) => {
+  return state.updateIn([sessions], (ent) => {
     if (!ent) {
       return ent;
     }
@@ -15,5 +15,5 @@ export const LOGOUT = (state: any) => {
 
 export const LOGIN = (state: any, { payload: token }: Object) => {
   set('token', token);
-  return state.setIn(['data', sessions, 'token'], token);
+  return state.setIn([sessions, 'token'], token);
 };

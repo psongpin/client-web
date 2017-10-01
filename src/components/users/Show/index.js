@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
 
 import { khange, kheck } from '@client/hoc';
-import { View, Header, Column, Row } from 'ui-kit';
+import { View, CardText, Column, Row, Card, CardTitle } from 'ui-kit';
 import userActions from '@client/actions/users';
 import userSelectors from '@client/selectors/users';
 import User from '@client/models/User';
@@ -26,21 +26,19 @@ type $props = $stateProps & $dispatchProps;
 export class ShowUser extends PureComponent {
   props: $props;
   render() {
-    const { user, goToGravatar } = this.props;
+    const { user } = this.props;
     return (<View>
       <Row>
         <Column xs={12} size={4}>
-          <Row>
-            <Column>
-              <Header>{user.username}</Header>
-              <p>{user.points}</p>
-            </Column>
-          </Row>
-          <Row>
-            <Column>
-              <img style={{ cursor: 'pointer' }} onClick={goToGravatar} alt="Profile" src={`https://www.gravatar.com/avatar/${user.email}?s=200&d=identicon`} />
-            </Column>
-          </Row>
+          <Card>
+            <CardTitle
+              title={user.username}
+              avatar={user.imageUrl}
+            />
+            <CardText>
+              {user.description}
+            </CardText>
+          </Card>
         </Column>
       </Row>
     </View>);
@@ -56,9 +54,6 @@ export const mapDispatchToProps = (dispatch: $$dispatch): $Exact<$dispatchProps>
   return {
     find(id) {
       dispatch(userActions.find(id));
-    },
-    goToGravatar: ()=>{
-      window.location.href = 'https://en.gravatar.com/';
     },
   };
 };
