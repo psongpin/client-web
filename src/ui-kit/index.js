@@ -37,6 +37,8 @@ import Select from './Select';
 import SelectCreatable from './Select/Creatable';
 import SelectSearchable from './Select/Searchable';
 import Pagination from './Pagination';
+import Tabs from './Tabs';
+import Tab from './Tabs/Tab';
 
 export * from './Container';
 export * from './MainNav';
@@ -91,4 +93,6 @@ export {
   SelectCreatable,
   SelectSearchable,
   Pagination,
+  Tabs,
+  Tab,
 };
