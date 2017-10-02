@@ -41,7 +41,7 @@ export class Nav extends PureComponent {
       Search
     </MainNavDropdownItem>);
     return (
-      <AppBar title="Title" leftIcon="home" onLeftIconClick={goHome}>
+      <AppBar title="Menternship" leftIcon="home" onLeftIconClick={goHome}>
         <MainNavDropdown icon="more_vert">
           {
             !loggedIn && [
