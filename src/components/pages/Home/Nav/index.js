@@ -34,13 +34,18 @@ export class Nav extends PureComponent {
       user,
       onLogout,
       goToUser,
+      goToSearch,
     } = this.props;
     const { token: loggedIn } = session;
+    const search = (<MainNavDropdownItem onClick={goToSearch}>
+      Search
+    </MainNavDropdownItem>);
     return (
       <AppBar title="Title" leftIcon="home" onLeftIconClick={goHome}>
         <MainNavDropdown icon="more_vert">
           {
             !loggedIn && [
+              search,
               <MainNavDropdownItem onClick={onSignup}>
                 Signup
               </MainNavDropdownItem>,
@@ -54,9 +59,7 @@ export class Nav extends PureComponent {
               <MainNavDropdownItem onClick={()=>goToUser(user.id)}>
                 {user.username}
               </MainNavDropdownItem>,
-              <MainNavDropdownItem onClick={goToSearch}>
-                Search
-              </MainNavDropdownItem>,
+              search,
               <MainNavDropdownItem onClick={onLogout}>
                 Logout
               </MainNavDropdownItem>,
