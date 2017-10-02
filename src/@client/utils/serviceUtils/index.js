@@ -63,7 +63,7 @@ export class Services {
   host: string;
   constructor(prefix: string, host: string) {
     this.prefix = prefix;
-    this.host = `${host || process.env.API_CONNECTION || 'https://menternship.herokuapp.com'}/`;
+    this.host = `${host || process.env.API_CONNECTION || 'https://api.menternship.org'}/`;
   }
   _getUrl(prefix: string, url?: $url) {
     return `${this.host}${prefix}${processUrl(url)}`;

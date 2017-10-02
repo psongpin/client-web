@@ -15,7 +15,7 @@
 
 Create a .env file in root directory of project and include the following env variables
 ```
-API_CONNECTION=https://menternship.herokuapp.com/ (or if you're running the server locally, point to your server)
+API_CONNECTION=http://api.menternship.org/ (or if you're running the server locally, point to your server)
 PORT=3000
 ```
 
