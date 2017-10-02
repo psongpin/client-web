@@ -21,16 +21,23 @@ type $props = {
   isValid?: boolean;
   verify?: Function;
   onKeyPress?: Function;
+  debounce?: boolean | number;
 };
 
 export class TextInput extends PureComponent {
   props: $props;
   input: any;
+  onChange: Function;
+  constructor(props: $props) {
+    super(props);
+    if (props.debounce) {
+      this.onChange = debounce(this.onRegularChange, props.debounce || 500);
+    } else {
+      this.onChange = this.onRegularChange;
+    }
+  }
   shouldComponentUpdate(nextProps: $props) {
     return (this.props.value !== nextProps.value || this.props.errors !== nextProps.errors);
-  }
-  render() {
-    return this.generateContent(this.props);
   }
   getType = () => {
     if (this.props.email) {
@@ -57,8 +64,8 @@ export class TextInput extends PureComponent {
     }
     this.props.onKeyPress && this.props.onKeyPress(event);
   }
-  generateContent = (combinedProps: $props) => {
-    const { label, placeholder, errors, onChange, multi, readonly, isDirty, initialValue, isValid, verify, ...props } = combinedProps;
+  render() {
+    const { label, placeholder, errors, onChange, multi, readonly, isDirty, initialValue, isValid, verify, ...props } = this.props;
     return (<Input
       ref={this.setInput}
       type={this.getType()}
@@ -71,7 +78,7 @@ export class TextInput extends PureComponent {
       error={errors && errors.size > 0 && errors.first()}
     />);
   }
-  onChange = (value: any) => {
+  onRegularChange = (value: any) => {
     const { name, onChange = noop } = this.props;
     onChange({ value, name });
   }

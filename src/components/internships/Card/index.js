@@ -4,23 +4,43 @@ import { CardTitle } from 'ui-kit';
 import GridCard from 'components/shared/GridCard';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { flowRight } from 'lodash';
 import internshipSelectors from '@client/selectors/internships';
+import projectSelectors from '@client/selectors/projects';
+import internshipActions from '@client/actions/internships';
+import projectActions from '@client/actions/projects';
+
 
 class InternshipCard extends PureComponent {
   render() {
-    const { internship } = this.props;
+    const { props } = this;
     return (
       <GridCard>
         <CardTitle
-          title={internship.name}
+          title={<div onClick={props.goTo}>{props.internship.name}</div>}
+          subtitle={<div onClick={props.goToProject}>{props.project.name}</div>}
         />
       </GridCard>
     );
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-  internship: internshipSelectors.find(),
-});
+const mapStateToPropsFactory = () => {
+  const getProjectId = internshipSelectors.findRelatedId('project');
+  return createStructuredSelector({
+    internship: internshipSelectors.find(),
+    project: projectSelectors.find(getProjectId),
+  });
+};
 
-export default connect(mapStateToProps)(InternshipCard);
+const mapDispatchToProps = (dispatch: $$dispatch, { id })=>{
+  return {
+    goTo: ()=>dispatch(internshipActions.goTo(id)),
+    goToProject: ()=>dispatch(projectActions.goTo(id)),
+  };
+};
+
+export default flowRight([
+  connect(mapStateToPropsFactory),
+  connect(null, mapDispatchToProps),
+])(InternshipCard);

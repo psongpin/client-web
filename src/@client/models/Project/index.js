@@ -3,7 +3,7 @@ import { Record } from 'immutable';
 
 export const properties = {
   id: 0,
-  name: '',
+  name: 'Project Title',
 };
 export default class Project extends Record(properties) {
 

@@ -61,7 +61,7 @@ function processUrl(url) {
 export class Services {
   prefix: string;
   host: string;
-  constructor(prefix: string, host: string) {
+  constructor(prefix: string, host?: string) {
     this.prefix = prefix;
     this.host = `${host || process.env.API_CONNECTION || 'https://api.menternship.org'}/`;
   }

@@ -16,7 +16,7 @@ export class Search extends PureComponent {
     return (<div>
       <TextInput className={textInput} label="Search" />
       <Tabs>
-        <Tab label="INTERNSHIPS"><InternshipsGrid ids={props.internshipIds} /></Tab>
+        <Tab label="INTERNSHIPS"><InternshipsGrid ids={[1] || props.internshipIds} /></Tab>
         <Tab label="PROJECTS"><ProjectsGrid ids={props.projectIds} /></Tab>
         <Tab label="PEOPLE"><UsersGrid ids={props.userIds} /></Tab>
       </Tabs>
