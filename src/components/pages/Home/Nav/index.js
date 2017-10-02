@@ -17,7 +17,7 @@ import sessionSelectors from '@client/selectors/pages/sessions';
 import { openPrelogin, openPresignup } from '@client/actions/panels';
 
 import userActions from '@client/actions/users';
-
+import searchActions from '@client/actions/pages/search';
 import sessionActions from '@client/actions/pages/session';
 
 
@@ -34,30 +34,36 @@ export class Nav extends PureComponent {
       user,
       onLogout,
       goToUser,
+      goToSearch,
     } = this.props;
     const { token: loggedIn } = session;
+    const search = (<MainNavDropdownItem onClick={goToSearch}>
+      Search
+    </MainNavDropdownItem>);
     return (
-      <AppBar title="Title" leftIcon="home" onLeftIconClick={goHome}>
+      <AppBar title="Menternship" leftIcon="home" onLeftIconClick={goHome}>
         <MainNavDropdown icon="more_vert">
           {
-            !loggedIn && <MainNavDropdownItem onClick={onSignup}>
-            Signup
-          </MainNavDropdownItem>
+            !loggedIn && [
+              search,
+              <MainNavDropdownItem onClick={onSignup}>
+                Signup
+              </MainNavDropdownItem>,
+              <MainNavDropdownItem onClick={onLogin}>
+                Login
+              </MainNavDropdownItem>,
+            ]
           }
           {
-            !loggedIn && <MainNavDropdownItem onClick={onLogin}>
-              Login
-            </MainNavDropdownItem>
-          }
-          {
-            loggedIn && <MainNavDropdownItem onClick={()=>goToUser(user.id)}>
-              {user.username}
-            </MainNavDropdownItem>
-          }
-          {
-            loggedIn && <MainNavDropdownItem onClick={onLogout}>
-              Logout
-            </MainNavDropdownItem>
+            loggedIn && [
+              <MainNavDropdownItem onClick={()=>goToUser(user.id)}>
+                {user.username}
+              </MainNavDropdownItem>,
+              search,
+              <MainNavDropdownItem onClick={onLogout}>
+                Logout
+              </MainNavDropdownItem>,
+            ]
           }
         </MainNavDropdown>
       </AppBar>
@@ -86,6 +92,9 @@ function mapDispatchToProps(dispatch: $$dispatch) {
     },
     goToUser(id) {
       dispatch(userActions.goTo(id));
+    },
+    goToSearch() {
+      dispatch(searchActions.goTo());
     },
   };
 }
