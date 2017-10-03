@@ -3,7 +3,7 @@ import { Record } from 'immutable';
 
 export const properties = {
   id: 0,
-  username: '',
+  username: 'Username',
   points: 0,
   imageUrl: '',
 };
