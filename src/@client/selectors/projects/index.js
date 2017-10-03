@@ -6,7 +6,7 @@ import { get } from 'lodash';
 const { projects } = require('@client/schemas/constants');
 
 class ProjectSelectors extends Selector {
-  getIdFromLocation = (state, props)=>get(props, 'location.params.projectId')
+  getIdFromLocation = (state, props)=>get(props, 'params.projectId')
 }
 
 export default new ProjectSelectors(projects, new Project());

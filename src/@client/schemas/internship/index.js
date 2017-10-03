@@ -23,5 +23,9 @@ export default standardizeEntity({
       alias: 'projectId',
       type: relationshipTypes.ONE,
     },
+    {
+      entityName: 'applicants',
+      type: relationshipTypes.MANY,
+    },
   ],
 });

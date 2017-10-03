@@ -8,7 +8,6 @@ import { flowRight } from 'lodash';
 import { createStructuredSelector } from 'reselect';
 import { getQuery } from '@client/selectors/router';
 
-
 class SignupUsername extends PureComponent {
   render() {
     const { fields, actions } = this.props;

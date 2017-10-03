@@ -16,8 +16,15 @@ type $relationship = {
 }
 
 export class Actions extends ErschemaActions {
-  constructor(name: string) {
+  services: Object;
+  constructor(name: string, services?: Object) {
     super(schema, name);
+    this.services = services;
+  }
+  get = (id: $$id)=>dispatch=>{
+    return this.services.get(id).then((entity)=>{
+      return dispatch(this.entities.get(entity));
+    });
   }
   createRelated = (entity: {id: $$id}, relationship: $relationship) => retypeAction(
     `CREATE_RELATED_${generateActionName(this.name)}_${generateActionName(relationship.entityName)}`,

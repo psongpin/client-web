@@ -17,6 +17,7 @@ import sessionSelectors from '@client/selectors/pages/sessions';
 import { openPrelogin, openPresignup } from '@client/actions/panels';
 
 import userActions from '@client/actions/users';
+import applicationActions from '@client/actions/applications';
 import searchActions from '@client/actions/pages/search';
 import sessionActions from '@client/actions/pages/session';
 
@@ -35,6 +36,7 @@ export class Nav extends PureComponent {
       onLogout,
       goToUser,
       goToSearch,
+      goToApplications,
     } = this.props;
     const { token: loggedIn } = session;
     const search = (<MainNavDropdownItem onClick={goToSearch}>
@@ -60,6 +62,9 @@ export class Nav extends PureComponent {
                 {user.username}
               </MainNavDropdownItem>,
               search,
+              <MainNavDropdownItem onClick={goToApplications}>
+                Applications
+              </MainNavDropdownItem>,
               <MainNavDropdownItem onClick={onLogout}>
                 Logout
               </MainNavDropdownItem>,
@@ -95,6 +100,9 @@ function mapDispatchToProps(dispatch: $$dispatch) {
     },
     goToSearch() {
       dispatch(searchActions.goTo());
+    },
+    goToApplications() {
+      dispatch(applicationActions.goTo());
     },
   };
 }

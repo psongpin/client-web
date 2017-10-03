@@ -6,7 +6,7 @@ import { get } from 'lodash';
 const { internships } = require('@client/schemas/constants');
 
 class InternshipSelectors extends Selector {
-  getIdFromLocation = (state, props)=>get(props, 'location.params.internshipId')
+  getIdFromLocation = (state, props)=>get(props, 'params.internshipId')
 }
 
 export default new InternshipSelectors(internships, new Internship());
