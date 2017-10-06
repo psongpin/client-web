@@ -1,7 +1,7 @@
 // @flow
 import { OrderedSet, List } from 'immutable';
 // $FlowFixMe
-import ErschemaSelector from 'erschema-redux-immutable/selectors';
+import ErschemaSelector from 'erschema-selectors';
 import { createSelector } from 'reselect';
 
 export default class Selector extends ErschemaSelector {
