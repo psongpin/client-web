@@ -43,5 +43,5 @@ We use the immutablejs library extensively throughout the redux store. This is v
 
 ### erschema-redux-immutable utility library
 
-I built a custom library for this project called erschema-suite that goes over some of the finer points of the application and have schemas, reducers, selectors, and actions all come together. https://github.com/l2silver/erschema-redux-immutable
+I built a custom library for this project called erschema-redux-immutable that goes over some of the finer points of the application and have schemas, reducers, selectors, and actions all come together. https://github.com/l2silver/erschema-redux-immutable
 https://github.com/l2silver/erschema
