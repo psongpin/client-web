@@ -27,8 +27,8 @@ class MainContainer extends PureComponent {
   componentWillMount() {
     if (this.props.auth) {
       this.props.login(this.props.auth);
-      this.props.checkIfLoggedIn();
     }
+    this.props.checkIfLoggedIn();
     this.props.getFlash(this.props.flash);
   }
   render() {
