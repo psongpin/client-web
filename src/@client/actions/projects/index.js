@@ -11,4 +11,4 @@ class ProjectActions extends Actions {
   goTo = (id: $$id) => dispatch => dispatch(locationPush(`/projects/${id}`))
 }
 
-export default new ProjectActions(schemaConstants.projects);
+export default new ProjectActions(schemaConstants.projects, services);
