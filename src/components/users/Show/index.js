@@ -46,7 +46,7 @@ export class ShowUser extends PureComponent {
           <Column xs={12} size={8}>
             <Tabs>
               <Tab label="INTERNSHIPS"><InternshipGrid ids={[0, 1, 2, 3, 4, 5]}/></Tab>
-              <Tab label="PROJECTS"><ProjectGrid ids={[0, 1, 2, 3, 4, 5]}/></Tab>
+              <Tab label="PROJECTS"><ProjectGrid create ids={[0, 1, 2, 3, 4, 5]}/></Tab>
             </Tabs>
           </Column>
         }

@@ -26,6 +26,13 @@ export class Actions extends ErschemaActions {
       return dispatch(this.entities.get(entity));
     });
   }
+  create = (payload?: Object = {})=>dispatch=>{
+    return this.services.create(payload)
+    .then((id)=>{
+      dispatch(this.entities.create({ ...payload, id }));
+      return id;
+    });
+  }
   createRelated = (entity: {id: $$id}, relationship: $relationship) => retypeAction(
     `CREATE_RELATED_${generateActionName(this.name)}_${generateActionName(relationship.entityName)}`,
     batchActions([

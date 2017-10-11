@@ -1,5 +1,4 @@
 // @flow
-// $FlowFixMe
 import erschemaReducer from 'erschema-redux-immutable';
 import schema from '@client/schemas';
 import pageSchema from '@client/schemas/pages';
