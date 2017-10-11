@@ -47,7 +47,7 @@
     "enzyme-adapter-react-15": "^1.0.0",
     "erschema": "^1.1.1",
     "erschema-actions": "^1.0.3",
-    "erschema-redux-immutable": "^1.0.17",
+    "erschema-redux-immutable": "^1.0.19",
     "erschema-selectors": "^1.0.3",
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.15.2",
