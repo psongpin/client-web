@@ -2,12 +2,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { Clickable } from 'ui-kit';
-import { CreateProject } from './';
+import CreateGridCard from './';
 
-
-describe('CreateProject', ()=>{
+describe('CreateGridCard', ()=>{
   it('renders', ()=>{
-    const wrapper = shallow(<CreateProject />);
+    const wrapper = shallow(<CreateGridCard />);
     expect(wrapper.find(Clickable).length).toBe(1);
-  })
-})
+  });
+});

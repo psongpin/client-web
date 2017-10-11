@@ -6,7 +6,7 @@ import { flowRight } from 'lodash';
 
 import { khange, kheck } from '@client/hoc';
 import { View, CardText, Column, Row, Card, CardTitle, Tabs, Tab } from 'ui-kit';
-import InternshipGrid from 'components/projects/Grid';
+import InternshipGrid from 'components/internships/Grid';
 import projectActions from '@client/actions/projects';
 import projectSelectors from '@client/selectors/projects';
 import Project from '@client/models/Project';
@@ -20,6 +20,7 @@ type $stateProps = {
 
 type $dispatchProps = {
   find: (id: $$id)=>void;
+  getInternships: (id: $$id)=>void;
 };
 
 type $props = $stateProps & $dispatchProps;
@@ -43,7 +44,7 @@ export class ShowInternship extends PureComponent {
         {
           <Column xs={12} size={8}>
             <Tabs>
-              <Tab label="CURRENT INTERNSHIPS"><InternshipGrid ids={props.currentInternshipIds} /></Tab>
+              <Tab label="CURRENT INTERNSHIPS"><InternshipGrid create projectId={props.id} ids={props.currentInternshipIds} /></Tab>
               <Tab label="PAST INTERNSHIPS"><InternshipGrid ids={props.pastInternshipIds} /></Tab>
             </Tabs>
           </Column>
@@ -56,7 +57,7 @@ export class ShowInternship extends PureComponent {
 export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSelector({
   id: projectSelectors.getIdFromLocation,
   project: projectSelectors.find(projectSelectors.getIdFromLocation),
-  currentInternshipIds: projectSelectors.getRelatedIds('projects', projectSelectors.getIdFromLocation),
+  currentInternshipIds: projectSelectors.getRelatedIds('internships', projectSelectors.getIdFromLocation),
   pastInternshipIds: projectSelectors.getRelatedIds('pastInternships', projectSelectors.getIdFromLocation),
 });
 
@@ -65,13 +66,17 @@ export const mapDispatchToProps = (dispatch: $$dispatch): $Exact<$dispatchProps>
     find(id) {
       dispatch(projectActions.get(id));
     },
+    getInternships(id) {
+      dispatch(projectActions.getInternships(id));
+    },
   };
 };
 
 export const onIdChange = ({
-  id, find,
+  id, find, getInternships,
 }: $props) => {
   find(id);
+  getInternships(id);
 };
 
 export default flowRight([

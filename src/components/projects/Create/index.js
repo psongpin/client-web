@@ -1,22 +1,14 @@
 // @flow
 import React, { PureComponent } from 'react';
-import { Clickable, CardText } from 'ui-kit';
 import { flowRight } from 'lodash';
 import { connect } from 'react-redux';
 import projectActions from '@client/actions/projects';
-import GridCard from 'components/shared/GridCard';
-import { plus } from './style.pcss';
+import CreateGridCard from 'components/shared/GridCardCreate';
+
 
 export class CreateProject extends PureComponent {
   render() {
-    return (
-      <GridCard>
-        <CardText>
-          <Clickable onClick={this.props.createProject} className={plus}>
-          +
-          </Clickable>
-        </CardText>
-      </GridCard>);
+    return <CreateGridCard onClick={this.props.createProject} />;
   }
 }
 
