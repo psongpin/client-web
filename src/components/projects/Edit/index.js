@@ -1,14 +1,13 @@
 // @flow
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { createSelector, createStructuredSelector } from 'reselect';
+import { createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
 
-import { khange, kheck } from '@client/hoc';
-import { Button, View, CardText, Column, Row, Card, CardTitle, CardActions } from 'ui-kit';
+import { khange, kheck, form } from '@client/hoc';
+import { View, CardActions, Button, CardText, Column, Row, Card, TextInput } from 'ui-kit';
 import projectActions from '@client/actions/projects';
 import projectSelectors from '@client/selectors/projects';
-import sessionSelectors from '@client/selectors/pages/sessions';
 import Project from '@client/models/Project';
 import InternshipsTab from '../InternshipsTab';
 import { container } from './style.pcss';
@@ -17,17 +16,17 @@ import { container } from './style.pcss';
 type $stateProps = {
   id: $$id,
   project: Project,
-  editing: boolean,
 };
 
 type $dispatchProps = {
   find: (id: $$id)=>void;
-  goToEditProject: ()=>void;
+  update: (propObj: Object)=>Promise<any>;
+  goTo: ()=>void;
 };
 
 type $props = $stateProps & $dispatchProps;
 
-export class ShowProject extends PureComponent {
+export class EditProject extends PureComponent {
   props: $props;
   render() {
     const { props } = this;
@@ -35,16 +34,14 @@ export class ShowProject extends PureComponent {
       <Row>
         <Column xs={12} size={4}>
           <Card>
-            <CardTitle
-              title={props.project.name}
-            />
             <CardText>
-              {props.project.description}
+              <TextInput {...props.fields.get('name').toObject()} />
+            </CardText>
+            <CardText>
+              <TextInput maxLength={200} rows={5} multi {...props.fields.get('description').toObject()} />
             </CardText>
             <CardActions>
-              {
-                props.editing && <Button onClick={props.goToEditProject}>Edit</Button>
-              }
+              <Button onClick={this.props.goTo}>Go Back</Button>
             </CardActions>
           </Card>
         </Column>
@@ -56,27 +53,23 @@ export class ShowProject extends PureComponent {
   }
 }
 
-const isEditing = createSelector([
-    sessionSelectors.getCurrentUserId(),
-    projectSelectors.findRelatedId('user', projectSelectors.getIdFromLocation),
-  ],
-  (currentUserId, projectUserId)=>{
-    return currentUserId === projectUserId;
-  });
-
 export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSelector({
   id: projectSelectors.getIdFromLocation,
   project: projectSelectors.find(projectSelectors.getIdFromLocation),
-  editing: isEditing,
 });
 
-export const mapDispatchToProps = (dispatch: $$dispatch, props: $props): $Exact<$dispatchProps> => {
+export const mapDispatchToProps = (dispatch: $$dispatch, props: $$props): $Exact<$dispatchProps> => {
   return {
     find(id) {
       dispatch(projectActions.get(id));
     },
-    goToEditProject() {
-      dispatch(projectActions.goToEdit(props.id));
+    update({ name, value }) {
+      return dispatch(projectActions.update(props.id, {
+        [name]: value,
+      }));
+    },
+    goTo() {
+      dispatch(projectActions.goTo(props.id));
     },
   };
 };
@@ -87,10 +80,28 @@ export const onIdChange = ({
   find(id);
 };
 
+const actionsSelector = (props)=>({
+  update: props.update,
+});
+
+const configSelector = (props)=>({
+  initialValuesPropName: 'project',
+});
+
+const fieldsSelector = (props)=>({
+  name: {
+
+  },
+  description: {
+
+  },
+});
+
 export default flowRight([
   connect(mapStateToProps),
   connect(null, mapDispatchToProps),
   khange([
     [kheck('id'), onIdChange],
   ]),
-])(ShowProject);
+  form(fieldsSelector, actionsSelector, configSelector),
+])(EditProject);

@@ -5,13 +5,12 @@ import services from '@client/services/projects';
 import internshipServices from '@client/services/internships';
 import { locationPush } from '../router';
 
-
-
 class ProjectActions extends Actions {
   get = (id: $$id) => dispatch => services.get(id).then((project)=>{
     dispatch(this.entities.get(project));
   })
   goTo = (id: $$id) => dispatch => dispatch(locationPush(`/projects/${id}`))
+  goToEdit = (id: $$id) => dispatch => dispatch(locationPush(`/projects/${id}/edit`))
   getInternships = (id: $$id)=> dispatch => {
     return internshipServices.getByProject(id)
       .then((internships)=>{

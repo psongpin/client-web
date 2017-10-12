@@ -33,6 +33,12 @@ export class Actions extends ErschemaActions {
       return id;
     });
   }
+  update = (id: $$id, payload?: Object = {})=>dispatch=>{
+    return this.services.update(id, payload)
+    .then(()=>{
+      return dispatch(this.entities.update({ ...payload, id }));
+    });
+  }
   createRelated = (entity: {id: $$id}, relationship: $relationship) => retypeAction(
     `CREATE_RELATED_${generateActionName(this.name)}_${generateActionName(relationship.entityName)}`,
     batchActions([
