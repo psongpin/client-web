@@ -16,5 +16,11 @@ export default standardizeEntity({
       name: 'pastInternships',
       type: relationshipTypes.MANY,
     },
+    {
+      entityName: 'users',
+      alias: 'userId',
+      name: 'user',
+      type: relationshipTypes.ONE,
+    },
   ],
 });
