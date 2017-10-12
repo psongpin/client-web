@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
 
 import { khange, kheck, form } from '@client/hoc';
-import { View, CardText, Column, Row, Card, TextInput } from 'ui-kit';
+import { View, CardActions, Button, CardText, Column, Row, Card, TextInput } from 'ui-kit';
 import projectActions from '@client/actions/projects';
 import projectSelectors from '@client/selectors/projects';
 import Project from '@client/models/Project';
@@ -21,6 +21,7 @@ type $stateProps = {
 type $dispatchProps = {
   find: (id: $$id)=>void;
   update: (propObj: Object)=>Promise<any>;
+  goTo: ()=>void;
 };
 
 type $props = $stateProps & $dispatchProps;
@@ -39,13 +40,14 @@ export class EditProject extends PureComponent {
             <CardText>
               <TextInput maxLength={200} rows={5} multi {...props.fields.get('description').toObject()} />
             </CardText>
+            <CardActions>
+              <Button onClick={this.props.goTo}>Go Back</Button>
+            </CardActions>
           </Card>
         </Column>
-        {
-          <Column xs={12} size={8}>
-            <InternshipsTab id={props.id} />
-          </Column>
-        }
+        <Column xs={12} size={8}>
+          <InternshipsTab id={props.id} />
+        </Column>
       </Row>
     </View>);
   }
@@ -65,6 +67,9 @@ export const mapDispatchToProps = (dispatch: $$dispatch, props: $$props): $Exact
       return dispatch(projectActions.update(props.id, {
         [name]: value,
       }));
+    },
+    goTo() {
+      dispatch(projectActions.goTo(props.id));
     },
   };
 };
