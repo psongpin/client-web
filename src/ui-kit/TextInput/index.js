@@ -2,6 +2,7 @@
 import React, { PureComponent } from 'react';
 import { Map } from 'immutable';
 import Input from 'react-toolbox/lib/input';
+import { debounce } from 'lodash';
 
 const noop = ()=>{}
 type $props = {
@@ -31,7 +32,7 @@ export class TextInput extends PureComponent {
   constructor(props: $props) {
     super(props);
     if (props.debounce) {
-      this.onChange = debounce(this.onRegularChange, props.debounce || 500);
+      this.onChange = debounce(this.onRegularChange, typeof props.debounce === 'number' ? props.debounce : 500);
     } else {
       this.onChange = this.onRegularChange;
     }

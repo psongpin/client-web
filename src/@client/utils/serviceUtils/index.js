@@ -109,6 +109,16 @@ export class Services {
       { ...finalOptions, body: JSON.stringify(body) },
     );
   }
+  search = (searchText: string, options?: Object = {}) => {
+    const { prefix, ...finalOptions } = options;
+    return post(
+      this._getUrl(
+        prefix || this.prefix,
+        'search',
+      ),
+      { ...finalOptions, body: JSON.stringify({ searchText }) },
+    );
+  }
   put = (url: string, body: Object, options?: Object = {}) => {
     const { prefix, ...finalOptions } = options;
     return put(
