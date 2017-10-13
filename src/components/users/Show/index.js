@@ -1,16 +1,16 @@
 // @flow
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
 
 import { khange, kheck } from '@client/hoc';
-import { View, CardText, Column, Row, Card, CardTitle, Tabs, Tab } from 'ui-kit';
-import InternshipGrid from 'components/internships/Grid';
-import ProjectGrid from 'components/projects/Grid';
+import { View, CardText, Column, Row, Card, CardTitle } from 'ui-kit';
 import userActions from '@client/actions/users';
 import userSelectors from '@client/selectors/users';
+import sessionSelectors from '@client/selectors/pages/sessions';
 import User from '@client/models/User';
+import UserInternshipsAndProjectsTabs from '../InternshipsAndProjectsTabs';
 import { container } from './style.pcss';
 
 
@@ -28,7 +28,7 @@ type $props = $stateProps & $dispatchProps;
 export class ShowUser extends PureComponent {
   props: $props;
   render() {
-    const { user } = this.props;
+    const { user, id } = this.props;
     return (<View className={container}>
       <Row>
         <Column xs={12} size={4}>
@@ -44,10 +44,7 @@ export class ShowUser extends PureComponent {
         </Column>
         {
           <Column xs={12} size={8}>
-            <Tabs>
-              <Tab label="INTERNSHIPS"><InternshipGrid ids={[0, 1, 2, 3, 4, 5]}/></Tab>
-              <Tab label="PROJECTS"><ProjectGrid create ids={[0, 1, 2, 3, 4, 5]}/></Tab>
-            </Tabs>
+            <UserInternshipsAndProjectsTabs id={id} />
           </Column>
         }
       </Row>
@@ -58,6 +55,12 @@ export class ShowUser extends PureComponent {
 export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSelector({
   id: userSelectors.getUserId,
   user: userSelectors.find(userSelectors.getUserId),
+  canEdit: createSelector([
+    userSelectors.getUserId,
+    sessionSelectors.getCurrentUserId(),
+  ], (userId, currentUserId)=>{
+    return userId === currentUserId;
+  }),
 });
 
 export const mapDispatchToProps = (dispatch: $$dispatch): $Exact<$dispatchProps> => {

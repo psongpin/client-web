@@ -3,12 +3,12 @@ import { List } from 'immutable';
 import { Actions } from '@client/utils/actionUtils';
 import schemaConstants from '@client/schemas/constants';
 import services from '@client/services/users';
+import internshipServices from '@client/services/internships';
+import projectServices from '@client/services/projects';
 import oauthServices from '@client/services/oauth';
 import { locationPush, queryReplace } from '../router';
 import sessionActions from '../pages/session';
 import flashActions from '../flash';
-
-const { users: USERS } = schemaConstants;
 
 class UserActions extends Actions {
   create = (user: Object) => (dispatch: $$dispatch) => services.create(user)
@@ -65,6 +65,14 @@ class UserActions extends Actions {
   find = (id: $$id) => dispatch =>
     services.get(id)
     .then(user => dispatch(this.entities.get(user)));
+  getInternships = (id: $$id) => dispatch => internshipServices.byUser(id)
+    .then((internships)=>{
+      return dispatch(this.entities.getRelated(id, 'internships', internships));
+    })
+  getProjects = (id: $$id) => dispatch => projectServices.byUser(id)
+    .then((projects)=>{
+      return dispatch(this.entities.getRelated(id, 'projects', projects));
+    })
 }
 
-export default new UserActions(USERS);
+export default new UserActions(schemaConstants.users);

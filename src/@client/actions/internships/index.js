@@ -6,6 +6,7 @@ import { locationPush } from '../router';
 
 class InternshipActions extends Actions {
   goTo = (id: $$id) => dispatch => dispatch(locationPush(`/internships/${id}`))
+  goToEdit = (id: $$id) => dispatch => dispatch(locationPush(`/internships/${id}/edit`))
 }
 
 export default new InternshipActions(schemaConstants.internships, services);

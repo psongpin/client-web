@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
 
-import { khange, kheck } from '@client/hoc';
-import { Button, CardText, CardActions, Card, CardTitle } from 'ui-kit';
-import projectActions from '@client/actions/projects';
+import { khange, kheck, form } from '@client/hoc';
+import { Button, CardText, CardActions, Card, CardTitle, TextInput } from 'ui-kit';
 import internshipActions from '@client/actions/internships';
 import applicantActions from '@client/actions/applicants';
 import internshipSelectors from '@client/selectors/internships';
@@ -23,33 +22,31 @@ type $stateProps = {
 type $dispatchProps = {
   find: (id: $$id)=>void;
   goToApplicants: Function;
-  goToEdit: Function;
-  findProject: Function;
+  goTo: Function;
+  updateInternship: Function;
 };
 
 type $props = $stateProps & $dispatchProps;
 
-export class ShowInternship extends PureComponent {
+export class EditInternship extends PureComponent {
   props: $props;
   render() {
     const { props } = this;
     return (<Card>
-      <CardTitle
-        title={props.internship.name}
-      />
       <CardText>
-        {props.internship.description}
+        <TextInput {...props.fields.get('name').toObject()} />
       </CardText>
-      {
-        props.canEdit && (<CardActions>
-          <Button onClick={props.goToApplicants}>
-            Applicants
-          </Button>
-          <Button onClick={props.goToEdit}>
-            Edit
-          </Button>
-        </CardActions>)
-      }
+      <CardText>
+        <TextInput multi rows={5} {...props.fields.get('description').toObject()} />
+      </CardText>
+      <CardActions>
+        <Button onClick={props.goTo}>
+          Go Back
+        </Button>
+        <Button onClick={props.goToApplicants}>
+          Applicants
+        </Button>
+      </CardActions>
     </Card>);
   }
 }
@@ -60,7 +57,6 @@ const getUserId = projectSelectors.findRelatedId('user', getProjectId);
 
 export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSelector({
   id: getInternshipId,
-  projectId: getProjectId,
   internship: internshipSelectors.find(getInternshipId),
   currentInternIds: internshipSelectors.getRelatedIds('interns', getInternshipId),
   completedInternshipIds: internshipSelectors.getRelatedIds('completedInternships', getInternshipId),
@@ -69,12 +65,8 @@ export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSe
   canEdit: createSelector([
     getUserId,
     sessionSelectors.getCurrentUserId(),
-    getProjectId
   ],
-  (userId, currentUserId, p)=>{
-    console.log(userId, currentUserId, p);
-    return userId === currentUserId;
-  }),
+  (userId, currentUserId)=>userId === currentUserId),
 });
 
 export const mapDispatchToProps = (dispatch: $$dispatch, props: $props): $Exact<$dispatchProps> => {
@@ -82,14 +74,14 @@ export const mapDispatchToProps = (dispatch: $$dispatch, props: $props): $Exact<
     find(id) {
       dispatch(internshipActions.get(id));
     },
-    findProject(id) {
-      if (id) dispatch(projectActions.get(id));
-    },
     goToApplicants() {
       dispatch(applicantActions.goTo(props.id));
     },
-    goToEdit() {
-      dispatch(internshipActions.goToEdit(props.id));
+    goTo() {
+      dispatch(internshipActions.goTo(props.id));
+    },
+    updateInternship({ name, value }) {
+      return dispatch(internshipActions.update(props.id, { [name]: value }))
     },
   };
 };
@@ -100,17 +92,28 @@ export const onIdChange = ({
   find(id);
 };
 
-export const onProjectIdChange = ({
-  projectId, findProject,
-}: $props) => {
-  findProject(projectId);
+const fieldsSelector = (props)=>{
+  return {
+    name: {},
+    description: {},
+  };
 };
+
+const actionsSelector = (props)=>{
+  return {
+    update: props.updateInternship,
+  };
+};
+
+const configSelector = ()=>({
+  initialValuesPropName: 'internship',
+});
 
 export default flowRight([
   connect(mapStateToProps),
   connect(null, mapDispatchToProps),
   khange([
     [kheck('id'), onIdChange],
-    [kheck('projectId'), onProjectIdChange],
   ]),
-])(ShowInternship);
+  form(fieldsSelector, actionsSelector, configSelector)
+])(EditInternship);
