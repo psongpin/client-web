@@ -1,18 +1,20 @@
 // @flow
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { createSelector, createStructuredSelector } from 'reselect';
+import { createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
 
 import { khange, kheck } from '@client/hoc';
-import { Button, CardText, CardActions, Card, CardTitle } from 'ui-kit';
-import projectActions from '@client/actions/projects';
+import { View, Column, Row, Tabs, Tab } from 'ui-kit';
+import InternshipGrid from 'components/internships/Grid';
+import ProjectGrid from 'components/projects/Grid';
 import internshipActions from '@client/actions/internships';
 import applicantActions from '@client/actions/applicants';
 import internshipSelectors from '@client/selectors/internships';
 import projectSelectors from '@client/selectors/projects';
 import sessionSelectors from '@client/selectors/pages/sessions';
 import Internship from '@client/models/Internship';
+import { container } from './style.pcss';
 
 
 type $stateProps = {
@@ -23,8 +25,6 @@ type $stateProps = {
 type $dispatchProps = {
   find: (id: $$id)=>void;
   goToApplicants: Function;
-  goToEdit: Function;
-  findProject: Function;
 };
 
 type $props = $stateProps & $dispatchProps;
@@ -33,24 +33,21 @@ export class ShowInternship extends PureComponent {
   props: $props;
   render() {
     const { props } = this;
-    return (<Card>
-      <CardTitle
-        title={props.internship.name}
-      />
-      <CardText>
-        {props.internship.description}
-      </CardText>
-      {
-        props.canEdit && (<CardActions>
-          <Button onClick={props.goToApplicants}>
-            Applicants
-          </Button>
-          <Button onClick={props.goToEdit}>
-            Edit
-          </Button>
-        </CardActions>)
-      }
-    </Card>);
+    return (<View className={container}>
+      <Row>
+        <Column xs={12} size={4}>
+          { this.props.children }
+        </Column>
+        {
+          <Column xs={12} size={8}>
+            <Tabs>
+              <Tab label="CURRENT INTERNS"><InternshipGrid ids={props.currentInternIds}/></Tab>
+              <Tab label="COMPLETED INTERNSHIPS"><ProjectGrid ids={props.completedInternshipIds}/></Tab>
+            </Tabs>
+          </Column>
+        }
+      </Row>
+    </View>);
   }
 }
 
@@ -60,36 +57,21 @@ const getUserId = projectSelectors.findRelatedId('user', getProjectId);
 
 export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSelector({
   id: getInternshipId,
-  projectId: getProjectId,
   internship: internshipSelectors.find(getInternshipId),
   currentInternIds: internshipSelectors.getRelatedIds('interns', getInternshipId),
   completedInternshipIds: internshipSelectors.getRelatedIds('completedInternships', getInternshipId),
   project: projectSelectors.find(getProjectId),
   userId: getUserId,
-  canEdit: createSelector([
-    getUserId,
-    sessionSelectors.getCurrentUserId(),
-    getProjectId
-  ],
-  (userId, currentUserId, p)=>{
-    console.log(userId, currentUserId, p);
-    return userId === currentUserId;
-  }),
+  currentUserId: sessionSelectors.getCurrentUserId(),
 });
 
-export const mapDispatchToProps = (dispatch: $$dispatch, props: $props): $Exact<$dispatchProps> => {
+export const mapDispatchToProps = (dispatch: $$dispatch): $Exact<$dispatchProps> => {
   return {
     find(id) {
       dispatch(internshipActions.get(id));
     },
-    findProject(id) {
-      if (id) dispatch(projectActions.get(id));
-    },
-    goToApplicants() {
-      dispatch(applicantActions.goTo(props.id));
-    },
-    goToEdit() {
-      dispatch(internshipActions.goToEdit(props.id));
+    goToApplicants(id) {
+      dispatch(applicantActions.goTo(id));
     },
   };
 };
@@ -100,17 +82,9 @@ export const onIdChange = ({
   find(id);
 };
 
-export const onProjectIdChange = ({
-  projectId, findProject,
-}: $props) => {
-  findProject(projectId);
-};
-
 export default flowRight([
-  connect(mapStateToProps),
-  connect(null, mapDispatchToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   khange([
     [kheck('id'), onIdChange],
-    [kheck('projectId'), onProjectIdChange],
   ]),
 ])(ShowInternship);
