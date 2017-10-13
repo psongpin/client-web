@@ -75,4 +75,7 @@ export class PageActions extends ErschemaPageActions {
   constructor(name: string) {
     super(schema, pageSchema, name);
   }
+  update = (payload: Object = {})=>dispatch=>{
+    return dispatch(this.entities.update(payload));
+  }
 }
