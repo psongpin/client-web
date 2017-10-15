@@ -17,5 +17,10 @@ export default standardizeEntity({
       entityName: 'offers',
       type: relationshipTypes.ONE,
     },
+    {
+      name: 'user',
+      entityName: 'users',
+      type: relationshipTypes.ONE,
+    },
   ],
 });

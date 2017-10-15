@@ -8,16 +8,18 @@ import { khange, kheck } from '@client/hoc';
 import { Button, CardText, CardActions, Card, CardTitle } from 'ui-kit';
 import projectActions from '@client/actions/projects';
 import internshipActions from '@client/actions/internships';
-import applicantActions from '@client/actions/applications';
+import applicationActions from '@client/actions/applications';
 import internshipSelectors from '@client/selectors/internships';
 import projectSelectors from '@client/selectors/projects';
 import sessionSelectors from '@client/selectors/pages/sessions';
+import applicationSelectors from '@client/selectors/applications';
 import Internship from '@client/models/Internship';
 
 
 type $stateProps = {
   id: $$id,
   internship: Internship,
+  currentUserId: $$id,
 };
 
 type $dispatchProps = {
@@ -25,6 +27,7 @@ type $dispatchProps = {
   goToApplicants: Function;
   goToEdit: Function;
   findProject: Function;
+  apply: Function;
 };
 
 type $props = $stateProps & $dispatchProps;
@@ -40,16 +43,26 @@ export class ShowInternship extends PureComponent {
       <CardText>
         {props.internship.description}
       </CardText>
-      {
-        props.canEdit && (<CardActions>
-          <Button onClick={props.goToApplicants}>
-            Applicants
-          </Button>
-          <Button onClick={props.goToEdit}>
-            Edit
-          </Button>
-        </CardActions>)
-      }
+      <CardActions>
+        {
+          props.canEdit && ([
+            <Button onClick={props.goToApplicants}>
+              Applicants
+            </Button>,
+            <Button onClick={props.goToEdit}>
+              Edit
+            </Button>,
+          ])
+        }
+        {
+          !!props.canEdit && props.loggedIn && !props.alreadyApplied && [
+            <Button onClick={props.apply}>Apply</Button>,
+          ]
+        }
+        {
+          props.alreadyApplied && <span>Applied</span>
+        }
+      </CardActions>
     </Card>);
   }
 }
@@ -57,24 +70,37 @@ export class ShowInternship extends PureComponent {
 const getInternshipId = internshipSelectors.getIdFromLocation;
 const getProjectId = internshipSelectors.findRelatedId('project', getInternshipId);
 const getUserId = projectSelectors.findRelatedId('user', getProjectId);
-
+const alreadyApplied = createSelector([
+  internshipSelectors.getRelatedIds('applications', getInternshipId),
+  applicationSelectors.findMonoRelationshipData('user'),
+  sessionSelectors.getCurrentUserId(),
+],
+(applicationIds, applicationUserRelationshipData, currentUserId)=>{
+  if (!currentUserId) return false;
+  return applicationIds.reduce((finalResult, applicationId) => {
+    if (finalResult) return finalResult;
+    return Number(applicationUserRelationshipData.get(`${applicationId}`)) === Number(currentUserId);
+  }, false);
+});
+const canEdit = createSelector([
+  getUserId,
+  sessionSelectors.getCurrentUserId(),
+],
+(userId, currentUserId)=>{
+  return userId === currentUserId;
+});
 export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSelector({
   id: getInternshipId,
+  currentUserId: sessionSelectors.getCurrentUserId(),
+  loggedIn: sessionSelectors.isLoggedIn(),
   projectId: getProjectId,
   internship: internshipSelectors.find(getInternshipId),
   currentInternIds: internshipSelectors.getRelatedIds('interns', getInternshipId),
   completedInternshipIds: internshipSelectors.getRelatedIds('completedInternships', getInternshipId),
   project: projectSelectors.find(getProjectId),
   userId: getUserId,
-  canEdit: createSelector([
-    getUserId,
-    sessionSelectors.getCurrentUserId(),
-    getProjectId
-  ],
-  (userId, currentUserId, p)=>{
-    console.log(userId, currentUserId, p);
-    return userId === currentUserId;
-  }),
+  canEdit,
+  alreadyApplied,
 });
 
 export const mapDispatchToProps = (dispatch: $$dispatch, props: $props): $Exact<$dispatchProps> => {
@@ -90,6 +116,11 @@ export const mapDispatchToProps = (dispatch: $$dispatch, props: $props): $Exact<
     },
     goToEdit() {
       dispatch(internshipActions.goToEdit(props.id));
+    },
+    apply() {
+      dispatch(applicationActions.create({
+        internshipId: props.id,
+      }, props.currentUserId));
     },
   };
 };

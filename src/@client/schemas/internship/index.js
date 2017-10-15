@@ -29,7 +29,7 @@ export default standardizeEntity({
       type: relationshipTypes.ONE,
     },
     {
-      entityName: 'applicants',
+      entityName: 'applications',
       type: relationshipTypes.MANY,
     },
   ],

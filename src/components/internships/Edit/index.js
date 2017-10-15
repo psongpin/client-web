@@ -7,7 +7,7 @@ import { flowRight } from 'lodash';
 import { khange, kheck, form } from '@client/hoc';
 import { Button, CardText, CardActions, Card, CardTitle, TextInput } from 'ui-kit';
 import internshipActions from '@client/actions/internships';
-import applicantActions from '@client/actions/applications';
+import applicationActions from '@client/actions/applications';
 import internshipSelectors from '@client/selectors/internships';
 import projectSelectors from '@client/selectors/projects';
 import sessionSelectors from '@client/selectors/pages/sessions';
