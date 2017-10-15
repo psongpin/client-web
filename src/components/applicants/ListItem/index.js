@@ -1,18 +1,25 @@
 // @flow
 import React, { PureComponent } from 'react';
 import ULItem from 'components/shared/AppULItem';
+import { Button } from 'ui-kit';
 import { connect } from 'react-redux';
 import { flowRight } from 'lodash';
 import { createStructuredSelector } from 'reselect';
-import applicantSelectors from '@client/selectors/applicants';
+import applicantSelectors from '@client/selectors/applications';
+import { displayStatus } from '@client/models/Application';
 import userSelectors from '@client/selectors/users';
-import { status } from './style.pcss';
+import { openOffersCreate } from '@client/actions/panels';
+import { status, offer, reject } from './style.pcss';
+
+type $props = Object;
 
 export class ApplicantListItem extends PureComponent {
+  props: $props;
   render() {
     const { props } = this;
     return (<ULItem
-      rightIcon={<span className={status}>{props.applicant.status}</span>}
+      legend={displayStatus(props.applicant)}
+      rightActions={[<Button onClick={props.openOffer} className={offer}>OFFER</Button>, <Button className={reject}>REJECT</Button>]}
     >
       {
         props.user.username
@@ -29,6 +36,14 @@ const mapStateToPropsFactory = ()=>{
   });
 };
 
+const mapDispatchToProps = (dispatch: $$dispatch, props: $props)=>{
+  return {
+    openOffer() {
+      dispatch(openOffersCreate(props.id));
+    },
+  };
+};
+
 export default flowRight([
-  connect(mapStateToPropsFactory),
+  connect(mapStateToPropsFactory, mapDispatchToProps),
 ])(ApplicantListItem);

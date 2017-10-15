@@ -8,7 +8,7 @@ import { khange, kheck } from '@client/hoc';
 import { Button, CardText, CardActions, Card, CardTitle } from 'ui-kit';
 import projectActions from '@client/actions/projects';
 import internshipActions from '@client/actions/internships';
-import applicantActions from '@client/actions/applicants';
+import applicantActions from '@client/actions/applications';
 import internshipSelectors from '@client/selectors/internships';
 import projectSelectors from '@client/selectors/projects';
 import sessionSelectors from '@client/selectors/pages/sessions';
@@ -86,7 +86,7 @@ export const mapDispatchToProps = (dispatch: $$dispatch, props: $props): $Exact<
       if (id) dispatch(projectActions.get(id));
     },
     goToApplicants() {
-      dispatch(applicantActions.goTo(props.id));
+      dispatch(applicationActions.goToApplicants(props.id));
     },
     goToEdit() {
       dispatch(internshipActions.goToEdit(props.id));

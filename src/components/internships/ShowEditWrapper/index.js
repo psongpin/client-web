@@ -9,7 +9,7 @@ import { View, Column, Row, Tabs, Tab } from 'ui-kit';
 import InternshipGrid from 'components/internships/Grid';
 import ProjectGrid from 'components/projects/Grid';
 import internshipActions from '@client/actions/internships';
-import applicantActions from '@client/actions/applicants';
+import applicantActions from '@client/actions/applications';
 import internshipSelectors from '@client/selectors/internships';
 import projectSelectors from '@client/selectors/projects';
 import sessionSelectors from '@client/selectors/pages/sessions';
@@ -71,7 +71,7 @@ export const mapDispatchToProps = (dispatch: $$dispatch): $Exact<$dispatchProps>
       dispatch(internshipActions.get(id));
     },
     goToApplicants(id) {
-      dispatch(applicantActions.goTo(id));
+      dispatch(applicationActions.goToApplicants(id));
     },
   };
 };

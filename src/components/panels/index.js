@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { Panel } from 'ui-kit';
-import { getPanel, getPathname } from '@client/selectors/router';
+import { getPathname } from '@client/selectors/router';
+import { getPanel } from '@client/selectors/panel';
 
 import panelRoutes from './panelRoutes';
 import { close } from './actions';
@@ -22,7 +23,7 @@ class PanelContainer extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  panel: getPanel,
+  panel: getPanel(),
   pathname: getPathname,
 });
 

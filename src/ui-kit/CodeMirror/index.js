@@ -6,7 +6,7 @@ import ErrorWrapper from '../ErrorWrapper';
 import './styleCodeMirror.css';
 import RawMarkdownEditor from './RawMarkdownEditor';
 
-type $propTypes = {
+type $props = {
 	name: string;
 	label?: string;
 	errors?: Map<string, string>;
@@ -19,7 +19,7 @@ type $propTypes = {
 };
 
 export default class CodeMirror extends PureComponent {
-  props: $propTypes;
+  props: $props;
   render() {
     const { label, errors, onChange, multi, value, height, name, options = {}, maxCharacters, ...props } = this.props;
     return (<div>

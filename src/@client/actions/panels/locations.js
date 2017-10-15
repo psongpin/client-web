@@ -18,6 +18,7 @@ const locations = {
   search: null,
   referenceIndex: null,
   prerequisiteIndex: null,
+  offersCreate: null,
 };
 
 module.exports = getMirror(locations);
