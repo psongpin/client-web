@@ -45,7 +45,7 @@ const getProjectId = internshipSelectors.findRelatedId('project', getInternshipI
 const mapStateToProps = createStructuredSelector({
   internship: internshipSelectors.find(getInternshipId),
   project: projectSelectors.find(getProjectId),
-  applicantIds: internshipSelectors.getRelatedIds('applicants'),
+  applicantIds: internshipSelectors.getRelatedIds('applications'),
 });
 
 export default flowRight([

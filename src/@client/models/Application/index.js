@@ -16,8 +16,8 @@ export const displayStatusTypes = {
   [3]: 'Rejected',
 };
 
-export const displayStatus = (applicant: Object)=>{
-  return displayStatusTypes[applicant.status];
+export const displayStatus = (application: Object)=>{
+  return displayStatusTypes[application.status];
 };
 
 export default class Application extends Record(properties) {

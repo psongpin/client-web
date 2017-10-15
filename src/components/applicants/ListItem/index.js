@@ -5,7 +5,7 @@ import { Button } from 'ui-kit';
 import { connect } from 'react-redux';
 import { flowRight } from 'lodash';
 import { createStructuredSelector } from 'reselect';
-import applicantSelectors from '@client/selectors/applications';
+import applicationSelectors from '@client/selectors/applications';
 import { displayStatus } from '@client/models/Application';
 import userSelectors from '@client/selectors/users';
 import { openOffersCreate } from '@client/actions/panels';
@@ -29,9 +29,9 @@ export class ApplicantListItem extends PureComponent {
 }
 
 const mapStateToPropsFactory = ()=>{
-  const getUserId = applicantSelectors.findRelatedId('user');
+  const getUserId = applicationSelectors.findRelatedId('user');
   return createStructuredSelector({
-    applicant: applicantSelectors.find(),
+    applicant: applicationSelectors.find(),
     user: userSelectors.find(getUserId),
   });
 };

@@ -20,6 +20,11 @@ export class Actions extends ErschemaActions {
   constructor(name: string, services?: Object) {
     super(schema, name);
     this.services = services;
+    this.relationships = {
+      link: (relationship)=>{
+        return relationshipActions.link(name, relationship);
+      },
+    };
   }
   get = (id: $$id)=>dispatch=>{
     return this.services.get(id).then((entity)=>{
