@@ -7,7 +7,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { isPanelActive } from '@client/selectors/router';
+import { isPanelActive } from '@client/selectors/panel';
 
 
 export default (WrappedComponent: any)=>{

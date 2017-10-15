@@ -8,6 +8,7 @@ import { createStructuredSelector } from 'reselect';
 import PanelContainer from 'components/panels';
 
 import * as routerSelectors from '@client/selectors/router';
+import * as panelSelectors from '@client/selectors/panel';
 
 import sessionActions from '@client/actions/pages/session';
 import flashActions from '@client/actions/flash';
@@ -59,7 +60,7 @@ class MainContainer extends PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   auth: routerSelectors.getQuery('auth'),
-  panel: routerSelectors.getPanel,
+  panel: panelSelectors.getPanel(),
   pathname: routerSelectors.getPathname,
   confirmedEmail: routerSelectors.getQuery('emailConfirm'),
   flash: routerSelectors.getFlash,

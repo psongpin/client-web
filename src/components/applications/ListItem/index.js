@@ -15,7 +15,7 @@ export class ApplicationListItem extends PureComponent {
     const { props } = this;
     return (<ULItem
       legend={props.project.name}
-      rightIcon={<span className={status}>{props.application.status}</span>}
+      rightIcon={<span className={status}>{props.application.displayStatus()}</span>}
     >
       {
         props.internship.name

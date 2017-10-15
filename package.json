@@ -26,7 +26,8 @@
     "eslint-plugin-flowtype": "^2.30.3",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.10.3"
+    "eslint-plugin-react": "^6.10.3",
+    "yo": "^2.0.0"
   },
   "dependencies": {
     "babel-core": "^6.24.0",

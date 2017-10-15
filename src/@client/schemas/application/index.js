@@ -12,5 +12,10 @@ export default standardizeEntity({
       entityName: 'internships',
       type: relationshipTypes.ONE,
     },
+    {
+      name: 'offer',
+      entityName: 'offers',
+      type: relationshipTypes.ONE,
+    },
   ],
 });

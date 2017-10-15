@@ -3,6 +3,7 @@ import { createSelector } from 'reselect';
 import { parse } from 'qs';
 import { get } from 'lodash';
 import { camelizeKeys } from 'humps';
+
 export const getPathName = (state: Object) => state.routing.locationBeforeTransitions.pathname;
 
 export const splitPathName = createSelector(
@@ -36,20 +37,6 @@ export const getQueryObject = createSelector(
     state => get(state, 'routing.locationBeforeTransitions.search'),
   ],
   (query) => (query ? parse((query).slice(1)) : {}),
-);
-
-export const getPanel = createSelector(
-  [
-    getQueryObject,
-  ],
-  (query) => (query.panel || {}),
-);
-
-export const isPanelActive = createSelector(
-  [
-    getPanel,
-  ],
-  (panel) => panel.open,
 );
 
 export const getFlash = createSelector(

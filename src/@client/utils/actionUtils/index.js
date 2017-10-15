@@ -2,7 +2,7 @@
 // $FlowFixMe
 import ErschemaActions, { PageActions as ErschemaPageActions } from 'erschema-actions';
 // $FlowFixMe
-import relationshipActions from 'erschema-redux-immutable/actions/relationships';
+import * as relationshipActions from 'erschema-redux-immutable/actions/relationships';
 import schema from '@client/schemas';
 import pageSchema from '@client/schemas/pages';
 import { batchActions } from 'redux-batched-actions';

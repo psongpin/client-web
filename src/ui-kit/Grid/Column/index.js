@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Col as ColumnFB } from 'react-flexbox-grid';
 import { createStructuredSelector } from 'reselect';
-import { isPanelActive } from '@client/selectors/router';
+import { isPanelActive } from '@client/selectors/panel';
 
 type $props = {
   size?: number;
