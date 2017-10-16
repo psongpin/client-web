@@ -20,6 +20,7 @@ type $stateProps = {
   id: $$id,
   internship: Internship,
   currentUserId: $$id,
+  projectId: $$id,
 };
 
 type $dispatchProps = {
@@ -36,6 +37,7 @@ export class ShowInternship extends PureComponent {
   props: $props;
   render() {
     const { props } = this;
+    console.log(props.canEdit, props.loggedIn, props.alreadyApplied);
     return (<Card>
       <CardTitle
         title={props.internship.name}
@@ -55,7 +57,7 @@ export class ShowInternship extends PureComponent {
           ])
         }
         {
-          !!props.canEdit && props.loggedIn && !props.alreadyApplied && [
+          !props.canEdit && props.loggedIn && !props.alreadyApplied && [
             <Button onClick={props.apply}>Apply</Button>,
           ]
         }
@@ -87,6 +89,7 @@ const canEdit = createSelector([
   sessionSelectors.getCurrentUserId(),
 ],
 (userId, currentUserId)=>{
+  console.log(userId, currentUserId);
   return userId === currentUserId;
 });
 export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSelector({
