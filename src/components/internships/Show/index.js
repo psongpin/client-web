@@ -29,6 +29,7 @@ type $dispatchProps = {
   goToEdit: Function;
   findProject: Function;
   apply: Function;
+  getApplications: Function;
 };
 
 type $props = $stateProps & $dispatchProps;
@@ -37,7 +38,6 @@ export class ShowInternship extends PureComponent {
   props: $props;
   render() {
     const { props } = this;
-    console.log(props.canEdit, props.loggedIn, props.alreadyApplied);
     return (<Card>
       <CardTitle
         title={props.internship.name}
@@ -89,7 +89,6 @@ const canEdit = createSelector([
   sessionSelectors.getCurrentUserId(),
 ],
 (userId, currentUserId)=>{
-  console.log(userId, currentUserId);
   return userId === currentUserId;
 });
 export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSelector({
@@ -125,13 +124,17 @@ export const mapDispatchToProps = (dispatch: $$dispatch, props: $props): $Exact<
         internshipId: props.id,
       }, props.currentUserId));
     },
+    getApplications() {
+      dispatch(internshipActions.getApplications(props.id));
+    },
   };
 };
 
 export const onIdChange = ({
-  id, find,
+  id, find, getApplications,
 }: $props) => {
   find(id);
+  getApplications(id);
 };
 
 export const onProjectIdChange = ({

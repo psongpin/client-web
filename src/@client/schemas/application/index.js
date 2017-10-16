@@ -21,6 +21,8 @@ export default standardizeEntity({
       name: 'user',
       entityName: 'users',
       type: relationshipTypes.ONE,
+      alias: 'userId',
     },
+    
   ],
 });
