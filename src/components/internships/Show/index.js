@@ -20,6 +20,7 @@ type $stateProps = {
   id: $$id,
   internship: Internship,
   currentUserId: $$id,
+  projectId: $$id,
 };
 
 type $dispatchProps = {
@@ -28,6 +29,7 @@ type $dispatchProps = {
   goToEdit: Function;
   findProject: Function;
   apply: Function;
+  getApplications: Function;
 };
 
 type $props = $stateProps & $dispatchProps;
@@ -55,7 +57,7 @@ export class ShowInternship extends PureComponent {
           ])
         }
         {
-          !!props.canEdit && props.loggedIn && !props.alreadyApplied && [
+          !props.canEdit && props.loggedIn && !props.alreadyApplied && [
             <Button onClick={props.apply}>Apply</Button>,
           ]
         }
@@ -122,13 +124,17 @@ export const mapDispatchToProps = (dispatch: $$dispatch, props: $props): $Exact<
         internshipId: props.id,
       }, props.currentUserId));
     },
+    getApplications() {
+      dispatch(internshipActions.getApplications(props.id));
+    },
   };
 };
 
 export const onIdChange = ({
-  id, find,
+  id, find, getApplications,
 }: $props) => {
   find(id);
+  getApplications(id);
 };
 
 export const onProjectIdChange = ({

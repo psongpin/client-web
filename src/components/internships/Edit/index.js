@@ -5,7 +5,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
 
 import { khange, kheck, form } from '@client/hoc';
-import { Button, CardText, CardActions, Card, CardTitle, TextInput } from 'ui-kit';
+import { Dropdown, Button, CardText, CardActions, Card, CardTitle, TextInput } from 'ui-kit';
 import internshipActions from '@client/actions/internships';
 import applicationActions from '@client/actions/applications';
 import internshipSelectors from '@client/selectors/internships';
@@ -28,6 +28,11 @@ type $dispatchProps = {
 
 type $props = $stateProps & $dispatchProps;
 
+const statusOptions = [
+  { value: 1, label: 'Active' },
+  { value: 2, label: 'Inactive' },
+];
+
 export class EditInternship extends PureComponent {
   props: $props;
   render() {
@@ -38,6 +43,9 @@ export class EditInternship extends PureComponent {
       </CardText>
       <CardText>
         <TextInput multi rows={5} {...props.fields.get('description').toObject()} />
+      </CardText>
+      <CardText>
+        <Dropdown source={statusOptions} {...props.fields.get('status').toObject()} />
       </CardText>
       <CardActions>
         <Button onClick={props.goTo}>
@@ -96,6 +104,7 @@ const fieldsSelector = (props)=>{
   return {
     name: {},
     description: {},
+    status: {},
   };
 };
 

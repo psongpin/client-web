@@ -2,7 +2,7 @@
 import { Services } from '@client/utils/serviceUtils';
 
 class ApplicationServices extends Services {
-  create = () => Promise.resolve(10)
+  byInternship = (id: $$id) => this.post(`by_internship/${id}`, {});
 }
 
 export default new ApplicationServices('applications');
