@@ -1,14 +1,17 @@
 // @flow
 import React, { PureComponent } from 'react';
+import { List } from 'immutable';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
 
 import { khange, kheck } from '@client/hoc';
 import { Tabs, Tab } from 'ui-kit';
-import InternshipGrid from 'components/internships/Grid';
+import InternInternshipGrid from 'components/interns/InternshipGrid';
 import ProjectGrid from 'components/projects/Grid';
 import userActions from '@client/actions/users';
+import internshipActions from '@client/actions/internships';
+import projectActions from '@client/actions/projects';
 import userSelectors from '@client/selectors/users';
 
 type $stateProps = {
@@ -16,8 +19,10 @@ type $stateProps = {
 };
 
 type $dispatchProps = {
-  getInternshipsByUser: ()=>void;
+  getInternsByUser: ()=>Promise<any>;
   getProjectsByUser: ()=>void;
+  indexInternships: Function;
+  indexProjects: Function;
 };
 
 type $props = $stateProps & $dispatchProps;
@@ -27,7 +32,7 @@ export class UserInternshipsAndProjectsTabs extends PureComponent {
   render() {
     const { props } = this;
     return (<Tabs>
-      <Tab label="INTERNSHIPS"><InternshipGrid ids={props.internshipIds}/></Tab>
+      <Tab label="INTERNSHIPS"><InternInternshipGrid owner={props.owner} ids={props.internIds}/></Tab>
       <Tab label="PROJECTS"><ProjectGrid create={props.canEdit ? true : false} ids={props.projectIds}/></Tab>
     </Tabs>);
   }
@@ -35,23 +40,35 @@ export class UserInternshipsAndProjectsTabs extends PureComponent {
 
 export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSelector({
   userId: userSelectors.getUserId,
-  internshipIds: userSelectors.getRelatedIds('internships', userSelectors.getUserId),
+  internIds: userSelectors.getRelatedIds('interns', userSelectors.getUserId),
   projectIds: userSelectors.getRelatedIds('projects', userSelectors.getUserId),
 });
 
 export const mapDispatchToProps = (dispatch: $$dispatch, props: Object): $Exact<$dispatchProps> => {
   return {
-    getInternshipsByUser() {
-      dispatch(userActions.getInternships(props.userId));
+    getInternsByUser() {
+      return dispatch(userActions.getInterns(props.userId));
     },
     getProjectsByUser() {
       dispatch(userActions.getProjects(props.userId));
+    },
+    indexInternships(ids) {
+      return dispatch(internshipActions.index(ids));
+    },
+    indexProjects(ids) {
+      return dispatch(projectActions.index(ids));
     },
   };
 };
 
 export const onIdChange = (props: $props) => {
-  props.getInternshipsByUser();
+  props.getInternsByUser()
+  .then((interns)=>{
+    return props.indexInternships(new List(interns.map(i => i.internshipId)))
+  })
+  .then((internships)=>{
+    return props.indexProjects(new List(internships.map(i => i.projectId)))
+  });
   props.getProjectsByUser();
 };
 

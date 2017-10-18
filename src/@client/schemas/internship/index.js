@@ -14,12 +14,12 @@ export default standardizeEntity({
   relationships: [
     {
       name: 'interns',
-      entityName: 'users',
+      entityName: 'interns',
       type: relationshipTypes.MANY,
     },
     {
-      name: 'completedInternships',
-      entityName: 'users',
+      name: 'finishedInterns',
+      entityName: 'interns',
       type: relationshipTypes.MANY,
     },
     {

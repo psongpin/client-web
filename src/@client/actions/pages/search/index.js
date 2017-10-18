@@ -9,7 +9,7 @@ import * as routerActions from '../../router';
 const { search } = schemaConstants;
 
 class SearchActions extends PageActions {
-  goTo = ()=>dispatch=>dispatch(routerActions.locationPush('/search'));
+  goTo = ()=>dispatch=>dispatch(routerActions.locationPush('/'));
   searchUsers = (searchText)=>dispatch=>{
     return userServices.search(searchText).then((users)=>{
       return dispatch(this.entities.getRelated('users', users));

@@ -5,6 +5,7 @@ import schemaConstants from '@client/schemas/constants';
 import services from '@client/services/users';
 import internshipServices from '@client/services/internships';
 import projectServices from '@client/services/projects';
+import internServices from '@client/services/interns';
 import oauthServices from '@client/services/oauth';
 import { locationPush, queryReplace } from '../router';
 import sessionActions from '../pages/session';
@@ -73,6 +74,11 @@ class UserActions extends Actions {
     .then((projects)=>{
       return dispatch(this.entities.getRelated(id, 'projects', projects));
     })
+  getInterns = (id: $$id) => dispatch => internServices.byUser(id)
+  .then((interns)=>{
+    dispatch(this.entities.getRelated(id, 'interns', interns));
+    return interns;
+  })
 }
 
 export default new UserActions(schemaConstants.users);

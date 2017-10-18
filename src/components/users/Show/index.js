@@ -28,7 +28,7 @@ type $props = $stateProps & $dispatchProps;
 export class ShowUser extends PureComponent {
   props: $props;
   render() {
-    const { user, id } = this.props;
+    const { user, id, canEdit } = this.props;
     return (<View className={container}>
       <Row>
         <Column xs={12} size={4}>
@@ -44,7 +44,7 @@ export class ShowUser extends PureComponent {
         </Column>
         {
           <Column xs={12} size={8}>
-            <UserInternshipsAndProjectsTabs id={id} />
+            <UserInternshipsAndProjectsTabs owner={canEdit} id={id} />
           </Column>
         }
       </Row>
@@ -59,7 +59,7 @@ export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSe
     userSelectors.getUserId,
     sessionSelectors.getCurrentUserId(),
   ], (userId, currentUserId)=>{
-    return userId === currentUserId;
+    return Number(userId) === Number(currentUserId);
   }),
 });
 

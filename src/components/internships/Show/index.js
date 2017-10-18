@@ -84,13 +84,7 @@ const alreadyApplied = createSelector([
     return Number(applicationUserRelationshipData.get(`${applicationId}`)) === Number(currentUserId);
   }, false);
 });
-const canEdit = createSelector([
-  getUserId,
-  sessionSelectors.getCurrentUserId(),
-],
-(userId, currentUserId)=>{
-  return userId === currentUserId;
-});
+
 export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSelector({
   id: getInternshipId,
   currentUserId: sessionSelectors.getCurrentUserId(),
@@ -101,7 +95,6 @@ export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSe
   completedInternshipIds: internshipSelectors.getRelatedIds('completedInternships', getInternshipId),
   project: projectSelectors.find(getProjectId),
   userId: getUserId,
-  canEdit,
   alreadyApplied,
 });
 

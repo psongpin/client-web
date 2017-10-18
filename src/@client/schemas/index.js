@@ -4,6 +4,7 @@ import internships from './internship';
 import projects from './project';
 import applications from './application';
 import offers from './offer';
+import interns from './intern';
 
 export default {
   users,
@@ -11,4 +12,5 @@ export default {
   projects,
   applications,
   offers,
+  interns,
 };
