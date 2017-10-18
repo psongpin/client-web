@@ -32,7 +32,7 @@ export class UserInternshipsAndProjectsTabs extends PureComponent {
   render() {
     const { props } = this;
     return (<Tabs>
-      <Tab label="INTERNSHIPS"><InternInternshipGrid ids={props.internIds}/></Tab>
+      <Tab label="INTERNSHIPS"><InternInternshipGrid owner={props.owner} ids={props.internIds}/></Tab>
       <Tab label="PROJECTS"><ProjectGrid create={props.canEdit ? true : false} ids={props.projectIds}/></Tab>
     </Tabs>);
   }

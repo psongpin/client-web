@@ -33,10 +33,12 @@ class InternCard extends PureComponent {
           subtitle={<Clickable onClick={this.goToProject}>{props.project.name}</Clickable>}
         />
         <MinutesAndStatus intern={props.intern} />
-        <CardText>
-          <TextInput {...props.fields.get('minutes').toObject()} type="number" />
-          <Button {...props.actions.submit}>Submit Hours</Button>
-        </CardText>
+        {
+          props.owner && (<CardText>
+            <TextInput {...props.fields.get('minutes').toObject()} type="number" />
+            <Button {...props.actions.submit}>Submit Hours</Button>
+          </CardText>)
+        }
       </GridCard>
     );
   }
