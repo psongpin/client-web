@@ -17,7 +17,7 @@ import sessionSelectors from '@client/selectors/pages/sessions';
 import { openPrelogin, openPresignup } from '@client/actions/panels';
 
 import userActions from '@client/actions/users';
-import applicationActions from '@client/actions/applications';
+import pageApplicationActions from '@client/actions/pages/applications';
 import searchActions from '@client/actions/pages/search';
 import sessionActions from '@client/actions/pages/session';
 
@@ -102,7 +102,7 @@ function mapDispatchToProps(dispatch: $$dispatch) {
       dispatch(searchActions.goTo());
     },
     goToApplications() {
-      dispatch(applicationActions.goTo());
+      dispatch(pageApplicationActions.goTo());
     },
   };
 }

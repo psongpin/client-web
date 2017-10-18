@@ -10,12 +10,16 @@ export const statusTypes = {
   PENDING: 1,
   OFFERED: 2,
   REJECTED: 3,
+  OFFER_REJECTED: 4,
+  OFFER_ACCEPTED: 5,
 };
 
 export const displayStatusTypes = {
   [1]: 'Pending',
   [2]: 'Offered',
   [3]: 'Rejected',
+  [4]: 'Offer Rejected',
+  [5]: 'Offer Accepted',
 };
 
 export const displayStatus = (application: Object)=>{

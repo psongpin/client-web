@@ -19,10 +19,15 @@ const {
   referenceIndex,
   prerequisiteIndex,
   offersCreate,
+  offersAccept,
 } = require('./locations');
 
 export const openOffersCreate = (applicationId: $$id)=>{
   return openPanel(offersCreate, { applicationId });
+};
+
+export const openOffersAccept = (applicationId: $$id)=>{
+  return openPanel(offersAccept, { applicationId });
 };
 
 export const openPrelogin = openPanel(prelogin);

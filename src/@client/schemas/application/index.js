@@ -11,6 +11,7 @@ export default standardizeEntity({
       name: 'internship',
       entityName: 'internships',
       type: relationshipTypes.ONE,
+      alias: 'internshipId',
     },
     {
       name: 'offer',

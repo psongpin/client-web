@@ -22,6 +22,24 @@ class OfferActions extends Actions {
       ]));
     });
   }
+  accept = (id: $$id, applicationId: $$id) => dispatch => {
+    return services.accept(id)
+    .then(()=>{
+      return dispatch(applicationActions.entities.update({
+        id: applicationId,
+        status: Application.statusTypes.OFFER_ACCEPTED,
+      }))
+    });
+  }
+  reject = (id: $$id, applicationId: $$id) => dispatch => {
+    return services.accept(id)
+    .then(()=>{
+      return dispatch(applicationActions.entities.update({
+        id: applicationId,
+        status: Application.statusTypes.OFFER_REJECTED,
+      }))
+    });
+  }
 }
 
 export default new OfferActions(schemaConstants.offers, services);

@@ -1,4 +1,5 @@
 // @flow
+import { List } from 'immutable';
 // $FlowFixMe
 import ErschemaActions, { PageActions as ErschemaPageActions } from 'erschema-actions';
 // $FlowFixMe
@@ -26,7 +27,17 @@ export class Actions extends ErschemaActions {
       },
     };
   }
-  get = (id: $$id)=>dispatch=>{
+  index = (ids: List<$$id>) => dispatch => {
+    if (ids && ids.size) {
+      return this.services.post('index', { ids })
+      .then((entities) => {
+        dispatch(this.entities.index(entities));
+        return entities;
+      });
+    }
+    return Promise.resolve([]);
+  }
+  get = (id: $$id) => dispatch => {
     return this.services.get(id).then((entity)=>{
       return dispatch(this.entities.get(entity));
     });
