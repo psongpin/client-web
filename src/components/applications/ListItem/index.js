@@ -4,18 +4,25 @@ import ULItem from 'components/shared/AppULItem';
 import { connect } from 'react-redux';
 import { flowRight } from 'lodash';
 import { createStructuredSelector } from 'reselect';
+import * as panelActions from '@client/actions/panels';
 import applicationSelectors from '@client/selectors/applications';
 import internshipSelectors from '@client/selectors/internships';
 import projectSelectors from '@client/selectors/projects';
-
+import { displayStatus } from '@client/models/Application';
 import { status } from './style.pcss';
 
+type $props = Object;
+
 export class ApplicationListItem extends PureComponent {
+  props: $props;
+  handleOpenOffer = () => {
+    this.props.openOffer(this.props.id);
+  }
   render() {
     const { props } = this;
     return (<ULItem
       legend={props.project.name}
-      rightIcon={<span className={status}>{props.application.displayStatus()}</span>}
+      rightIcon={<span onClick={this.handleOpenOffer} className={status}>{displayStatus(props.application)}</span>}
     >
       {
         props.internship.name
@@ -34,6 +41,12 @@ const mapStateToPropsFactory = ()=>{
   });
 };
 
+const mapDispatchToProps = (dispatch: $$dispatch) => ({
+  openOffer(applicationId) {
+    dispatch(panelActions.openOffersAccept(applicationId));
+  },
+});
+
 export default flowRight([
-  connect(mapStateToPropsFactory),
+  connect(mapStateToPropsFactory, mapDispatchToProps),
 ])(ApplicationListItem);

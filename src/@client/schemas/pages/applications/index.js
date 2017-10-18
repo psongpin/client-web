@@ -1,4 +1,5 @@
 // @flow
+import { relationshipTypes } from 'erschema';
 import { standardizePage } from '@client/utils/schemaUtils';
 import Model, { properties } from '@client/models/pages/Application';
 
@@ -10,6 +11,7 @@ export default standardizePage(pageName, {
   relationships: [
     {
       entityName: 'applications',
+      type: relationshipTypes.MANY,
     },
   ],
 });

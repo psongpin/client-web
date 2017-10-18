@@ -5,6 +5,7 @@ import * as presignupPanel from 'components/pages/Signup/Pre/routes';
 import * as preloginPanel from 'components/pages/Login/Pre/routes';
 import * as loginPanel from 'components/pages/Login/routes';
 import * as createOfferPanel from 'components/offers/Create/routes';
+import * as createAcceptPanel from 'components/offers/Accept/routes';
 
 const routes = [
   signupPanel,
@@ -12,6 +13,7 @@ const routes = [
   preloginPanel,
   loginPanel,
   createOfferPanel,
+  createAcceptPanel,
   // $FlowFixMe
 ].reduce((finalResult, { location, component, conditionalLocation }) => {
   finalResult[location] = [component, conditionalLocation];

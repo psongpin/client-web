@@ -11,7 +11,7 @@ class InternshipActions extends Actions {
   getApplications = (id: $$id) => dispatch => {
     return applicationServices.byInternship(id)
     .then(applications => {
-      dispatch(this.entities.getRelated(id, 'applications', applications));
+      return dispatch(this.entities.getRelated(id, 'applications', applications));
     });
   }
 }
