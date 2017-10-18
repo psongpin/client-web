@@ -1,15 +1,16 @@
 // @flow
 import React, { PureComponent } from 'react';
+import { List } from 'immutable';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { createStructuredSelector, createSelector } from 'reselect';
 import { flowRight } from 'lodash';
 
 import { khange, kheck } from '@client/hoc';
 import { View, Column, Row, Tabs, Tab } from 'ui-kit';
-import InternshipGrid from 'components/internships/Grid';
-import ProjectGrid from 'components/projects/Grid';
+import InternsGrid from 'components/interns/Grid';
+import userActions from '@client/actions/users';
 import internshipActions from '@client/actions/internships';
-import applicantActions from '@client/actions/applications';
+import applicationActions from '@client/actions/applications';
 import internshipSelectors from '@client/selectors/internships';
 import projectSelectors from '@client/selectors/projects';
 import sessionSelectors from '@client/selectors/pages/sessions';
@@ -25,6 +26,9 @@ type $stateProps = {
 type $dispatchProps = {
   find: (id: $$id)=>void;
   goToApplicants: Function;
+  getInterns: Function;
+  getUsers: Function;
+  getFinishedInterns: Function;
 };
 
 type $props = $stateProps & $dispatchProps;
@@ -41,8 +45,8 @@ export class ShowInternship extends PureComponent {
         {
           <Column xs={12} size={8}>
             <Tabs>
-              <Tab label="CURRENT INTERNS"><InternshipGrid ids={props.currentInternIds}/></Tab>
-              <Tab label="COMPLETED INTERNSHIPS"><ProjectGrid ids={props.completedInternshipIds}/></Tab>
+              <Tab label="CURRENT INTERNS"><InternsGrid owner={props.canEdit} ids={props.currentInternIds}/></Tab>
+              <Tab label="FINISHED INTERNSHIPS"><InternsGrid owner={props.canEdit} ids={props.finishedInternIds}/></Tab>
             </Tabs>
           </Column>
         }
@@ -55,14 +59,22 @@ const getInternshipId = internshipSelectors.getIdFromLocation;
 const getProjectId = internshipSelectors.findRelatedId('project', getInternshipId);
 const getUserId = projectSelectors.findRelatedId('user', getProjectId);
 
+const canEdit = createSelector([
+  getUserId,
+  sessionSelectors.getCurrentUserId(),
+], (userId, currentUserId)=>{
+  return userId === currentUserId;
+});
+
 export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSelector({
   id: getInternshipId,
   internship: internshipSelectors.find(getInternshipId),
   currentInternIds: internshipSelectors.getRelatedIds('interns', getInternshipId),
-  completedInternshipIds: internshipSelectors.getRelatedIds('completedInternships', getInternshipId),
+  finishedInternIds: internshipSelectors.getRelatedIds('finishedInterns', getInternshipId),
   project: projectSelectors.find(getProjectId),
   userId: getUserId,
   currentUserId: sessionSelectors.getCurrentUserId(),
+  canEdit,
 });
 
 export const mapDispatchToProps = (dispatch: $$dispatch): $Exact<$dispatchProps> => {
@@ -73,13 +85,28 @@ export const mapDispatchToProps = (dispatch: $$dispatch): $Exact<$dispatchProps>
     goToApplicants(id) {
       dispatch(applicationActions.goToApplicants(id));
     },
+    getInterns(id) {
+      return dispatch(internshipActions.getInterns(id));
+    },
+    getFinishedInterns(id) {
+      return dispatch(internshipActions.getFinishedInterns(id));
+    },
+    getUsers(ids) {
+      return dispatch(userActions.getUsers(ids));
+    },
   };
 };
 
 export const onIdChange = ({
-  id, find,
+  id, find, getInterns, getUsers, getFinishedInterns,
 }: $props) => {
   find(id);
+  getInterns(id).then(interns => {
+    getUsers(new List(interns.map(i => i.userId)));
+  });
+  getFinishedInterns(id).then(interns => {
+    getUsers(new List(interns.map(i => i.userId)));
+  });
 };
 
 export default flowRight([

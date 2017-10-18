@@ -47,6 +47,7 @@ export class TextInput extends PureComponent {
     if (this.props.tel) {
       return 'tel';
     }
+    return this.props.type;
   }
   setInput = (input: any)=>{
     this.input = input;
