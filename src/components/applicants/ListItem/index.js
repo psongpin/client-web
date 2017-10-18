@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { flowRight } from 'lodash';
 import { createStructuredSelector } from 'reselect';
 import applicationSelectors from '@client/selectors/applications';
-import { displayStatus } from '@client/models/Application';
+import { displayStatus, isPending } from '@client/models/Application';
 import userSelectors from '@client/selectors/users';
 import { openOffersCreate } from '@client/actions/panels';
 import { status, offer, reject } from './style.pcss';
@@ -19,7 +19,10 @@ export class ApplicantListItem extends PureComponent {
     const { props } = this;
     return (<ULItem
       legend={displayStatus(props.applicant)}
-      rightActions={[<Button onClick={props.openOffer} className={offer}>OFFER</Button>, <Button className={reject}>REJECT</Button>]}
+      rightActions={isPending(props.applicant) ?
+        [<Button onClick={props.openOffer} className={offer}>OFFER</Button>, <Button className={reject}>REJECT</Button>]
+        : []
+      }
     >
       {
         props.user.username
