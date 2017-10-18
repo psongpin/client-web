@@ -3,9 +3,13 @@ import React, { PureComponent } from 'react';
 import { UL, Row, Column, TextInput } from 'ui-kit';
 import { connect } from 'react-redux';
 import { flowRight } from 'lodash';
-import { createStructuredSelector } from 'reselect';
+import khange, { kheck } from 'khange';
+import { createStructuredSelector, createSelector } from 'reselect';
 import internshipSelectors from '@client/selectors/internships';
-import projectSelectors from '@client/selectors/projects';
+import applicationSelectors from '@client/selectors/applications';
+import { requestInternshipAndProject } from '@client/utils/internshipUtils';
+import userActions from '@client/actions/users';
+import internshipActions from '@client/actions/internships';
 import { textInput } from './style.pcss';
 import ApplicantListItem from '../ListItem';
 
@@ -13,22 +17,21 @@ export class ApplicantsShowAll extends PureComponent {
   render() {
     const { props } = this;
     return (<div>
-      <h1>
-        { props.internship.name }
-      </h1>
-      <h2>
-        { props.project.name }
-      </h2>
-      <Row>
-        <Column>
-          <TextInput className={textInput} label="Search" />
-        </Column>
-      </Row>
+      <p><strong>
+        { props.internship.name }</strong>, { props.project.name }
+      </p>
+      {
+        // <Row>
+        //   <Column>
+        //     <TextInput className={textInput} label="Search" />
+        //   </Column>
+        // </Row>
+      }
       <Row>
         <Column>
           <UL>
             {
-              ([1] || props.applicantIds).map((id)=>{
+              (props.applicantIds).map((id)=>{
                 return <ApplicantListItem id={id} key={id} />;
               })
             }
@@ -40,15 +43,48 @@ export class ApplicantsShowAll extends PureComponent {
 }
 
 const getInternshipId = internshipSelectors.getIdFromLocation;
-const getProjectId = internshipSelectors.findRelatedId('project', getInternshipId);
-
-const mapStateToProps = createStructuredSelector({
-  internship: internshipSelectors.find(getInternshipId),
-  project: projectSelectors.find(getProjectId),
-  applicantIds: internshipSelectors.getRelatedIds('applications'),
+const getApplicantIds = internshipSelectors.getRelatedIds('applications', getInternshipId);
+const getUserIds = createSelector([
+  getApplicantIds,
+  applicationSelectors.findMonoRelationshipData('user'),
+],
+(applicationIds, mapOfUserIds)=>{
+  return applicationIds.map(id => mapOfUserIds.get(`${id}`));
 });
 
+const mapStateToProps = createStructuredSelector({
+  id: getInternshipId,
+  applicantIds: getApplicantIds,
+  userIds: getUserIds,
+});
+
+const mapDispatchToProps = (dispatch: $$dispatch) => {
+  return {
+    getUsers(userIds) {
+      dispatch(userActions.getUsers(userIds));
+    },
+    getApplications(id) {
+      if (id) {
+        dispatch(internshipActions.getApplications(id));
+      }
+    },
+  };
+};
+
+const onInternshipChange = (props) => {
+  return props.getApplications(props.id);
+};
+
+const onApplicationsChange = (props) => {
+  return props.getUsers(props.userIds);
+};
+
 export default flowRight([
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
+  requestInternshipAndProject(getInternshipId),
+  khange([
+    [kheck('id'), onInternshipChange],
+    [kheck('applicantIds'), onApplicationsChange],
+  ]),
 ])(ApplicantsShowAll);
 

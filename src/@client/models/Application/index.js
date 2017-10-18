@@ -7,7 +7,9 @@ export const properties = {
 };
 
 export const statusTypes = {
+  PENDING: 1,
   OFFERED: 2,
+  REJECTED: 3,
 };
 
 export const displayStatusTypes = {
@@ -19,6 +21,8 @@ export const displayStatusTypes = {
 export const displayStatus = (application: Object)=>{
   return displayStatusTypes[application.status];
 };
+
+export const isPending = (application: Object)=>application.status === statusTypes.PENDING;
 
 export default class Application extends Record(properties) {
   static statusTypes = statusTypes
