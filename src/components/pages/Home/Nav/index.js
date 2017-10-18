@@ -29,7 +29,6 @@ export class Nav extends PureComponent {
   render() {
     const {
       session,
-      goHome,
       onSignup,
       onLogin,
       user,
@@ -43,7 +42,7 @@ export class Nav extends PureComponent {
       Search
     </MainNavDropdownItem>);
     return (
-      <AppBar title="Menternship" leftIcon="home" onLeftIconClick={goHome}>
+      <AppBar onLeftIconClick={goToSearch} title="Menternship" leftIcon="home">
         <MainNavDropdown icon="more_vert">
           {
             !loggedIn && [
