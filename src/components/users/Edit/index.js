@@ -3,24 +3,28 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
-import { Button, CardText, Card, CardTitle, CardActions } from 'ui-kit';
+import { form } from '@client/hoc';
+import { CardText, Card, CardTitle, TextInput, CardActions, Button } from 'ui-kit';
 import userActions from '@client/actions/users';
 import userSelectors from '@client/selectors/users';
+
 import User from '@client/models/User';
 
 
 type $stateProps = {
   id: $$id,
   user: User,
+  fields: any,
 };
 
 type $dispatchProps = {
-  find: (id: $$id)=>void;
+  update: Function;
+  goBack: Function;
 };
 
 type $props = $stateProps & $dispatchProps;
 
-export class ShowUser extends PureComponent {
+export class EditUser extends PureComponent {
   props: $props;
   render() {
     const { user, ...props } = this.props;
@@ -30,13 +34,11 @@ export class ShowUser extends PureComponent {
         avatar={user.imageUrl}
       />
       <CardText>
-        {user.description}
+        <TextInput multi rows={5} {...props.fields.get('description').toObject()} />
       </CardText>
-      {
-        props.canEdit && <CardActions>
-          <Button onClick={props.goToEdit}>Edit</Button>
-        </CardActions>
-      }
+      <CardActions>
+        <Button onClick={props.goBack}>Go Back</Button>
+      </CardActions>
     </Card>);
   }
 }
@@ -44,16 +46,31 @@ export class ShowUser extends PureComponent {
 export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSelector({
   id: userSelectors.getUserId,
   user: userSelectors.find(userSelectors.getUserId),
-  canEdit: userSelectors.canEdit(userSelectors.getUserId),
 });
 
-export const mapDispatchToProps = (dispatch: $$dispatch, props: $props) => ({
-  goToEdit() {
-    dispatch(userActions.goToEdit(props.id));
+export const mapDispatchToProps = (dispatch: $$dispatch, props: $props) : $Exact<$dispatchProps> => ({
+  update({ value }) {
+    return dispatch(userActions.update(props.id, { description: value }));
   },
+  goBack() {
+    return dispatch(userActions.goTo(props.id));
+  },
+});
+
+const fieldsSelector = (props) => ({
+  description: {},
+});
+
+const actionsSelector = (props) => ({
+  update: props.update,
+});
+
+const configSelector = (props) => ({
+  initialValuesPropName: 'user',
 });
 
 export default flowRight([
   connect(mapStateToProps),
   connect(null, mapDispatchToProps),
-])(ShowUser);
+  form(fieldsSelector, actionsSelector, configSelector),
+])(EditUser);
