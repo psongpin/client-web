@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
 
-import { khange, kheck } from '@client/hoc';
 import { Button, CardText, CardActions, Card, CardTitle } from 'ui-kit';
 import projectActions from '@client/actions/projects';
 import internshipActions from '@client/actions/internships';
@@ -30,6 +29,7 @@ type $dispatchProps = {
   findProject: Function;
   apply: Function;
   getApplications: Function;
+  deleteInternship: Function;
 };
 
 type $props = $stateProps & $dispatchProps;
@@ -57,14 +57,23 @@ export class ShowInternship extends PureComponent {
           ])
         }
         {
+          props.canEdit && !props.internExists && 
+            <Button
+              confirmationMessage="Are you sure you want to delete this internship?"
+              onConfirmClick={props.deleteInternship}
+            >Delete</Button>
+        }
+        {
           !props.canEdit && props.loggedIn && !props.alreadyApplied && [
             <Button onClick={props.apply}>Apply</Button>,
           ]
         }
+      </CardActions>
+      <CardText>
         {
           props.alreadyApplied && <span>Applied</span>
         }
-      </CardActions>
+      </CardText>
     </Card>);
   }
 }
@@ -91,21 +100,15 @@ export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSe
   loggedIn: sessionSelectors.isLoggedIn(),
   projectId: getProjectId,
   internship: internshipSelectors.find(getInternshipId),
-  currentInternIds: internshipSelectors.getRelatedIds('interns', getInternshipId),
-  completedInternshipIds: internshipSelectors.getRelatedIds('completedInternships', getInternshipId),
   project: projectSelectors.find(getProjectId),
   userId: getUserId,
   alreadyApplied,
+  canEdit: internshipSelectors.canEdit(getInternshipId),
+  internExists: internshipSelectors.internExists(getInternshipId),
 });
 
 export const mapDispatchToProps = (dispatch: $$dispatch, props: $props): $Exact<$dispatchProps> => {
   return {
-    find(id) {
-      dispatch(internshipActions.get(id));
-    },
-    findProject(id) {
-      if (id) dispatch(projectActions.get(id));
-    },
     goToApplicants() {
       dispatch(applicationActions.goToApplicants(props.id));
     },
@@ -119,6 +122,11 @@ export const mapDispatchToProps = (dispatch: $$dispatch, props: $props): $Exact<
     },
     getApplications() {
       dispatch(internshipActions.getApplications(props.id));
+    },
+    deleteInternship() {
+      return dispatch(internshipActions.del(props.id)).then(()=>{
+        return dispatch(projectActions.goTo(props.projectId));
+      });
     },
   };
 };
@@ -139,8 +147,4 @@ export const onProjectIdChange = ({
 export default flowRight([
   connect(mapStateToProps),
   connect(null, mapDispatchToProps),
-  khange([
-    [kheck('id'), onIdChange],
-    [kheck('projectId'), onProjectIdChange],
-  ]),
 ])(ShowInternship);

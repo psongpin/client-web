@@ -3,10 +3,12 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
+import { List } from 'immutable';
 
 import { khange, kheck } from '@client/hoc';
 import { Button, View, CardText, Column, Row, Card, CardTitle, CardActions } from 'ui-kit';
 import projectActions from '@client/actions/projects';
+import userActions from '@client/actions/users';
 import projectSelectors from '@client/selectors/projects';
 import sessionSelectors from '@client/selectors/pages/sessions';
 import Project from '@client/models/Project';
@@ -18,11 +20,15 @@ type $stateProps = {
   id: $$id,
   project: Project,
   editing: boolean,
+  currentUserId: $$id,
+  internshipIds: List<$$id>,
+  pastInternshipIds: List<$$id>,
 };
 
 type $dispatchProps = {
   find: (id: $$id)=>void;
   goToEditProject: ()=>void;
+  deleteProject: Function;
 };
 
 type $props = $stateProps & $dispatchProps;
@@ -44,6 +50,12 @@ export class ShowProject extends PureComponent {
             <CardActions>
               {
                 props.editing && <Button onClick={props.goToEditProject}>Edit</Button>
+              }
+              {
+                props.editing && !props.internshipIds.size && !props.pastInternshipIds.size && <Button
+                  onConfirmClick={props.deleteProject}
+                  confirmationMessage="Are you sure you want to delete this project?"
+                >Delete</Button>
               }
             </CardActions>
           </Card>
@@ -68,6 +80,9 @@ export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSe
   id: projectSelectors.getIdFromLocation,
   project: projectSelectors.find(projectSelectors.getIdFromLocation),
   editing: isEditing,
+  currentUserId: sessionSelectors.getCurrentUserId(),
+  internshipIds: projectSelectors.getRelatedIds('internships', projectSelectors.getIdFromLocation),
+  pastInternshipIds: projectSelectors.getRelatedIds('pastInternships', projectSelectors.getIdFromLocation),
 });
 
 export const mapDispatchToProps = (dispatch: $$dispatch, props: $props): $Exact<$dispatchProps> => {
@@ -77,6 +92,11 @@ export const mapDispatchToProps = (dispatch: $$dispatch, props: $props): $Exact<
     },
     goToEditProject() {
       dispatch(projectActions.goToEdit(props.id));
+    },
+    deleteProject() {
+      return dispatch(projectActions.del(props.id)).then(()=>{
+        return dispatch(userActions.goTo(props.currentUserId));
+      });
     },
   };
 };

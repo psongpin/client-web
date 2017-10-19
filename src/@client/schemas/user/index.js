@@ -8,10 +8,6 @@ export default standardizeEntity({
   Model,
   relationships: [
     {
-      entityName: 'interns',
-      type: relationshipTypes.MANY,
-    },
-    {
       entityName: 'projects',
       type: relationshipTypes.MANY,
     },
