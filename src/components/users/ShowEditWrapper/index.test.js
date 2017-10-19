@@ -4,12 +4,12 @@ import User from '@client/models/User';
 import { shallow } from 'enzyme';
 
 import InternshipsAndProjectsTabs from '../InternshipsAndProjectsTabs';
-import { ShowUser } from './';
+import { ShowEditWrapperUser } from './';
 
 describe('ShowUser', ()=>{
   describe('renders', ()=>{
     const setup = ()=>{
-      return shallow(<ShowUser
+      return shallow(<ShowEditWrapperUser
         user={new User()}
       />);
     };
