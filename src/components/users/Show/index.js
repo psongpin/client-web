@@ -5,7 +5,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
 
 import { khange, kheck } from '@client/hoc';
-import { View, CardText, Column, Row, Card, CardTitle } from 'ui-kit';
+import { View, CardText, Column, Row, Card, CardTitle, Clickable } from 'ui-kit';
 import userActions from '@client/actions/users';
 import userSelectors from '@client/selectors/users';
 import sessionSelectors from '@client/selectors/pages/sessions';
@@ -17,6 +17,7 @@ import { container } from './style.pcss';
 type $stateProps = {
   id: $$id,
   user: User,
+  canEdit: boolean,
 };
 
 type $dispatchProps = {
@@ -27,6 +28,10 @@ type $props = $stateProps & $dispatchProps;
 
 export class ShowUser extends PureComponent {
   props: $props;
+  goToLinkedInProfile = () => {
+    console.log('goToUser', this.props.user.linkedInUrl)
+    window.open(this.props.user.linkedInUrl);
+  }
   render() {
     const { user, id, canEdit } = this.props;
     return (<View className={container}>
@@ -34,7 +39,7 @@ export class ShowUser extends PureComponent {
         <Column xs={12} size={4}>
           <Card>
             <CardTitle
-              title={user.username}
+              title={<Clickable onClick={this.goToLinkedInProfile}>{user.username}</Clickable>}
               avatar={user.imageUrl}
             />
             <CardText>

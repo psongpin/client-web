@@ -6,6 +6,7 @@ export const properties = {
   username: 'Username',
   points: 0,
   imageUrl: '',
+  linkedInUrl: '',
 };
 export default class User extends Record(properties) {
 
