@@ -10,12 +10,15 @@ import InternshipGrid from 'components/internships/Grid';
 import projectActions from '@client/actions/projects';
 import projectSelectors from '@client/selectors/projects';
 
+type $props = Object;
+
 export class ProjectInternshipsTab extends PureComponent {
+  props: $props;
   render() {
     const { props } = this;
     return (<Tabs>
-      <Tab label="CURRENT INTERNSHIPS"><InternshipGrid create projectId={props.id} ids={props.currentInternshipIds} /></Tab>
-      <Tab label="PAST INTERNSHIPS"><InternshipGrid ids={props.pastInternshipIds} /></Tab>
+      <Tab label="ACTIVE INTERNSHIPS"><InternshipGrid create projectId={props.id} ids={props.currentInternshipIds} /></Tab>
+      <Tab label="INACTIVE INTERNSHIPS"><InternshipGrid ids={props.pastInternshipIds} /></Tab>
     </Tabs>);
   }
 }
@@ -33,13 +36,17 @@ export const mapDispatchToProps = (dispatch: $$dispatch): $Exact<$dispatchProps>
     getInternships(id) {
       dispatch(projectActions.getInternships(id));
     },
+    getPastInternships(id) {
+      dispatch(projectActions.getPastInternships(id));
+    },
   };
 };
 
 export const onIdChange = ({
-  id, getInternships,
+  id, getInternships, getPastInternships,
 }: $props) => {
   getInternships(id);
+  getPastInternships(id);
 };
 
 export default flowRight([

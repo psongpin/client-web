@@ -39,7 +39,13 @@ export class Actions extends ErschemaActions {
   }
   get = (id: $$id) => dispatch => {
     return this.services.get(id).then((entity)=>{
-      return dispatch(this.entities.get(entity));
+      dispatch(this.entities.get(entity));
+      return entity;
+    });
+  }
+  del = (id: $$id) => dispatch => {
+    return this.services.del(id).then(()=>{
+      return dispatch(this.entities.remove(id));
     });
   }
   create = (payload?: Object = {})=>dispatch=>{

@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react';
 import { List } from 'immutable';
 import { connect } from 'react-redux';
-import { createStructuredSelector, createSelector } from 'reselect';
+import { createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
 
 import { khange, kheck } from '@client/hoc';
@@ -11,6 +11,7 @@ import InternsGrid from 'components/interns/Grid';
 import userActions from '@client/actions/users';
 import internshipActions from '@client/actions/internships';
 import applicationActions from '@client/actions/applications';
+import projectActions from '@client/actions/projects';
 import internshipSelectors from '@client/selectors/internships';
 import projectSelectors from '@client/selectors/projects';
 import sessionSelectors from '@client/selectors/pages/sessions';
@@ -24,7 +25,8 @@ type $stateProps = {
 };
 
 type $dispatchProps = {
-  find: (id: $$id)=>void;
+  find: (id: $$id)=>Promise<any>;
+  findProject: Function;
   goToApplicants: Function;
   getInterns: Function;
   getUsers: Function;
@@ -56,31 +58,25 @@ export class ShowInternship extends PureComponent {
 }
 
 const getInternshipId = internshipSelectors.getIdFromLocation;
-const getProjectId = internshipSelectors.findRelatedId('project', getInternshipId);
-const getUserId = projectSelectors.findRelatedId('user', getProjectId);
-
-const canEdit = createSelector([
-  getUserId,
-  sessionSelectors.getCurrentUserId(),
-], (userId, currentUserId)=>{
-  return userId === currentUserId;
-});
 
 export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSelector({
   id: getInternshipId,
   internship: internshipSelectors.find(getInternshipId),
   currentInternIds: internshipSelectors.getRelatedIds('interns', getInternshipId),
   finishedInternIds: internshipSelectors.getRelatedIds('finishedInterns', getInternshipId),
-  project: projectSelectors.find(getProjectId),
-  userId: getUserId,
+  project: projectSelectors.find(internshipSelectors.getProjectId(getInternshipId)),
+  userId: internshipSelectors.getUserId(getInternshipId),
   currentUserId: sessionSelectors.getCurrentUserId(),
-  canEdit,
+  canEdit: internshipSelectors.canEdit(getInternshipId),
 });
 
 export const mapDispatchToProps = (dispatch: $$dispatch): $Exact<$dispatchProps> => {
   return {
     find(id) {
-      dispatch(internshipActions.get(id));
+      return dispatch(internshipActions.get(id));
+    },
+    findProject(id) {
+      return dispatch(projectActions.get(id));
     },
     goToApplicants(id) {
       dispatch(applicationActions.goToApplicants(id));
@@ -98,15 +94,19 @@ export const mapDispatchToProps = (dispatch: $$dispatch): $Exact<$dispatchProps>
 };
 
 export const onIdChange = ({
-  id, find, getInterns, getUsers, getFinishedInterns,
+  id, find, findProject, getInterns, getUsers, getFinishedInterns,
 }: $props) => {
-  find(id);
-  getInterns(id).then(interns => {
-    getUsers(new List(interns.map(i => i.userId)));
-  });
-  getFinishedInterns(id).then(interns => {
-    getUsers(new List(interns.map(i => i.userId)));
-  });
+  if (id) {
+    find(id).then((internship)=>{
+      return findProject(internship.projectId);
+    });
+    getInterns(id).then(interns => {
+      getUsers(new List(interns.map(i => i.userId)));
+    });
+    getFinishedInterns(id).then(interns => {
+      getUsers(new List(interns.map(i => i.userId)));
+    });
+  }
 };
 
 export default flowRight([
