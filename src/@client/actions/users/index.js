@@ -35,9 +35,6 @@ class UserActions extends Actions {
   get = (userId) => dispatch => {
     return dispatch(this.getUsers([userId]));
   }
-  getGoogleAuthUrl = ()=>{
-    return oauthServices.getGoogleAuthUrl();
-  }
   getLinkedInAuthUrl = ()=>{
     return oauthServices.getLinkedInAuthUrl();
   }
@@ -63,6 +60,7 @@ class UserActions extends Actions {
     });
   }
   goTo = (id: $$id) => dispatch => dispatch(locationPush(`/users/${id}`))
+  goToEdit = (id: $$id) => dispatch => dispatch(locationPush(`/users/${id}/edit`))
   find = (id: $$id) => dispatch =>
     services.get(id)
     .then(user => dispatch(this.entities.get(user)));
@@ -81,4 +79,4 @@ class UserActions extends Actions {
   })
 }
 
-export default new UserActions(schemaConstants.users);
+export default new UserActions(schemaConstants.users, services);

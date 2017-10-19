@@ -1,17 +1,12 @@
 // @flow
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { createSelector, createStructuredSelector } from 'reselect';
+import { createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
-
-import { khange, kheck } from '@client/hoc';
-import { View, CardText, Column, Row, Card, CardTitle, Clickable } from 'ui-kit';
+import { Button, CardText, Card, CardTitle, CardActions, Clickable } from 'ui-kit';
 import userActions from '@client/actions/users';
 import userSelectors from '@client/selectors/users';
-import sessionSelectors from '@client/selectors/pages/sessions';
 import User from '@client/models/User';
-import UserInternshipsAndProjectsTabs from '../InternshipsAndProjectsTabs';
-import { container } from './style.pcss';
 
 
 type $stateProps = {
@@ -29,62 +24,40 @@ type $props = $stateProps & $dispatchProps;
 export class ShowUser extends PureComponent {
   props: $props;
   goToLinkedInProfile = () => {
-    console.log('goToUser', this.props.user.linkedInUrl)
     window.open(this.props.user.linkedInUrl);
   }
   render() {
-    const { user, id, canEdit } = this.props;
-    return (<View className={container}>
-      <Row>
-        <Column xs={12} size={4}>
-          <Card>
-            <CardTitle
-              title={<Clickable onClick={this.goToLinkedInProfile}>{user.username}</Clickable>}
-              avatar={user.imageUrl}
-            />
-            <CardText>
-              {user.description}
-            </CardText>
-          </Card>
-        </Column>
-        {
-          <Column xs={12} size={8}>
-            <UserInternshipsAndProjectsTabs owner={canEdit} id={id} />
-          </Column>
-        }
-      </Row>
-    </View>);
+    const { user, ...props } = this.props;
+    return (<Card>
+      <CardTitle
+        title={<Clickable onClick={this.goToLinkedInProfile}>{user.username}</Clickable>}
+        avatar={user.imageUrl}
+      />
+      <CardText>
+        {user.description}
+      </CardText>
+      {
+        props.canEdit && <CardActions>
+          <Button onClick={props.goToEdit}>Edit</Button>
+        </CardActions>
+      }
+    </Card>);
   }
 }
 
 export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSelector({
   id: userSelectors.getUserId,
   user: userSelectors.find(userSelectors.getUserId),
-  canEdit: createSelector([
-    userSelectors.getUserId,
-    sessionSelectors.getCurrentUserId(),
-  ], (userId, currentUserId)=>{
-    return Number(userId) === Number(currentUserId);
-  }),
+  canEdit: userSelectors.canEdit(userSelectors.getUserId),
 });
 
-export const mapDispatchToProps = (dispatch: $$dispatch): $Exact<$dispatchProps> => {
-  return {
-    find(id) {
-      dispatch(userActions.find(id));
-    },
-  };
-};
-
-export const onIdChange = ({
-  id, find,
-}: $props) => {
-  find(id);
-};
+export const mapDispatchToProps = (dispatch: $$dispatch, props: $props) => ({
+  goToEdit() {
+    dispatch(userActions.goToEdit(props.id));
+  },
+});
 
 export default flowRight([
-  connect(mapStateToProps, mapDispatchToProps),
-  khange([
-    [kheck('id'), onIdChange],
-  ]),
+  connect(mapStateToProps),
+  connect(null, mapDispatchToProps),
 ])(ShowUser);
