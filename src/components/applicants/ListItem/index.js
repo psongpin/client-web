@@ -20,7 +20,10 @@ export class ApplicantListItem extends PureComponent {
     return (<ULItem
       legend={displayStatus(props.applicant)}
       rightActions={isPending(props.applicant) ?
-        [<Button onClick={props.openOffer} className={offer}>OFFER</Button>, <Button className={reject}>REJECT</Button>]
+      [
+        <Button onClick={props.openOffer} className={offer}>OFFER</Button>,
+        // <Button className={reject}>REJECT</Button>,
+      ]
         : []
       }
     >
