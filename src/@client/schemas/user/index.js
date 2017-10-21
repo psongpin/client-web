@@ -11,5 +11,9 @@ export default standardizeEntity({
       entityName: 'projects',
       type: relationshipTypes.MANY,
     },
+    {
+      entityName: 'interns',
+      type: relationshipTypes.MANY,
+    },
   ],
 });
