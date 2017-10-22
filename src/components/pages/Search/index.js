@@ -11,7 +11,13 @@ import UsersGrid from 'components/users/Grid';
 
 import { textInput } from './style.pcss';
 
+type $props = Object;
+
 export class Search extends PureComponent {
+  props: $props;
+  componentDidMount() {
+    this.props.search({ value: '' });
+  }
   render() {
     const { props } = this;
     return (<div>

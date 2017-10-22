@@ -1,6 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react';
-import { CardTitle, Clickable } from 'ui-kit';
+import { CardTitle, Clickable, CardText } from 'ui-kit';
 import GridCard from 'components/shared/GridCard';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -15,6 +15,9 @@ class ProjectCard extends PureComponent {
         <CardTitle
           title={<Clickable onClick={goToProject}>{project.name}</Clickable>}
         />
+        <CardText>
+          {project.description}
+        </CardText>
       </GridCard>
     );
   }
