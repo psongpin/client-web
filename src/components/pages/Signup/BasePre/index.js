@@ -31,15 +31,19 @@ export default class PreBase extends PureComponent {
   }
   render() {
     return (<PanelContent title={this.props.title}>
-      <TermsOfService isOpen={this.state.termsOfService} onClose={this.closeTermsOfService} iAgree={this.iAgree}/>
-      <div className={termsOfService}>
-        <p>You must agree to the <Clickable onClick={this.openTermsOfService}>TERMS OF SERVICES</Clickable> before signing up</p>
-      </div>
+      {
+        this.props.termsOfService && <TermsOfService isOpen={this.state.termsOfService} onClose={this.closeTermsOfService} iAgree={this.iAgree}/>
+      }
+      {
+        this.props.termsOfService && (<div className={termsOfService}>
+          <p>You must agree to the <Clickable onClick={this.openTermsOfService}>TERMS OF SERVICES</Clickable> before signing up</p>
+        </div>)
+      }
       <div className={nav}>
         <Navigation type="vertical">
-          <LinkedIn disabled={!this.state.iAgree} />
+          <LinkedIn disabled={!this.state.iAgree && this.props.termsOfService} />
           {
-            process.env.NODE_ENV !== 'producton' && <Button className={button} onClick={this.props.emailAction}>Email</Button>
+            process.env.NODE_ENV !== 'production' && <Button className={button} onClick={this.props.emailAction}>Email</Button>
           }
         </Navigation>
       </div>

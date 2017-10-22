@@ -12,7 +12,7 @@ type $dispatchProps = {
 class PreSignup extends PureComponent {
   props: $dispatchProps;
   render() {
-    return (<BasePre title="Choose Signup Option" emailAction={this.props.emailAction} />);
+    return (<BasePre termsOfService title="Choose Signup Option" emailAction={this.props.emailAction} />);
   }
 }
 
