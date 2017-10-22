@@ -26,7 +26,6 @@ class linkedIn extends PureComponent {
     window.location.href = this.state.linkedInAuthUrl;
   }
   render() {
-    console.log(this.props.disabled);
     return (<Button disabled={this.props.disabled} onClick={this.goTolinkedIn} className={classnames(button, linkedInButton)}><Icon name="linkedin" /> LinkedIn</Button>);
   }
 }

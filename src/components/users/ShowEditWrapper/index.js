@@ -60,7 +60,7 @@ export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSe
 export const mapDispatchToProps = (dispatch: $$dispatch): $Exact<$dispatchProps> => {
   return {
     find(id) {
-      dispatch(userActions.find(id));
+      dispatch(userActions.get(id));
     },
   };
 };
