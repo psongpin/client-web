@@ -11,6 +11,7 @@ import offerSelectors from '@client/selectors/offers';
 import applicationSelectors from '@client/selectors/applications';
 import { closePanel } from '@client/actions/panels';
 import { getPanel } from '@client/selectors/panel';
+import StandardInternship from 'components/internships/Standard';
 
 type $props = Object;
 
@@ -20,6 +21,7 @@ export class AcceptOffer extends PureComponent {
     const { props } = this;
     return (<div>
       <h2>Accept Offer</h2>
+      <StandardInternship />
       <Markdown content={props.offer.message} />
       <Button onClick={props.accept}>ACCEPT</Button>
       <Button onClick={props.reject}>REJECT</Button>

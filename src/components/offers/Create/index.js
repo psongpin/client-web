@@ -8,6 +8,7 @@ import { form } from '@client/hoc';
 import offerActions from '@client/actions/offers';
 import { closePanel } from '@client/actions/panels';
 import { getPanel } from '@client/selectors/panel';
+import StandardInternship from 'components/internships/Standard';
 
 type $props = Object;
 
@@ -17,6 +18,7 @@ export class CreateOffer extends PureComponent {
     const { props } = this;
     return (<div>
       <h2>Send Offer</h2>
+      <StandardInternship />
       <CodeMirror {...props.fields.get('message').toObject()} />
       <Button {...props.actions.submit}>SEND</Button>
       <Button onClick={props.close}>CANCEL</Button>
