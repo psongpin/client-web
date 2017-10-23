@@ -8,6 +8,8 @@ const app = express();
 const { PORT = 3000 } = process.env;
 app.use('/dist', express.static('dist'));
 
+app.use('/public', express.static('public'));
+
 app.get('/dist/vendor*', function(req, res) {
   res.sendFile(path.join(__dirname, `dist/${stats.vendor[0]}`));
 });
