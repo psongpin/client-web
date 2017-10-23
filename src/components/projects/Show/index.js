@@ -6,7 +6,7 @@ import { flowRight } from 'lodash';
 import { List } from 'immutable';
 
 import { khange, kheck } from '@client/hoc';
-import { Button, View, CardText, Column, Row, Card, CardTitle, CardActions } from 'ui-kit';
+import { Markdown, Button, View, CardText, Column, Row, Card, CardTitle, CardActions } from 'ui-kit';
 import projectActions from '@client/actions/projects';
 import userActions from '@client/actions/users';
 import projectSelectors from '@client/selectors/projects';
@@ -45,7 +45,7 @@ export class ShowProject extends PureComponent {
               title={props.project.name}
             />
             <CardText>
-              {props.project.description}
+              <Markdown content={props.project.description} />
             </CardText>
             <CardActions>
               {

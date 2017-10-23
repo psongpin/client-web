@@ -1,11 +1,12 @@
 // @flow
 import React, { PureComponent } from 'react';
-import { CardTitle, Clickable, CardText } from 'ui-kit';
+import { Markdown, CardTitle, Clickable, CardText } from 'ui-kit';
 import GridCard from 'components/shared/GridCard';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import projectSelectors from '@client/selectors/projects';
 import projectActions from '@client/actions/projects';
+import ProjectDotX3 from '../DotX3';
 
 class ProjectCard extends PureComponent {
   render() {
@@ -16,7 +17,9 @@ class ProjectCard extends PureComponent {
           title={<Clickable onClick={goToProject}>{project.name}</Clickable>}
         />
         <CardText>
-          {project.description}
+          <ProjectDotX3>
+            <Markdown content={project.description} />
+          </ProjectDotX3>
         </CardText>
       </GridCard>
     );

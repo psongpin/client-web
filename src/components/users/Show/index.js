@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
-import { Button, CardText, Card, CardTitle, CardActions, Clickable } from 'ui-kit';
+import { Markdown, Button, CardText, Card, CardTitle, CardActions, Clickable } from 'ui-kit';
 import userActions from '@client/actions/users';
 import userSelectors from '@client/selectors/users';
 import User from '@client/models/User';
@@ -34,7 +34,7 @@ export class ShowUser extends PureComponent {
         avatar={user.imageUrl}
       />
       <CardText>
-        {user.description}
+        <Markdown content={user.description} />
       </CardText>
       {
         props.canEdit && <CardActions>

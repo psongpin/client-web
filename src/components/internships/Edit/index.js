@@ -5,7 +5,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
 
 import { khange, kheck, form } from '@client/hoc';
-import { Dropdown, Button, CardText, CardActions, Card, CardTitle, TextInput } from 'ui-kit';
+import { CodeMirror, Dropdown, Button, CardText, CardActions, Card, CardTitle, TextInput } from 'ui-kit';
 import internshipActions from '@client/actions/internships';
 import applicationActions from '@client/actions/applications';
 import internshipSelectors from '@client/selectors/internships';
@@ -42,7 +42,7 @@ export class EditInternship extends PureComponent {
         <TextInput {...props.fields.get('name').toObject()} />
       </CardText>
       <CardText>
-        <TextInput multi rows={5} {...props.fields.get('description').toObject()} />
+        <CodeMirror {...props.fields.get('description').toObject()} />
       </CardText>
       <CardText>
         <Dropdown source={statusOptions} {...props.fields.get('status').toObject()} />

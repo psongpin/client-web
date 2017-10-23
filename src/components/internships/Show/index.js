@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
 
-import { Button, CardText, CardActions, Card, CardTitle } from 'ui-kit';
+import { Markdown, Button, CardText, CardActions, Card, CardTitle } from 'ui-kit';
 import projectActions from '@client/actions/projects';
 import internshipActions from '@client/actions/internships';
 import applicationActions from '@client/actions/applications';
@@ -43,7 +43,7 @@ export class ShowInternship extends PureComponent {
         title={props.internship.name}
       />
       <CardText>
-        {props.internship.description}
+        <Markdown content={props.internship.description} />
       </CardText>
       <CardActions>
         {

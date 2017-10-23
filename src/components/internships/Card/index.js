@@ -1,6 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react';
-import { CardTitle, Clickable, CardText } from 'ui-kit';
+import { Markdown, CardTitle, Clickable, CardText } from 'ui-kit';
 import GridCard from 'components/shared/GridCard';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -10,6 +10,8 @@ import projectSelectors from '@client/selectors/projects';
 import internshipActions from '@client/actions/internships';
 import projectActions from '@client/actions/projects';
 import StandardInternship from '../Standard';
+import InternshipDotX3 from '../DotX3';
+
 
 class InternshipCard extends PureComponent {
   render() {
@@ -24,9 +26,9 @@ class InternshipCard extends PureComponent {
           <StandardInternship />
         </CardText>
         <CardText>
-          {
-            props.internship.description
-          }
+          <InternshipDotX3>
+            <Markdown content={props.internship.description} />
+          </InternshipDotX3>
         </CardText>
       </GridCard>
     );

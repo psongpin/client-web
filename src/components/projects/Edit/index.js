@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
 
 import { khange, kheck, form } from '@client/hoc';
-import { View, CardActions, Button, CardText, Column, Row, Card, TextInput } from 'ui-kit';
+import { CodeMirror, View, CardActions, Button, CardText, Column, Row, Card, TextInput } from 'ui-kit';
 import projectActions from '@client/actions/projects';
 import projectSelectors from '@client/selectors/projects';
 import Project from '@client/models/Project';
@@ -38,7 +38,7 @@ export class EditProject extends PureComponent {
               <TextInput {...props.fields.get('name').toObject()} />
             </CardText>
             <CardText>
-              <TextInput maxLength={200} rows={5} multi {...props.fields.get('description').toObject()} />
+              <CodeMirror {...props.fields.get('description').toObject()} />
             </CardText>
             <CardActions>
               <Button onClick={this.props.goTo}>Go Back</Button>

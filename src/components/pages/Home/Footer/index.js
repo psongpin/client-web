@@ -8,6 +8,10 @@ const links = [
     name: 'About',
     href: 'https://github.com/menternship/overview',
   },
+  {
+    name: 'Terms of Service',
+    href: 'https://github.com/Menternship/overview/blob/master/termsOfService.md',
+  },
 ];
 
 export default class Footer extends PureComponent {

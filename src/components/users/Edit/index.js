@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
 import { form } from '@client/hoc';
-import { CardText, Card, CardTitle, TextInput, CardActions, Button } from 'ui-kit';
+import { CodeMirror, CardText, Card, CardTitle, TextInput, CardActions, Button } from 'ui-kit';
 import userActions from '@client/actions/users';
 import userSelectors from '@client/selectors/users';
 
@@ -34,7 +34,7 @@ export class EditUser extends PureComponent {
         avatar={user.imageUrl}
       />
       <CardText>
-        <TextInput multi rows={5} {...props.fields.get('description').toObject()} />
+        <CodeMirror {...props.fields.get('description').toObject()} />
       </CardText>
       <CardActions>
         <Button onClick={props.goBack}>Go Back</Button>

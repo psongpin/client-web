@@ -1,11 +1,12 @@
 // @flow
 import React, { PureComponent } from 'react';
-import { CardTitle, CardText, Clickable } from 'ui-kit';
+import { Markdown, CardTitle, CardText, Clickable } from 'ui-kit';
 import GridCard from 'components/shared/GridCard';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import userSelectors from '@client/selectors/users';
 import userActions from '@client/actions/users';
+import UserDotX3 from '../DotX3';
 
 type $props = Object;
 
@@ -19,7 +20,9 @@ class UserCard extends PureComponent {
           title={<Clickable onClick={props.goTo}>{user.username}</Clickable>}
         />
         <CardText>
-          {user.description}
+          <UserDotX3>
+            <Markdown content={user.description} />
+          </UserDotX3>
         </CardText>
       </GridCard>
     );
