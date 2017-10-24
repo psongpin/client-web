@@ -8,7 +8,7 @@ import * as panelActions from '@client/actions/panels';
 import applicationSelectors from '@client/selectors/applications';
 import internshipSelectors from '@client/selectors/internships';
 import projectSelectors from '@client/selectors/projects';
-import { displayStatus } from '@client/models/Application';
+import { displayStatus, isOffered } from '@client/models/Application';
 import { status } from './style.pcss';
 
 type $props = Object;
@@ -16,7 +16,7 @@ type $props = Object;
 export class ApplicationListItem extends PureComponent {
   props: $props;
   handleOpenOffer = () => {
-    this.props.openOffer(this.props.id);
+    if (isOffered(this.props.application)) this.props.openOffer(this.props.id);
   }
   render() {
     const { props } = this;

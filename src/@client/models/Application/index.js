@@ -28,6 +28,8 @@ export const displayStatus = (application: Object)=>{
 
 export const isPending = (application: Object)=>application.status === statusTypes.PENDING;
 
+export const isOffered = (application: Object)=>(application.status === statusTypes.OFFERED)
+
 export default class Application extends Record(properties) {
   static statusTypes = statusTypes
   static displayStatusTypes = displayStatusTypes
