@@ -18,6 +18,7 @@ export class ApplicantListItem extends PureComponent {
   render() {
     const { props } = this;
     return (<ULItem
+      ripple={false}
       legend={displayStatus(props.applicant)}
       rightActions={isPending(props.applicant) ?
       [

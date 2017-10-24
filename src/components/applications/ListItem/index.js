@@ -1,6 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react';
 import ULItem from 'components/shared/AppULItem';
+import { Clickable } from 'ui-kit';
 import { connect } from 'react-redux';
 import { flowRight } from 'lodash';
 import { createStructuredSelector } from 'reselect';
@@ -21,8 +22,10 @@ export class ApplicationListItem extends PureComponent {
   render() {
     const { props } = this;
     return (<ULItem
+      selectable={false}
+      ripple={false}
       legend={props.project.name}
-      rightIcon={<span onClick={this.handleOpenOffer} className={status}>{displayStatus(props.application)}</span>}
+      rightIcon={<Clickable onClick={this.handleOpenOffer} className={status}>{displayStatus(props.application)}</Clickable>}
     >
       {
         props.internship.name
