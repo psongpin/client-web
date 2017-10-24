@@ -31,6 +31,7 @@ type $dispatchProps = {
   getInterns: Function;
   getUsers: Function;
   getFinishedInterns: Function;
+  getApplications: Function;
 };
 
 type $props = $stateProps & $dispatchProps;
@@ -90,13 +91,17 @@ export const mapDispatchToProps = (dispatch: $$dispatch): $Exact<$dispatchProps>
     getUsers(ids) {
       return dispatch(userActions.getUsers(ids));
     },
+    getApplications(id) {
+      return dispatch(internshipActions.getApplications(id));
+    },
   };
 };
 
 export const onIdChange = ({
-  id, find, findProject, getInterns, getUsers, getFinishedInterns,
+  id, find, findProject, getInterns, getUsers, getFinishedInterns, getApplications,
 }: $props) => {
   if (id) {
+    getApplications(id);
     find(id).then((internship)=>{
       return findProject(internship.projectId);
     });
