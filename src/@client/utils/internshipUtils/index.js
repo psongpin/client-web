@@ -16,7 +16,7 @@ export function requestInternshipAndProject(getInternshipId: $$selector<$$id>) {
     internship: internshipSelectors.find(getInternshipId),
     project: projectSelectors.find(getProjectId),
   });
-  const mapDispatchToProps = (dispatch: $$dispatch)=>{
+  const mapDispatchToProps = (dispatch: $$dispatch) => {
     return {
       getInternship(id) {
         if (id) {
@@ -30,10 +30,10 @@ export function requestInternshipAndProject(getInternshipId: $$selector<$$id>) {
       },
     };
   };
-  const onInternshipIdChange = (props) => {
+  const onInternshipIdChange = props => {
     props.getInternship(props.internshipId);
   };
-  const onProjectIdChange = (props) => {
+  const onProjectIdChange = props => {
     props.getProject(props.projectId);
   };
   return flowRight([

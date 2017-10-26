@@ -5,10 +5,6 @@ import { container } from './style.pcss';
 
 export default class GridCard extends PureComponent {
   render() {
-    return (
-      <Card className={container}>
-        {this.props.children} 
-      </Card>
-    );
+    return <Card className={container}>{this.props.children}</Card>;
   }
 }

@@ -1,3 +1,4 @@
+// @flow
 import Snackbar from 'react-toolbox/lib/snackbar';
 
 import React, { PureComponent } from 'react';
@@ -5,14 +6,13 @@ import { connect } from 'react-redux';
 
 import flashActions from '@client/actions/flash';
 
-
 type $stateProps = {
-  flash: Object;
+  flash: Object,
 };
 
 type $dispatchProps = {
-  onClose: Function;
-}
+  onClose: Function,
+};
 
 type $props = $stateProps & $dispatchProps;
 
@@ -21,11 +21,7 @@ export class Flash extends PureComponent {
   render() {
     const { flash, onClose } = this.props;
     return (
-      <Snackbar
-        onClick={onClose}
-        onTimeout={onClose}
-        {...flash.toObject()}
-      />
+      <Snackbar onClick={onClose} onTimeout={onClose} {...flash.toObject()} />
     );
   }
 }
@@ -34,7 +30,7 @@ const mapStateToProps = ({ flash }: Object) => ({
   flash,
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   onClose() {
     dispatch(flashActions.close);
   },

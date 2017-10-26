@@ -23,11 +23,10 @@ export const displayStatusTypes = {
   [5]: 'Will Not Complete',
 };
 
-export default class Intern extends Record(properties) {
+export default class Intern extends Record(properties) {}
 
-}
-
-export const finished = (intern: Intern)=>!(
-  intern.status === statusTypes.ACTIVE
-  || intern.status === statusTypes.AWAITING_APPROVAL
-);
+export const finished = (intern: Intern) =>
+  !(
+    intern.status === statusTypes.ACTIVE ||
+    intern.status === statusTypes.AWAITING_APPROVAL
+  );

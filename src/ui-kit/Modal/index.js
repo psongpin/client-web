@@ -3,14 +3,14 @@ import React, { PureComponent } from 'react';
 import Dialog from 'react-toolbox/lib/dialog';
 
 type $props = {
-  isOpen: boolean;
-  onClose?: Function;
-  children?: any;
-  size?: 'sm' | 'md' | 'lg';
-  actions?: Object[];
-  title: string;
-  noClose?: boolean;
-}
+  isOpen: boolean,
+  onClose?: Function,
+  children?: any,
+  size?: 'sm' | 'md' | 'lg',
+  actions?: Object[],
+  title: string,
+  noClose?: boolean,
+};
 
 const sizes = {
   sm: '300px',

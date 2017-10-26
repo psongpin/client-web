@@ -12,21 +12,27 @@ type $props = Object;
 class Google extends PureComponent {
   state = {
     googleAuthUrl: '',
-  }
+  };
   props: $props;
   componentWillMount() {
-    this.props.getGoogleAuthUrl()
-    .then((googleAuthUrl)=>{
+    this.props.getGoogleAuthUrl().then(googleAuthUrl => {
       this.setState({
         googleAuthUrl,
       });
     });
   }
-  goToGoogle = ()=>{
+  goToGoogle = () => {
     window.location.href = this.state.googleAuthUrl;
-  }
+  };
   render() {
-    return (<Button onClick={this.goToGoogle} className={classnames(button, googleButton)}><Icon name="google" /> Google</Button>);
+    return (
+      <Button
+        onClick={this.goToGoogle}
+        className={classnames(button, googleButton)}
+      >
+        <Icon name="google" /> Google
+      </Button>
+    );
   }
 }
 
@@ -36,6 +42,4 @@ function mapDispatchToProps() {
   };
 }
 
-export default flowRight([
-  connect(null, mapDispatchToProps),
-])(Google);
+export default flowRight([connect(null, mapDispatchToProps)])(Google);

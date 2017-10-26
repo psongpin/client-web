@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import './style.css';
 
 type $props = {
-  content: string;
+  content: string,
 };
 
 export default class Markdown extends PureComponent {

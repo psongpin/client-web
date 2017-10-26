@@ -11,19 +11,17 @@ import { closePanel } from '@client/actions/router';
 class Signup extends PureComponent {
   render() {
     const { fields, actions } = this.props;
-    return (<PanelContent title={'Signup'}>
-      <LinkedTextInput type="text" field={fields.get('username')} />
-      <LinkedTextInput type="email" field={fields.get('email')} />
-      <Button
-        {
-          ...actions.submit
-        }
-      />
-    </PanelContent>);
+    return (
+      <PanelContent title={'Signup'}>
+        <LinkedTextInput type="text" field={fields.get('username')} />
+        <LinkedTextInput type="email" field={fields.get('email')} />
+        <Button {...actions.submit} />
+      </PanelContent>
+    );
   }
 }
 
-const fieldsSelector = (props)=>({
+const fieldsSelector = props => ({
   email: {
     label: 'Email',
     verify: ['email', 'required'],
@@ -39,7 +37,7 @@ const fieldsSelector = (props)=>({
   },
 });
 
-const actionsSelector = ({ submit })=>({
+const actionsSelector = ({ submit }) => ({
   submit,
 });
 
@@ -53,8 +51,7 @@ const configSelector = () => ({
 function mapDispatchToProps(dispatch: $$dispatch) {
   return {
     submit(newUser) {
-      return dispatch(userActions.create(newUser))
-      .then(() => {
+      return dispatch(userActions.create(newUser)).then(() => {
         return dispatch(closePanel());
       });
     },

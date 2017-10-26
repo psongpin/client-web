@@ -3,21 +3,22 @@ import { push, replace } from 'react-router-redux';
 import { decamelizeKeys } from 'humps';
 import qs from 'qs';
 
-export const getRouterState = (state: Object)=>state.routing.locationBeforeTransitions;
+export const getRouterState = (state: Object) =>
+  state.routing.locationBeforeTransitions;
 
-export const getPathname = (state: Object)=>getRouterState(state).pathname;
-export const getQuery = (state: Object)=>getRouterState(state).query;
-export const getSearch = (state: Object)=>getRouterState(state).search;
+export const getPathname = (state: Object) => getRouterState(state).pathname;
+export const getQuery = (state: Object) => getRouterState(state).query;
+export const getSearch = (state: Object) => getRouterState(state).search;
 
 export function queryPush(nextQuery: Object) {
   return (dispatch: Function, getState: Function) => {
     const { query, pathname } = getRouterState(getState());
     dispatch(
-			push({
-  pathname,
-  query: { ...query, ...nextQuery },
-}),
-		);
+      push({
+        pathname,
+        query: { ...query, ...nextQuery },
+      })
+    );
   };
 }
 
@@ -28,14 +29,21 @@ export function queryReplace(nextQuery: Object) {
       replace({
         pathname,
         query: { ...query, ...decamelizeKeys(nextQuery) },
-      }));
+      })
+    );
   };
 }
 
-export const removeQuery = (queryObject: Object) => (dispatch: Function, getState: Function) => {
+export const removeQuery = (queryObject: Object) => (
+  dispatch: Function,
+  getState: Function
+) => {
   const pathname = getPathname(getState());
   const search = getSearch(getState());
-  const finalLocation = `${pathname}${search.replace(qs.stringify(queryObject), '')}`;
+  const finalLocation = `${pathname}${search.replace(
+    qs.stringify(queryObject),
+    ''
+  )}`;
   return dispatch(push(finalLocation));
 };
 
@@ -43,11 +51,11 @@ export function locationPush(nextLocation: string) {
   return (dispatch: Function, getState: Function) => {
     const { query } = getRouterState(getState());
     dispatch(
-			push({
-  query,
-  pathname: nextLocation,
-}),
-		);
+      push({
+        query,
+        pathname: nextLocation,
+      })
+    );
   };
 }
 
@@ -69,6 +77,4 @@ export function closePanel() {
   });
 }
 
-export {
-  push,
-}
+export { push };

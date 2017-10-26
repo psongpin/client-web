@@ -5,7 +5,4 @@ export const properties = {
   id: 0,
   message: '',
 };
-export default class Offer extends Record(properties) {
-
-}
-
+export default class Offer extends Record(properties) {}

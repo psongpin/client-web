@@ -5,9 +5,6 @@ import { ulItem } from './style.pcss';
 
 export default class AppULItem extends PureComponent {
   render() {
-    return (<ULItem
-      className={ulItem}
-      {...this.props}
-    />);
+    return <ULItem className={ulItem} {...this.props} />;
   }
 }

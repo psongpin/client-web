@@ -6,6 +6,10 @@ import { style } from './style.pcss';
 export default class Clickable extends PureComponent {
   render() {
     const { children, className, ...props } = this.props;
-    return <span {...props} className={classnames(style, className)}>{children}</span>;
+    return (
+      <span {...props} className={classnames(style, className)}>
+        {children}
+      </span>
+    );
   }
 }

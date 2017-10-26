@@ -12,7 +12,7 @@
     "start-server": "node -r dotenv/config server.js",
     "start": "npm run build && npm run start-server",
     "lint": "eslint src",
-    "pretty": "prettier --write 'app/**/*.js'",
+    "pretty": "prettier --write 'src/**/*.js'",
     "flow": "flow",
     "flowtyped": "flow-typed",
     "test": "jest",

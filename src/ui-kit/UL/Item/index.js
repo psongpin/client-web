@@ -5,14 +5,14 @@ import classnames from 'classnames';
 import { nonStringContent, clickable } from './style.pcss';
 
 type $props = {
-  children?: any;
-  className?: string;
-  rightActions?: any[];
-  leftActions?: any[];
-  subtitle?: string;
-  ripple?: boolean;
-  onClick?: Function;
-}
+  children?: any,
+  className?: string,
+  rightActions?: any[],
+  leftActions?: any[],
+  subtitle?: string,
+  ripple?: boolean,
+  onClick?: Function,
+};
 
 export default (props: $props) => {
   const {
@@ -24,22 +24,28 @@ export default (props: $props) => {
     ripple,
     subtitle: legend,
     ...otherProps
-} = props;
-  const stringContent = typeof children === 'string' || typeof children === 'number';
+  } = props;
+  const stringContent =
+    typeof children === 'string' || typeof children === 'number';
   const properties = {
     leftActions,
     rightActions,
     legend,
     onClick,
     ripple,
-    [stringContent ? 'caption' : 'itemContent']: stringContent ? children :
-    <div className={nonStringContent}>{children}</div>,
+    [stringContent ? 'caption' : 'itemContent']: stringContent ? (
+      children
+    ) : (
+      <div className={nonStringContent}>{children}</div>
+    ),
   };
-  return (<ListItem
-    className={classnames(className, {
-      [clickable]: ripple === undefined,
-    })}
-    {...properties}
-    {...otherProps}
-  />);
+  return (
+    <ListItem
+      className={classnames(className, {
+        [clickable]: ripple === undefined,
+      })}
+      {...properties}
+      {...otherProps}
+    />
+  );
 };

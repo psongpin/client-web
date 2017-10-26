@@ -6,7 +6,7 @@ import { relationshipTypes } from 'erschema';
 export default standardizeEntity({
   properties,
   Model,
-  modifier: (ent) => {
+  modifier: ent => {
     const { name, ...otherProps } = ent;
     if (!ent.name) return otherProps;
     return ent;

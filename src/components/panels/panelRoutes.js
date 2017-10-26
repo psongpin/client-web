@@ -20,7 +20,7 @@ const routes = [
   return finalResult;
 }, {});
 
-export default function (panelLocation: string) {
+export default function(panelLocation: string) {
   if (routes[panelLocation]) {
     const [Route] = routes[panelLocation];
     return {
@@ -31,4 +31,4 @@ export default function (panelLocation: string) {
   return {
     Route: null,
   };
-};
+}

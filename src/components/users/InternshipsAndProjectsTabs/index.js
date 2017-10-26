@@ -19,10 +19,10 @@ type $stateProps = {
 };
 
 type $dispatchProps = {
-  getInternsByUser: ()=>Promise<any>;
-  getProjectsByUser: ()=>void;
-  indexInternships: Function;
-  indexProjects: Function;
+  getInternsByUser: () => Promise<any>,
+  getProjectsByUser: () => void,
+  indexInternships: Function,
+  indexProjects: Function,
 };
 
 type $props = $stateProps & $dispatchProps;
@@ -31,20 +31,31 @@ export class UserInternshipsAndProjectsTabs extends PureComponent {
   props: $props;
   render() {
     const { props } = this;
-    return (<Tabs>
-      <Tab label="INTERNSHIPS"><InternInternshipGrid owner={props.owner} ids={props.internIds}/></Tab>
-      <Tab label="PROJECTS"><ProjectGrid create={props.owner} ids={props.projectIds}/></Tab>
-    </Tabs>);
+    return (
+      <Tabs>
+        <Tab label="INTERNSHIPS">
+          <InternInternshipGrid owner={props.owner} ids={props.internIds} />
+        </Tab>
+        <Tab label="PROJECTS">
+          <ProjectGrid create={props.owner} ids={props.projectIds} />
+        </Tab>
+      </Tabs>
+    );
   }
 }
 
-export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSelector({
+export const mapStateToProps: $$selectorExact<
+  $stateProps
+> = createStructuredSelector({
   userId: userSelectors.getUserId,
   internIds: userSelectors.getRelatedIds('interns', userSelectors.getUserId),
   projectIds: userSelectors.getRelatedIds('projects', userSelectors.getUserId),
 });
 
-export const mapDispatchToProps = (dispatch: $$dispatch, props: Object): $Exact<$dispatchProps> => {
+export const mapDispatchToProps = (
+  dispatch: $$dispatch,
+  props: Object
+): $Exact<$dispatchProps> => {
   return {
     getInternsByUser() {
       return dispatch(userActions.getInterns(props.userId));
@@ -62,13 +73,14 @@ export const mapDispatchToProps = (dispatch: $$dispatch, props: Object): $Exact<
 };
 
 export const onIdChange = (props: $props) => {
-  props.getInternsByUser()
-  .then((interns)=>{
-    return props.indexInternships(new List(interns.map(i => i.internshipId)))
-  })
-  .then((internships)=>{
-    return props.indexProjects(new List(internships.map(i => i.projectId)))
-  });
+  props
+    .getInternsByUser()
+    .then(interns => {
+      return props.indexInternships(new List(interns.map(i => i.internshipId)));
+    })
+    .then(internships => {
+      return props.indexProjects(new List(internships.map(i => i.projectId)));
+    });
   props.getProjectsByUser();
 };
 

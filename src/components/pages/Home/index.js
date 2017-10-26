@@ -33,28 +33,26 @@ class MainContainer extends PureComponent {
     this.props.getFlash(this.props.flash);
   }
   render() {
-    const {
-      panel,
-      children,
-      pathname,
-    } = this.props;
+    const { panel, children, pathname } = this.props;
     // $FlowFixMe
-    const { conditionalLocation = defaultConditionalLocation } = panelRoutes(panel.location);
+    const { conditionalLocation = defaultConditionalLocation } = panelRoutes(
+      panel.location
+    );
     const pinned = panel.open && !conditionalLocation(panel, pathname);
-    return (<Layout>
-      <Panel>
-        <Nav />
-        <div className={mainContent}>
-          {children}
-        </div>
-        <SignupUsername />
-        <Footer />
-      </Panel>
-      <Sidebar className="panel" pinned={pinned} width={12}>
-        <PanelContainer />
-      </Sidebar>
-      <Flash />
-    </Layout>);
+    return (
+      <Layout>
+        <Panel>
+          <Nav />
+          <div className={mainContent}>{children}</div>
+          <SignupUsername />
+          <Footer />
+        </Panel>
+        <Sidebar className="panel" pinned={pinned} width={12}>
+          <PanelContainer />
+        </Sidebar>
+        <Flash />
+      </Layout>
+    );
   }
 }
 
@@ -75,7 +73,13 @@ function mapDispatchToProps(dispatch: $$dispatch) {
       dispatch(sessionActions.checkIfLoggedIn());
     },
     flashSuccessEmailConfirmation(error) {
-      dispatch(flashActions.create(error ? 'Your email was not successfully confirmed' : 'Your email was confirmed'))
+      dispatch(
+        flashActions.create(
+          error
+            ? 'Your email was not successfully confirmed'
+            : 'Your email was confirmed'
+        )
+      );
     },
     getFlash(flash) {
       if (Object.keys(flash).length) {

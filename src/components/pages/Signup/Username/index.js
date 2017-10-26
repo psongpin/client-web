@@ -15,18 +15,14 @@ class SignupUsername extends PureComponent {
       <Modal noClose isOpen={this.props.createUsername} title="Create Username">
         <ModalBody>
           <TextInput type="text" {...fields.get('username').toObject()} />
-          <Button
-            {
-              ...actions.submit
-            }
-          />
+          <Button {...actions.submit} />
         </ModalBody>
       </Modal>
     );
   }
 }
 
-const fieldsSelector = (props)=>({
+const fieldsSelector = props => ({
   username: {
     label: 'Username (public)',
     verify: [
@@ -37,7 +33,7 @@ const fieldsSelector = (props)=>({
   },
 });
 
-const actionsSelector = (props)=>({
+const actionsSelector = props => ({
   submit: props.submit,
 });
 
@@ -48,8 +44,9 @@ const configSelector = () => ({
   },
 });
 
-const mapDispatchToProps = (dispatch: $$dispatch, { id, token }: Object)=>({
-  submit: ({ username }) => dispatch(userActions.createUsername(id, token, username)),
+const mapDispatchToProps = (dispatch: $$dispatch, { id, token }: Object) => ({
+  submit: ({ username }) =>
+    dispatch(userActions.createUsername(id, token, username)),
   onUsernameChange: ({ value }) => userActions.checkUsername(value),
 });
 

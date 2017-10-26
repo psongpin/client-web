@@ -6,7 +6,7 @@ import Model, { properties } from '@client/models/Internship';
 export default standardizeEntity({
   properties,
   Model,
-  modifier: (ent) => {
+  modifier: ent => {
     const { name, ...otherProps } = ent;
     if (!ent.name) return otherProps;
     return ent;

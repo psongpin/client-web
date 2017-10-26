@@ -6,7 +6,7 @@ import { Record } from 'immutable';
 class DefaultPageModel extends Record({ id: '' }) {}
 export function standardizePage(
   pageName: string,
-  { properties = {}, Model = DefaultPageModel, relationships }: Object,
+  { properties = {}, Model = DefaultPageModel, relationships }: Object
 ) {
   return erschemaStandardizeEntity({
     properties: { ...properties, id: '' },

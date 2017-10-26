@@ -30,21 +30,23 @@ When you create an active internship, and a person accepts your offer to be a vo
  * You are expected to provide a meaningful experience for the volunteer interns where they can learn the necessary skills that will improve their chances of employment in a job that uses those skills, and if you do not, the volunteer intern can quit at anytime
 `;
 
-type $props = {iAgree: Function};
+type $props = { iAgree: Function };
 
 export default class extends PureComponent {
   props: $props;
   render() {
     const { iAgree, ...props } = this.props;
-    return (<Modal
-      {...props}
-    >
-      <ModalBody>
-        <div className={container}>
-          <Markdown content={content} />
-          <Button className={iAgreeBtn} onClick={iAgree}>I Agree</Button>
-        </div>
-      </ModalBody>
-    </Modal>);
+    return (
+      <Modal {...props}>
+        <ModalBody>
+          <div className={container}>
+            <Markdown content={content} />
+            <Button className={iAgreeBtn} onClick={iAgree}>
+              I Agree
+            </Button>
+          </div>
+        </ModalBody>
+      </Modal>
+    );
   }
 }

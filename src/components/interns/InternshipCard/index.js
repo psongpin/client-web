@@ -20,25 +20,36 @@ class InternCard extends PureComponent {
   props: $props;
   goToInternship = () => {
     this.props.goToInternship(this.props.internshipId);
-  }
+  };
   goToProject = () => {
     this.props.goToProject(this.props.projectId);
-  }
+  };
   render() {
     const { props } = this;
     return (
       <GridCard>
         <CardTitle
-          title={<Clickable onClick={this.goToInternship}>{props.internship.name}</Clickable>}
-          subtitle={<Clickable onClick={this.goToProject}>{props.project.name}</Clickable>}
+          title={
+            <Clickable onClick={this.goToInternship}>
+              {props.internship.name}
+            </Clickable>
+          }
+          subtitle={
+            <Clickable onClick={this.goToProject}>
+              {props.project.name}
+            </Clickable>
+          }
         />
         <MinutesAndStatus intern={props.intern} />
-        {
-          props.owner && (<CardText>
-            <TextInput {...props.fields.get('minutes').toObject()} type="number" />
+        {props.owner && (
+          <CardText>
+            <TextInput
+              {...props.fields.get('minutes').toObject()}
+              type="number"
+            />
             <Button {...props.actions.submit}>Submit Hours</Button>
-          </CardText>)
-        }
+          </CardText>
+        )}
       </GridCard>
     );
   }
@@ -46,7 +57,10 @@ class InternCard extends PureComponent {
 
 const mapStateToPropsFactory = () => {
   const getInternshipId = internSelectors.findRelatedId('internship');
-  const getProjectId = internshipSelectors.findRelatedId('project', getInternshipId);
+  const getProjectId = internshipSelectors.findRelatedId(
+    'project',
+    getInternshipId
+  );
   return createStructuredSelector({
     intern: internSelectors.find(),
     internshipId: getInternshipId,
@@ -56,11 +70,13 @@ const mapStateToPropsFactory = () => {
   });
 };
 
-const mapDispatchToProps = (dispatch: $$dispatch, { id, intern })=>{
+const mapDispatchToProps = (dispatch: $$dispatch, { id, intern }) => {
   return {
-    goToProject: (projectId)=>dispatch(projectActions.goTo(projectId)),
-    goToInternship: (internshipId) => dispatch(internshipActions.goTo(internshipId)),
-    logMinutes: ({ minutes }) => dispatch(internActions.logMinutes(id, intern.minutes, minutes * 60)),
+    goToProject: projectId => dispatch(projectActions.goTo(projectId)),
+    goToInternship: internshipId =>
+      dispatch(internshipActions.goTo(internshipId)),
+    logMinutes: ({ minutes }) =>
+      dispatch(internActions.logMinutes(id, intern.minutes, minutes * 60)),
   };
 };
 
@@ -71,11 +87,11 @@ const fieldSelector = () => ({
   },
 });
 
-const actionSelector = (props) => ({
+const actionSelector = props => ({
   submit: props.logMinutes,
 });
 
-const configSelector = ()=>({
+const configSelector = () => ({
   initialPropName: 'intern',
 });
 

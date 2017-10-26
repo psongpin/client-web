@@ -19,18 +19,23 @@ export class AcceptOffer extends PureComponent {
   props: $props;
   render() {
     const { props } = this;
-    return (<div>
-      <h2>Accept Offer</h2>
-      <StandardInternship />
-      <Markdown content={props.offer.message} />
-      <Button onClick={props.accept}>ACCEPT</Button>
-      <Button onClick={props.reject}>REJECT</Button>
-    </div>);
+    return (
+      <div>
+        <h2>Accept Offer</h2>
+        <StandardInternship />
+        <Markdown content={props.offer.message} />
+        <Button onClick={props.accept}>ACCEPT</Button>
+        <Button onClick={props.reject}>REJECT</Button>
+      </div>
+    );
   }
 }
 
 const getApplicationId = getPanel('applicationId');
-const getOfferId = applicationSelectors.findRelatedId('offer', getApplicationId);
+const getOfferId = applicationSelectors.findRelatedId(
+  'offer',
+  getApplicationId
+);
 
 const mapStateToProps = createStructuredSelector({
   id: getApplicationId,
@@ -38,21 +43,23 @@ const mapStateToProps = createStructuredSelector({
   offer: offerSelectors.find(getOfferId),
 });
 
-const mapDispatchToProps = (dispatch: $$dispatch, props: $$props)=>({
+const mapDispatchToProps = (dispatch: $$dispatch, props: $$props) => ({
   accept() {
-    return dispatch(offerActions.accept(props.offerId, props.id))
-    .then(()=>dispatch(closePanel()));
+    return dispatch(offerActions.accept(props.offerId, props.id)).then(() =>
+      dispatch(closePanel())
+    );
   },
   reject() {
-    return dispatch(offerActions.reject(props.offerId, props.id))
-    .then(()=>dispatch(closePanel()));
+    return dispatch(offerActions.reject(props.offerId, props.id)).then(() =>
+      dispatch(closePanel())
+    );
   },
   getOffer(applicationId) {
     return dispatch(applicationActions.getOffer(applicationId));
   },
 });
 
-const onChange = (props)=>{
+const onChange = props => {
   return props.getOffer(props.id);
 };
 

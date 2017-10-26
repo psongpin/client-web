@@ -7,7 +7,7 @@ export function PageModel(input?: Object = {}) {
 
 export function changeInput<$input: Object>(
   input: $input,
-  inputMapping: {[key: $Keys<$input>]: Function},
+  inputMapping: { [key: $Keys<$input>]: Function }
 ) {
   return Object.keys(inputMapping).reduce((finalResult, key) => {
     // $FlowFixMe

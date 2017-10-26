@@ -11,17 +11,16 @@ export class CreateInternship extends PureComponent {
   }
 }
 
-export const mapDispatchToProps = (dispatch: $$dispatch, props: Object)=>{
+export const mapDispatchToProps = (dispatch: $$dispatch, props: Object) => {
   return {
-    create: ()=>{
-      return dispatch(internshipActions.create({ projectId: props.projectId }))
-      .then((id)=>{
+    create: () => {
+      return dispatch(
+        internshipActions.create({ projectId: props.projectId })
+      ).then(id => {
         return dispatch(internshipActions.goTo(id));
       });
     },
   };
 };
 
-export default flowRight([
-  connect(null, mapDispatchToProps),
-])(CreateInternship);
+export default flowRight([connect(null, mapDispatchToProps)])(CreateInternship);

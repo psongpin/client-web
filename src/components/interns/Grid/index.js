@@ -7,13 +7,13 @@ type $props = Object;
 class InternsGrid extends PureComponent {
   props: $props;
   render() {
-    return (<div>
-      {
-        this.props.ids.map((id) => {
+    return (
+      <div>
+        {this.props.ids.map(id => {
           return <InternCard owner={this.props.owner} id={id} index={id} />;
-        })
-      }
-    </div>);
+        })}
+      </div>
+    );
   }
 }
 

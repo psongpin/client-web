@@ -5,7 +5,7 @@ import { Route } from 'react-router';
 import ShowAll from './ShowAll';
 
 export default [
-  <Route path="applicants/" >
+  <Route path="applicants/">
     <Route path=":internshipId(/)" component={ShowAll} />
   </Route>,
 ];

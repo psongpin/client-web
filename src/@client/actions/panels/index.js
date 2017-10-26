@@ -22,11 +22,11 @@ const {
   offersAccept,
 } = require('./locations');
 
-export const openOffersCreate = (applicationId: $$id)=>{
+export const openOffersCreate = (applicationId: $$id) => {
   return openPanel(offersCreate, { applicationId });
 };
 
-export const openOffersAccept = (applicationId: $$id)=>{
+export const openOffersAccept = (applicationId: $$id) => {
   return openPanel(offersAccept, { applicationId });
 };
 
@@ -63,11 +63,9 @@ export const openCaveatsCreate = (sectionId: $$id) =>
 export const openCaveatsShow = (caveatId: $$id) =>
   openPanel(caveatsShow, { caveatId });
 
+export const openSearch = (searchText: string) =>
+  openPanel(search, {
+    searchText,
+  });
 
-export const openSearch = (searchText: string) => openPanel(search, {
-  searchText,
-});
-
-export {
-  closePanel,
-};
+export { closePanel };

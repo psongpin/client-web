@@ -5,10 +5,10 @@ import SimpleMDE from 'react-simplemde-editor';
 import 'simplemde/src/css/simplemde.css';
 
 type $props = {
-	name: string;
-	onChange: Function;
-	value: any;
-	options?: Object;
+  name: string,
+  onChange: Function,
+  value: any,
+  options?: Object,
 };
 
 export default class RawMarkdownEditor extends PureComponent {
@@ -36,5 +36,5 @@ export default class RawMarkdownEditor extends PureComponent {
   onChange = (value: string) => {
     const { onChange, name } = this.props;
     onChange({ value, name });
-  }
+  };
 }

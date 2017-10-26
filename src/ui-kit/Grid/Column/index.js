@@ -6,11 +6,11 @@ import { createStructuredSelector } from 'reselect';
 import { isPanelActive } from '@client/selectors/panel';
 
 type $props = {
-  size?: number;
-  children?: any;
-  className?: string;
-  activePanel: boolean;
-}
+  size?: number,
+  children?: any,
+  className?: string,
+  activePanel: boolean,
+};
 const sizeNames = {
   xs: 1,
   sm: 1,
@@ -21,26 +21,23 @@ const sizeNames = {
 
 export class Column extends PureComponent {
   props: $props;
-  getFinalSize = (size?: number)=>{
+  getFinalSize = (size?: number) => {
     if (size && size !== 12) {
       return this.props.activePanel ? size * 2 : size;
     }
     return size;
-  }
+  };
   render() {
     const { size = 12, children, ...props } = this.props;
     const sizes = Object.keys(sizeNames).reduce((finalResult, sizeName) => {
       finalResult[sizeName] = this.getFinalSize(props[sizeName] || size);
       return finalResult;
     }, {});
-    return (<ColumnFB
-      {...sizes}
-      {...props}
-    >
-      {
-        children
-      }
-    </ColumnFB>);
+    return (
+      <ColumnFB {...sizes} {...props}>
+        {children}
+      </ColumnFB>
+    );
   }
 }
 

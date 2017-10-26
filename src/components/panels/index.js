@@ -14,11 +14,7 @@ class PanelContainer extends Component {
   render() {
     const { onClose, panel } = this.props;
     const { Route } = panelRoutes(panel.location);
-    return (
-      <Panel onClose={onClose}>
-        {Route}
-      </Panel>
-    );
+    return <Panel onClose={onClose}>{Route}</Panel>;
   }
 }
 

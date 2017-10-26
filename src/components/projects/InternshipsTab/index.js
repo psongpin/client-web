@@ -16,19 +16,33 @@ export class ProjectInternshipsTab extends PureComponent {
   props: $props;
   render() {
     const { props } = this;
-    return (<Tabs>
-      <Tab label="ACTIVE INTERNSHIPS"><InternshipGrid create projectId={props.id} ids={props.currentInternshipIds} /></Tab>
-      <Tab label="INACTIVE INTERNSHIPS"><InternshipGrid ids={props.pastInternshipIds} /></Tab>
-    </Tabs>);
+    return (
+      <Tabs>
+        <Tab label="ACTIVE INTERNSHIPS">
+          <InternshipGrid
+            create
+            projectId={props.id}
+            ids={props.currentInternshipIds}
+          />
+        </Tab>
+        <Tab label="INACTIVE INTERNSHIPS">
+          <InternshipGrid ids={props.pastInternshipIds} />
+        </Tab>
+      </Tabs>
+    );
   }
 }
 
-export const mapStateToProps : $$selectorExact<$stateProps> = createStructuredSelector({
+export const mapStateToProps: $$selectorExact<
+  $stateProps
+> = createStructuredSelector({
   currentInternshipIds: projectSelectors.getRelatedIds('internships'),
   pastInternshipIds: projectSelectors.getRelatedIds('pastInternships'),
 });
 
-export const mapDispatchToProps = (dispatch: $$dispatch): $Exact<$dispatchProps> => {
+export const mapDispatchToProps = (
+  dispatch: $$dispatch
+): $Exact<$dispatchProps> => {
   return {
     find(id) {
       dispatch(projectActions.get(id));
@@ -43,7 +57,9 @@ export const mapDispatchToProps = (dispatch: $$dispatch): $Exact<$dispatchProps>
 };
 
 export const onIdChange = ({
-  id, getInternships, getPastInternships,
+  id,
+  getInternships,
+  getPastInternships,
 }: $props) => {
   getInternships(id);
   getPastInternships(id);
