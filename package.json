@@ -12,6 +12,7 @@
     "start-server": "node -r dotenv/config server.js",
     "start": "npm run build && npm run start-server",
     "lint": "eslint src",
+    "pretty": "prettier --write 'app/**/*.js'",
     "flow": "flow",
     "flowtyped": "flow-typed",
     "test": "jest",
@@ -22,11 +23,14 @@
   "devDependencies": {
     "eslint": "^3.18.0",
     "eslint-config-airbnb": "^14.1.0",
+    "eslint-config-prettier": "^2.6.0",
     "eslint-plugin-babel": "^4.1.1",
     "eslint-plugin-flowtype": "^2.30.3",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-prettier": "^2.3.1",
     "eslint-plugin-react": "^6.10.3",
+    "prettier": "^1.7.4",
     "yo": "^2.0.0"
   },
   "dependencies": {
