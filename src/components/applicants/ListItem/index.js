@@ -9,7 +9,7 @@ import applicationSelectors from '@client/selectors/applications';
 import { displayStatus, isPending } from '@client/models/Application';
 import userSelectors from '@client/selectors/users';
 import { openOffersCreate } from '@client/actions/panels';
-import { status, offer, reject } from './style.pcss';
+import { offer } from './style.pcss';
 
 type $props = Object;
 
@@ -17,25 +17,27 @@ export class ApplicantListItem extends PureComponent {
   props: $props;
   render() {
     const { props } = this;
-    return (<ULItem
-      ripple={false}
-      legend={displayStatus(props.applicant)}
-      rightActions={isPending(props.applicant) ?
-      [
-        <Button onClick={props.openOffer} className={offer}>OFFER</Button>,
-        // <Button className={reject}>REJECT</Button>,
-      ]
-        : []
-      }
-    >
-      {
-        props.user.username
-      }
-    </ULItem>);
+    return (
+      <ULItem
+        ripple={false}
+        legend={displayStatus(props.applicant)}
+        rightActions={
+          isPending(props.applicant)
+            ? [
+                <Button onClick={props.openOffer} className={offer}>
+                  OFFER
+                </Button>,
+              ]
+            : []
+        }
+      >
+        {props.user.username}
+      </ULItem>
+    );
   }
 }
 
-const mapStateToPropsFactory = ()=>{
+const mapStateToPropsFactory = () => {
   const getUserId = applicationSelectors.findRelatedId('user');
   return createStructuredSelector({
     applicant: applicationSelectors.find(),
@@ -43,7 +45,7 @@ const mapStateToPropsFactory = ()=>{
   });
 };
 
-const mapDispatchToProps = (dispatch: $$dispatch, props: $props)=>{
+const mapDispatchToProps = (dispatch: $$dispatch, props: $props) => {
   return {
     openOffer() {
       dispatch(openOffersCreate(props.id));
@@ -51,6 +53,6 @@ const mapDispatchToProps = (dispatch: $$dispatch, props: $props)=>{
   };
 };
 
-export default flowRight([
-  connect(mapStateToPropsFactory, mapDispatchToProps),
-])(ApplicantListItem);
+export default flowRight([connect(mapStateToPropsFactory, mapDispatchToProps)])(
+  ApplicantListItem
+);

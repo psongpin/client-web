@@ -7,39 +7,50 @@ import Application from '@client/models/Application';
 import applicationActions from '../applications';
 
 class OfferActions extends Actions {
+  // $FlowFixMe
   create = (offer: Object) => dispatch => {
-    return services.create(offer).then((id)=>{
-      return dispatch(batchActions([
-        this.createRelated({
-          ...offer,
-          id,
-        }, {
-          name: 'offer',
-          entityName: schemaConstants.applications,
-          id: offer.applicationId,
-        }),
-        applicationActions.entities.update({ id: offer.applicationId, status: Application.statusTypes.OFFERED }),
-      ]));
+    return services.create(offer).then(id => {
+      return dispatch(
+        batchActions([
+          this.createRelated(
+            {
+              ...offer,
+              id,
+            },
+            {
+              name: 'offer',
+              entityName: schemaConstants.applications,
+              id: offer.applicationId,
+            }
+          ),
+          applicationActions.entities.update({
+            id: offer.applicationId,
+            status: Application.statusTypes.OFFERED,
+          }),
+        ])
+      );
     });
-  }
+  };
   accept = (id: $$id, applicationId: $$id) => dispatch => {
-    return services.accept(id)
-    .then(()=>{
-      return dispatch(applicationActions.entities.update({
-        id: applicationId,
-        status: Application.statusTypes.OFFER_ACCEPTED,
-      }))
+    return services.accept(id).then(() => {
+      return dispatch(
+        applicationActions.entities.update({
+          id: applicationId,
+          status: Application.statusTypes.OFFER_ACCEPTED,
+        })
+      );
     });
-  }
+  };
   reject = (id: $$id, applicationId: $$id) => dispatch => {
-    return services.accept(id)
-    .then(()=>{
-      return dispatch(applicationActions.entities.update({
-        id: applicationId,
-        status: Application.statusTypes.OFFER_REJECTED,
-      }))
+    return services.accept(id).then(() => {
+      return dispatch(
+        applicationActions.entities.update({
+          id: applicationId,
+          status: Application.statusTypes.OFFER_REJECTED,
+        })
+      );
     });
-  }
+  };
 }
 
 export default new OfferActions(schemaConstants.offers, services);

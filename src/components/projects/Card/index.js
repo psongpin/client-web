@@ -31,7 +31,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = (dispatch: $$dispatch, props: Object) => ({
-  goToProject: ()=>dispatch(projectActions.goTo(props.id)),
+  goToProject: () => dispatch(projectActions.goTo(props.id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectCard);

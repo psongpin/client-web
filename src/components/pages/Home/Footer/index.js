@@ -10,7 +10,8 @@ const links = [
   },
   {
     name: 'Terms of Service',
-    href: 'https://github.com/Menternship/overview/blob/master/termsOfService.md',
+    href:
+      'https://github.com/Menternship/overview/blob/master/termsOfService.md',
   },
 ];
 
@@ -20,9 +21,11 @@ export default class Footer extends PureComponent {
       <Row className={style} center="xs">
         <Column>
           <ul className={ul}>
-            {
-              links.map(link => <li key={link.name} className={li}><a href={link.href}>{link.name}</a></li>)
-            }
+            {links.map(link => (
+              <li key={link.name} className={li}>
+                <a href={link.href}>{link.name}</a>
+              </li>
+            ))}
           </ul>
         </Column>
       </Row>

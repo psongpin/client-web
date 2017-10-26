@@ -11,32 +11,34 @@ import userActions from '@client/actions/users';
 
 type $ownProps = {
   id: $$id,
-}
+};
 
 type $stateProps = {
   user: User,
-}
+};
 type $dispatchProps = {
-  goToUser: Function;
-}
+  goToUser: Function,
+};
 type $props = $stateProps & $dispatchProps & $ownProps;
 
 export class UsersChip extends PureComponent {
-  props: $props
+  props: $props;
   render() {
     const { user, goToUser } = this.props;
-    return (<Chip>
-      <Clickable onClick={goToUser}>{user.username}</Clickable>
-    </Chip>);
+    return (
+      <Chip>
+        <Clickable onClick={goToUser}>{user.username}</Clickable>
+      </Chip>
+    );
   }
 }
-const mapDispatchToProps = (dispatch: $$dispatch, { id }: $ownProps)=>({
-  goToUser: ()=>dispatch(userActions.goTo(id)),
+const mapDispatchToProps = (dispatch: $$dispatch, { id }: $ownProps) => ({
+  goToUser: () => dispatch(userActions.goTo(id)),
 });
 const mapStateToProps = createStructuredSelector({
   user: userSelectors.find(),
 });
 
-export default flowRight([
-  connect(mapStateToProps, mapDispatchToProps),
-])(UsersChip);
+export default flowRight([connect(mapStateToProps, mapDispatchToProps)])(
+  UsersChip
+);

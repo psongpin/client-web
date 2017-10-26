@@ -4,6 +4,4 @@ import { IndexRoute } from 'react-router';
 
 import Search from './Search';
 
-export default [
-  <IndexRoute component={Search} />,
-];
+export default [<IndexRoute component={Search} />];

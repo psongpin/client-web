@@ -10,9 +10,10 @@ export default class CreateGridCard extends PureComponent {
       <GridCard>
         <CardText>
           <Clickable onClick={this.props.onClick} className={plus}>
-          +
+            +
           </Clickable>
         </CardText>
-      </GridCard>);
+      </GridCard>
+    );
   }
 }

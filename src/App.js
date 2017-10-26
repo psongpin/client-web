@@ -11,19 +11,21 @@ import store, { browserHistory } from './configureStore';
 
 import allRoutes from './routes';
 
-const routes = (<Route path="/" component={Container}>
-  {allRoutes}
-</Route>);
+const routes = (
+  <Route path="/" component={Container}>
+    {allRoutes}
+  </Route>
+);
 
 const history = syncHistoryWithStore(browserHistory, store);
 
 export class Application extends Component {
   render() {
-    return (<Provider store={store}>
-      <Router history={history}>
-        {routes}
-      </Router>
-    </Provider>);
+    return (
+      <Provider store={store}>
+        <Router history={history}>{routes}</Router>
+      </Provider>
+    );
   }
 }
 
@@ -31,9 +33,6 @@ const DnDApp = DragDropContext(HTML5Backend)(Application);
 
 export class App extends Component {
   render() {
-    return (
-      <DnDApp />
-    );
+    return <DnDApp />;
   }
 }
-

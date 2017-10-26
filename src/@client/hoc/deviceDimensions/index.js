@@ -9,10 +9,9 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { isPanelActive } from '@client/selectors/panel';
 
-
-export default (WrappedComponent: any)=>{
+export default (WrappedComponent: any) => {
   class DeviceDimensions extends PureComponent {
-    getDevice = ()=>{
+    getDevice = () => {
       const width = window.innerWidth;
       if (width <= 768) {
         return 'phone';
@@ -21,7 +20,7 @@ export default (WrappedComponent: any)=>{
         return 'tablet';
       }
       return 'desktop';
-    }
+    };
     render() {
       return <WrappedComponent device={this.getDevice()} {...this.props} />;
     }

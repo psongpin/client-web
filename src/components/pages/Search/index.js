@@ -20,14 +20,27 @@ export class Search extends PureComponent {
   }
   render() {
     const { props } = this;
-    return (<div>
-      <TextInput className={textInput} debounce onChange={props.search} label="Search" />
-      <Tabs>
-        <Tab label="INTERNSHIPS"><InternshipsGrid ids={props.internshipIds} /></Tab>
-        <Tab label="PROJECTS"><ProjectsGrid ids={props.projectIds} /></Tab>
-        <Tab label="PEOPLE"><UsersGrid ids={props.userIds} /></Tab>
-      </Tabs>
-    </div>);
+    return (
+      <div>
+        <TextInput
+          className={textInput}
+          debounce
+          onChange={props.search}
+          label="Search"
+        />
+        <Tabs>
+          <Tab label="INTERNSHIPS">
+            <InternshipsGrid ids={props.internshipIds} />
+          </Tab>
+          <Tab label="PROJECTS">
+            <ProjectsGrid ids={props.projectIds} />
+          </Tab>
+          <Tab label="PEOPLE">
+            <UsersGrid ids={props.userIds} />
+          </Tab>
+        </Tabs>
+      </div>
+    );
   }
 }
 
@@ -37,9 +50,9 @@ export const mapStateToProps = createStructuredSelector({
   projectIds: searchSelectors.getRelatedIds('projects'),
 });
 
-const mapDispatchToProps = (dispatch: $$dispatch)=>{
+const mapDispatchToProps = (dispatch: $$dispatch) => {
   return {
-    search: ({ value: searchText })=>{
+    search: ({ value: searchText }) => {
       dispatch(searchActions.searchUsers(searchText));
       dispatch(searchActions.searchInternships(searchText));
       dispatch(searchActions.searchProjects(searchText));

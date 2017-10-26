@@ -9,7 +9,4 @@ export const properties = {
   imageUrl: '',
   linkedInUrl: '',
 };
-export default class User extends Record(properties) {
-
-}
-
+export default class User extends Record(properties) {}

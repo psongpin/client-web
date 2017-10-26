@@ -23,13 +23,13 @@ const constraints = {
     },
   }),
   pattern: (pattern, message, flags) => {
-    return ({
+    return {
       format: {
         pattern,
         flags,
         message,
       },
-    });
+    };
   },
 };
 
@@ -40,23 +40,23 @@ function generateConstraintForField(rawConstraintName, fieldName) {
   };
 }
 
-export function validate(constraintName: string, field: Field, errors: List<string>) {
+export function validate(
+  constraintName: string,
+  field: Field,
+  errors: List<string>
+) {
   if (errors.size) {
     return errors;
   }
   const name = field.get('name');
   const value = field.get('value');
-  const nextErrors =
-		validatejs(
-			{ [name]: value },
-			generateConstraintForField(
-				constraintName,
-				name,
-			),
-  {
-    format: 'flat',
-  },
-		);
+  const nextErrors = validatejs(
+    { [name]: value },
+    generateConstraintForField(constraintName, name),
+    {
+      format: 'flat',
+    }
+  );
   return errors.concat(nextErrors || []);
 }
 

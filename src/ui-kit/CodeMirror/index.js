@@ -7,30 +7,39 @@ import './styleCodeMirror.css';
 import RawMarkdownEditor from './RawMarkdownEditor';
 
 type $props = {
-	name: string;
-	label?: string;
-	errors?: Map<string, string>;
-	onChange: ()=>void;
-	multi?: boolean;
-	value: any;
-	options?: Object;
-	height?: number;
-  maxCharacters?: number;
+  name: string,
+  errors?: Map<string, string>,
+  onChange: () => void,
+  value: any,
+  options?: Object,
+  maxCharacters?: number,
 };
 
 export default class CodeMirror extends PureComponent {
   props: $props;
   render() {
-    const { label, errors, onChange, multi, value, height, name, options = {}, maxCharacters, ...props } = this.props;
-    return (<div>
-      <RawMarkdownEditor
-        onChange={onChange}
-        name={name}
-        value={value}
-        options={options}
-      />
-      {errors && errors.size > 0 && <ErrorWrapper>{errors.first()}</ErrorWrapper>}
-      {maxCharacters && <div>{`Remaining Characters: ${maxCharacters - value.length}`}</div> }
-    </div>);
+    const {
+      errors,
+      onChange,
+      value,
+      name,
+      options = {},
+      maxCharacters,
+    } = this.props;
+    return (
+      <div>
+        <RawMarkdownEditor
+          onChange={onChange}
+          name={name}
+          value={value}
+          options={options}
+        />
+        {errors &&
+          errors.size > 0 && <ErrorWrapper>{errors.first()}</ErrorWrapper>}
+        {maxCharacters && (
+          <div>{`Remaining Characters: ${maxCharacters - value.length}`}</div>
+        )}
+      </div>
+    );
   }
 }

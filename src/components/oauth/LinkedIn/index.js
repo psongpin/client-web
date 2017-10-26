@@ -12,21 +12,28 @@ type $props = Object;
 class linkedIn extends PureComponent {
   state = {
     linkedInAuthUrl: '',
-  }
+  };
   props: $props;
   componentWillMount() {
-    this.props.getlinkedInAuthUrl()
-    .then((linkedInAuthUrl)=>{
+    this.props.getlinkedInAuthUrl().then(linkedInAuthUrl => {
       this.setState({
         linkedInAuthUrl,
       });
     });
   }
-  goTolinkedIn = ()=>{
+  goTolinkedIn = () => {
     window.location.href = this.state.linkedInAuthUrl;
-  }
+  };
   render() {
-    return (<Button disabled={this.props.disabled} onClick={this.goTolinkedIn} className={classnames(button, linkedInButton)}><Icon name="linkedin" /> LinkedIn</Button>);
+    return (
+      <Button
+        disabled={this.props.disabled}
+        onClick={this.goTolinkedIn}
+        className={classnames(button, linkedInButton)}
+      >
+        <Icon name="linkedin" /> LinkedIn
+      </Button>
+    );
   }
 }
 
@@ -36,6 +43,4 @@ function mapDispatchToProps() {
   };
 }
 
-export default flowRight([
-  connect(null, mapDispatchToProps),
-])(linkedIn);
+export default flowRight([connect(null, mapDispatchToProps)])(linkedIn);

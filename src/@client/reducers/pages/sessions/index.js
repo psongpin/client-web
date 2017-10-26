@@ -5,7 +5,7 @@ const { sessions } = require('@client/schemas/pages/constants');
 
 export const LOGOUT = (state: any) => {
   remove('token');
-  return state.updateIn([sessions], (ent) => {
+  return state.updateIn([sessions], ent => {
     if (!ent) {
       return ent;
     }

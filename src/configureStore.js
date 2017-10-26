@@ -10,14 +10,14 @@ import reducers from '@client/reducers';
 export { browserHistory };
 
 const composeEnhancers =
-    process.env.NODE_ENV !== 'production' &&
-    typeof window === 'object' &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
-      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-      }) : compose;
+  process.env.NODE_ENV !== 'production' &&
+  typeof window === 'object' &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
 
 const enhancer = composeEnhancers(
-	applyMiddleware(reduxThunk, routerMiddleware(browserHistory)),
+  applyMiddleware(reduxThunk, routerMiddleware(browserHistory))
 );
 
 const allReducers = combineReducers({
@@ -26,6 +26,6 @@ const allReducers = combineReducers({
 });
 
 export default createStore(
-	composeHors(allReducers, enableBatching, enableRetyping),
-	enhancer,
+  composeHors(allReducers, enableBatching, enableRetyping),
+  enhancer
 );

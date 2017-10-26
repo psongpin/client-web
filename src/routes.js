@@ -6,11 +6,4 @@ import applications from './components/applications';
 import applicants from './components/applicants';
 import pages from './components/pages/routes';
 
-export default [
-  users,
-  pages,
-  internships,
-  projects,
-  applications,
-  applicants,
-];
+export default [users, pages, internships, projects, applications, applicants];

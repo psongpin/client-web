@@ -6,22 +6,26 @@ import { openSignup } from '@client/actions/panels';
 import BasePre from '../BasePre';
 
 type $dispatchProps = {
-  emailAction: Function;
-}
+  emailAction: Function,
+};
 
 class PreSignup extends PureComponent {
   props: $dispatchProps;
   render() {
-    return (<BasePre termsOfService title="Choose Signup Option" emailAction={this.props.emailAction} />);
+    return (
+      <BasePre
+        termsOfService
+        title="Choose Signup Option"
+        emailAction={this.props.emailAction}
+      />
+    );
   }
 }
 
-function mapDispatchToProps(dispatch: $$dispatch) : $dispatchProps {
+function mapDispatchToProps(dispatch: $$dispatch): $dispatchProps {
   return {
-    emailAction: ()=>dispatch(openSignup),
+    emailAction: () => dispatch(openSignup),
   };
 }
 
-export default flowRight([
-  connect(null, mapDispatchToProps),
-])(PreSignup);
+export default flowRight([connect(null, mapDispatchToProps)])(PreSignup);

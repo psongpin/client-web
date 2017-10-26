@@ -6,4 +6,7 @@ const constants = require('@client/schemas/pages/constants');
 
 class ApplicationPageSelector extends PageSelector {}
 
-export default new ApplicationPageSelector(constants.applications, new Application());
+export default new ApplicationPageSelector(
+  constants.applications,
+  new Application()
+);

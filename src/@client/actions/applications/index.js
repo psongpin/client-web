@@ -8,29 +8,35 @@ import { batchActions } from 'redux-batched-actions';
 import { locationPush } from '../router';
 
 class ApplicationActions extends Actions {
-  goToApplicants = (id: $$id) => dispatch => dispatch(locationPush(`/applicants/${id}`))
+  goToApplicants = (id: $$id) => dispatch =>
+    dispatch(locationPush(`/applicants/${id}`));
+  // $FlowFixMe
   create = (application: Object, userId: $$id) => dispatch => {
-    return services.create(application)
-    .then((id)=>{
-      dispatch(batchActions([
-        this.createRelated({ ...application, id }, {
-          entityName: 'internships',
-          name: 'applications',
-          id: application.internshipId,
-        }),
-        this.relationships.link({
-          relationshipName: 'user',
-          id,
-          relationshipValue: userId,
-        }),
-      ]));
+    return services.create(application).then(id => {
+      dispatch(
+        batchActions([
+          this.createRelated(
+            { ...application, id },
+            {
+              entityName: 'internships',
+              name: 'applications',
+              id: application.internshipId,
+            }
+          ),
+          this.relationships.link({
+            relationshipName: 'user',
+            id,
+            relationshipValue: userId,
+          }),
+        ])
+      );
     });
-  }
+  };
   getOffer = (id: $$id) => dispatch => {
-    return offerServices.byApplication(id).then((offer)=>{
+    return offerServices.byApplication(id).then(offer => {
       return dispatch(this.entities.getRelated(id, 'offer', offer));
     });
-  }
+  };
 }
 
 export default new ApplicationActions(schemaConstants.applications);

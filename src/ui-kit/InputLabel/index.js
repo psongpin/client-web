@@ -3,8 +3,8 @@ import React, { PureComponent } from 'react';
 import { inputLabel } from './style.pcss';
 
 type $props = {
-    children?: string,
-}
+  children?: string,
+};
 export default class InputLabel extends PureComponent {
   props: $props;
   render() {

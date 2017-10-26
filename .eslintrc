@@ -8,10 +8,12 @@
   },
   "extends": [
     "airbnb",
-    "plugin:flowtype/recommended"
+    "plugin:flowtype/recommended",
+    "prettier"
   ],
   "parser": "babel-eslint",
   "rules": {
+    "prettier/prettier": "error",
     "quotes": [2, "single"],
     "strict": [2, "never"],
     "no-undef": 0,
@@ -33,18 +35,24 @@
     "react/prefer-stateless-function": 0,
     "no-param-reassign": 0,
     "import/prefer-default-export": 0,
-    "indent": ["warn"],
+    "indent": 0,
     "react/sort-comp": 0,
     "react/require-default-props": 0,
     "arrow-body-style": 0,
     "arrow-parens": 0,
     "import/no-named-as-default": 0,
-    "arrow-spacing": 0
-
+    "arrow-spacing": 0,
+    "no-useless-computed-key": 0,
+    "flowtype/generic-spacing": 0,
+    "import/newline-after-import": 0,
+    "react/prop-types": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "react/jsx-indent": 0
   },
   "plugins": [
     "babel",
     "react",
-    "flowtype"
+    "flowtype",
+    "prettier"
   ]
 }

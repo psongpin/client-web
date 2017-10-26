@@ -18,23 +18,27 @@ export class ApplicationListItem extends PureComponent {
   props: $props;
   handleOpenOffer = () => {
     if (isOffered(this.props.application)) this.props.openOffer(this.props.id);
-  }
+  };
   render() {
     const { props } = this;
-    return (<ULItem
-      selectable={false}
-      ripple={false}
-      legend={props.project.name}
-      rightIcon={<Clickable onClick={this.handleOpenOffer} className={status}>{displayStatus(props.application)}</Clickable>}
-    >
-      {
-        props.internship.name
-      }
-    </ULItem>);
+    return (
+      <ULItem
+        selectable={false}
+        ripple={false}
+        legend={props.project.name}
+        rightIcon={
+          <Clickable onClick={this.handleOpenOffer} className={status}>
+            {displayStatus(props.application)}
+          </Clickable>
+        }
+      >
+        {props.internship.name}
+      </ULItem>
+    );
   }
 }
 
-const mapStateToPropsFactory = ()=>{
+const mapStateToPropsFactory = () => {
   const getInternshipId = applicationSelectors.findRelatedId('internship');
   const getProjectId = internshipSelectors.findRelatedId('project');
   return createStructuredSelector({
@@ -50,6 +54,6 @@ const mapDispatchToProps = (dispatch: $$dispatch) => ({
   },
 });
 
-export default flowRight([
-  connect(mapStateToPropsFactory, mapDispatchToProps),
-])(ApplicationListItem);
+export default flowRight([connect(mapStateToPropsFactory, mapDispatchToProps)])(
+  ApplicationListItem
+);

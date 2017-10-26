@@ -1,4 +1,5 @@
 // @flow
+// $FlowFixMe
 import { relationshipTypes } from 'erschema';
 import { standardizeEntity } from '@client/utils/schemaUtils';
 import Model, { properties } from '@client/models/Application';
@@ -24,6 +25,5 @@ export default standardizeEntity({
       type: relationshipTypes.ONE,
       alias: 'userId',
     },
-    
   ],
 });

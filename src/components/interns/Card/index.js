@@ -18,31 +18,34 @@ class InternCard extends PureComponent {
   props: $props;
   goToUser = () => {
     this.props.goToUser(this.props.userId);
-  }
+  };
   render() {
     const { props } = this;
     return (
       <GridCard>
         <CardTitle
-          title={<Clickable onClick={this.goToUser}>{props.user.username}</Clickable>}
+          title={
+            <Clickable onClick={this.goToUser}>{props.user.username}</Clickable>
+          }
         />
         <MinutesAndStatus intern={props.intern} />
-        {
-          props.owner && !finished(props.intern) && (<CardActions>
-            <Button
-              confirmationMessage="Are you sure you want to mark this intern as completed"
-              onConfirmClick={props.completed}
-            >
-              Approve Completion
-            </Button>
-            <Button
-              confirmationMessage="Are you sure you want to mark this intern as fired"
-              onConfirmClick={props.fire}
-            >
-              Fire Intern
-            </Button>
-          </CardActions>)
-        }
+        {props.owner &&
+          !finished(props.intern) && (
+            <CardActions>
+              <Button
+                confirmationMessage="Are you sure you want to mark this intern as completed"
+                onConfirmClick={props.completed}
+              >
+                Approve Completion
+              </Button>
+              <Button
+                confirmationMessage="Are you sure you want to mark this intern as fired"
+                onConfirmClick={props.fire}
+              >
+                Fire Intern
+              </Button>
+            </CardActions>
+          )}
       </GridCard>
     );
   }
@@ -57,12 +60,13 @@ const mapStateToPropsFactory = () => {
   });
 };
 
-const mapDispatchToProps = (dispatch: $$dispatch, { id })=>{
+const mapDispatchToProps = (dispatch: $$dispatch, { id }) => {
   return {
-    goTo: ()=>dispatch(internActions.goTo(id)),
-    goToUser: (userId) => dispatch(userActions.goTo(userId)),
-    completed: ()=>dispatch(internActions.changeStatus(id, statusTypes.COMPLETED)),
-    fire: ()=>dispatch(internActions.changeStatus(id, statusTypes.FIRED)),
+    goTo: () => dispatch(internActions.goTo(id)),
+    goToUser: userId => dispatch(userActions.goTo(userId)),
+    completed: () =>
+      dispatch(internActions.changeStatus(id, statusTypes.COMPLETED)),
+    fire: () => dispatch(internActions.changeStatus(id, statusTypes.FIRED)),
   };
 };
 

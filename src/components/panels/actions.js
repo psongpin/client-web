@@ -1,7 +1,7 @@
 import { closePanel } from '@client/actions/router';
 
 export function close() {
-  return (dispatch) => {
+  return dispatch => {
     dispatch(closePanel());
   };
 }

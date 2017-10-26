@@ -2,10 +2,10 @@
 import React from 'react';
 
 type $props = {
-  children?: any;
-  className?: string;
-  size?: 'sm' | 'md' | 'lg'
-}
+  children?: any,
+  className?: string,
+  size?: 'sm' | 'md' | 'lg',
+};
 
 function getTag(size) {
   switch (size) {

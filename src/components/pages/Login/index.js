@@ -1,4 +1,3 @@
-
 // @flow
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
@@ -18,20 +17,23 @@ import { closePanel } from '@client/actions/router';
 class Login extends PureComponent {
   render() {
     const { fields, actions } = this.props;
-    return (<PanelContent title={'Login'}>
-      <LinkedTextInput type="email" field={fields.get('email')} />
-      {
-        fields.getIn(['email', 'value']) && <Button onClick={()=>this.props.getLoginToken(fields.getIn(['email', 'value']))}>Get Token</Button>
-      }
-      {
-        fields.getIn(['email', 'value']) && <LinkedTextInput type="password" field={fields.get('loginToken')} />
-      }
-      <Button
-        {
-					...actions.submit
-				}
-      />
-    </PanelContent>);
+    return (
+      <PanelContent title={'Login'}>
+        <LinkedTextInput type="email" field={fields.get('email')} />
+        {fields.getIn(['email', 'value']) && (
+          <Button
+            onClick={() =>
+              this.props.getLoginToken(fields.getIn(['email', 'value']))}
+          >
+            Get Token
+          </Button>
+        )}
+        {fields.getIn(['email', 'value']) && (
+          <LinkedTextInput type="password" field={fields.get('loginToken')} />
+        )}
+        <Button {...actions.submit} />
+      </PanelContent>
+    );
   }
 }
 
@@ -39,7 +41,6 @@ const fieldsSelector = () => ({
   email: {
     verify: ['email', 'required'],
     isValid: false,
-
   },
   loginToken: {
     verify: ['required', 'minLength:6'],
@@ -56,8 +57,9 @@ function mapDispatchToProps(dispatch: $$dispatch) {
       return dispatch(userActions.getLoginToken(email));
     },
     submit(user) {
-      return dispatch(sessionActions.create(user))
-      .then(() => dispatch(closePanel()));
+      return dispatch(sessionActions.create(user)).then(() =>
+        dispatch(closePanel())
+      );
     },
   };
 }

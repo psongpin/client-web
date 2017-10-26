@@ -1,4 +1,5 @@
 // @flow
+// $FlowFixMe
 import { relationshipTypes } from 'erschema';
 import { standardizePage } from '@client/utils/schemaUtils';
 import Model, { properties } from '@client/models/pages/Application';

@@ -1,5 +1,5 @@
 // @flow
-import { OrderedSet, List } from 'immutable';
+import { OrderedSet } from 'immutable';
 // $FlowFixMe
 import ErschemaSelector from 'erschema-selectors';
 import { createSelector } from 'reselect';
@@ -10,7 +10,7 @@ export default class Selector extends ErschemaSelector {
   }
 }
 
-export class PageSelector <X> {
+export class PageSelector<X> {
   name: string;
   model: X;
   constructor(name: string, model: X) {
@@ -18,22 +18,30 @@ export class PageSelector <X> {
     this.model = model;
   }
   find = (): any => {
-    return (state: $$state) => (state.erschema.entities.pages.getIn([this.name]) || this.model);
-  }
-  getRelatedIds = (relationshipName: string): $$selector<List<$$id>> => {
+    return (state: $$state) =>
+      state.erschema.entities.pages.getIn([this.name]) || this.model;
+  };
+  getRelatedIds = (relationshipName: string): any => {
     return createSelector(
       [
-        (state) => {
+        state => {
           if (!state.erschema.relationships.pages[relationshipName]) {
-            throw new Error(`Missing relationship ${relationshipName} in pages schema ${this.name}`);
+            throw new Error(
+              `Missing relationship ${relationshipName} in pages schema ${this
+                .name}`
+            );
           }
-          return state.erschema.relationships.pages[relationshipName].get(this.name);
+          return state.erschema.relationships.pages[relationshipName].get(
+            this.name
+          );
         },
       ],
-      (relatedIds: OrderedSet<$$id>) => (relatedIds || new OrderedSet()).toList(),
+      (relatedIds: OrderedSet<$$id>) =>
+        (relatedIds || new OrderedSet()).toList()
     );
-  }
-  findRelatedId = (relationshipName: string): $$selector<$$id> => {
-    return state => state.erschema.relationships.pages[relationshipName].get(this.name);
-  }
+  };
+  findRelatedId = (relationshipName: string): any => {
+    return state =>
+      state.erschema.relationships.pages[relationshipName].get(this.name);
+  };
 }

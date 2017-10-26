@@ -16,32 +16,34 @@ export class CreateOffer extends PureComponent {
   props: $props;
   render() {
     const { props } = this;
-    return (<div>
-      <h2>Send Offer</h2>
-      <StandardInternship />
-      <CodeMirror {...props.fields.get('message').toObject()} />
-      <Button {...props.actions.submit}>SEND</Button>
-      <Button onClick={props.close}>CANCEL</Button>
-    </div>);
+    return (
+      <div>
+        <h2>Send Offer</h2>
+        <StandardInternship />
+        <CodeMirror {...props.fields.get('message').toObject()} />
+        <Button {...props.actions.submit}>SEND</Button>
+        <Button onClick={props.close}>CANCEL</Button>
+      </div>
+    );
   }
 }
-
 
 const mapStateToProps = createStructuredSelector({
   id: getPanel('applicationId'),
 });
 
-const mapDispatchToProps = (dispatch: $$dispatch, props: $$props)=>({
+const mapDispatchToProps = (dispatch: $$dispatch, props: $$props) => ({
   createOffer(offer) {
-    return dispatch(offerActions.create({ ...offer, applicationId: props.id }))
-    .then(()=>dispatch(closePanel()));
+    return dispatch(
+      offerActions.create({ ...offer, applicationId: props.id })
+    ).then(() => dispatch(closePanel()));
   },
   close() {
     return dispatch(closePanel());
   },
 });
 
-const fieldSelector = (props)=>{
+const fieldSelector = () => {
   return {
     message: {
       value: '',
@@ -49,7 +51,7 @@ const fieldSelector = (props)=>{
   };
 };
 
-const actionSelector = (props)=>({
+const actionSelector = props => ({
   submit: props.createOffer,
 });
 

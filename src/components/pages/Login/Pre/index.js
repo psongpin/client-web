@@ -8,16 +8,19 @@ import BasePre from 'components/pages/Signup/BasePre';
 class PreLogin extends PureComponent {
   props: Object;
   render() {
-    return (<BasePre title="Choose Login Option" emailAction={this.props.emailAction} />);
+    return (
+      <BasePre
+        title="Choose Login Option"
+        emailAction={this.props.emailAction}
+      />
+    );
   }
 }
 
 function mapDispatchToProps(dispatch: $$dispatch) {
   return {
-    emailAction: ()=>dispatch(openLogin),
+    emailAction: () => dispatch(openLogin),
   };
 }
 
-export default flowRight([
-  connect(null, mapDispatchToProps),
-])(PreLogin);
+export default flowRight([connect(null, mapDispatchToProps)])(PreLogin);

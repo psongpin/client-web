@@ -4,6 +4,4 @@ import { Route } from 'react-router';
 
 import Home from './';
 
-export default [
-  <Route path="/" component={Home} />,
-];
+export default [<Route path="/" component={Home} />];

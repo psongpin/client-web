@@ -14,6 +14,4 @@ export const statusTypes = {
   PREACTIVE: 3,
 };
 
-export default class Internship extends Record(properties) {
-
-}
+export default class Internship extends Record(properties) {}

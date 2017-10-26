@@ -12,15 +12,20 @@ import projectActions from '@client/actions/projects';
 import StandardInternship from '../Standard';
 import InternshipDotX3 from '../DotX3';
 
-
 class InternshipCard extends PureComponent {
   render() {
     const { props } = this;
     return (
       <GridCard>
         <CardTitle
-          title={<Clickable onClick={props.goTo}>{props.internship.name}</Clickable>}
-          subtitle={<Clickable onClick={props.goToProject}>{props.project.name}</Clickable>}
+          title={
+            <Clickable onClick={props.goTo}>{props.internship.name}</Clickable>
+          }
+          subtitle={
+            <Clickable onClick={props.goToProject}>
+              {props.project.name}
+            </Clickable>
+          }
         />
         <CardText>
           <StandardInternship />
@@ -43,10 +48,10 @@ const mapStateToPropsFactory = () => {
   });
 };
 
-const mapDispatchToProps = (dispatch: $$dispatch, { id })=>{
+const mapDispatchToProps = (dispatch: $$dispatch, { id }) => {
   return {
-    goTo: ()=>dispatch(internshipActions.goTo(id)),
-    goToProject: ()=>dispatch(projectActions.goTo(id)),
+    goTo: () => dispatch(internshipActions.goTo(id)),
+    goToProject: () => dispatch(projectActions.goTo(id)),
   };
 };
 
