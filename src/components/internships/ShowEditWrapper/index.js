@@ -16,11 +16,23 @@ import internshipSelectors from '@client/selectors/internships';
 import projectSelectors from '@client/selectors/projects';
 import sessionSelectors from '@client/selectors/pages/sessions';
 import Internship from '@client/models/Internship';
+import Project from '@client/models/Project';
 import { container } from './style.pcss';
+
+type $ownProps = {
+  children: any,
+};
 
 type $stateProps = {
   id: $$id,
   internship: Internship,
+  canEdit: boolean,
+  currentInternIds: any,
+  finishedInternIds: any,
+  project: Project,
+  userId: $$id,
+  currentUserId: $$id,
+  canEdit: boolean,
 };
 
 type $dispatchProps = {
@@ -33,7 +45,7 @@ type $dispatchProps = {
   getApplications: Function,
 };
 
-type $props = $stateProps & $dispatchProps;
+type $props = $ownProps & $stateProps & $dispatchProps;
 
 export class ShowInternship extends PureComponent {
   props: $props;

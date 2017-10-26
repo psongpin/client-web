@@ -83,7 +83,7 @@ export class ShowProject extends PureComponent {
 
 const isEditing = createSelector(
   [
-    sessionSelectors.getCurrentUserId(),
+    sessionSelectors.findRelatedId('user'),
     projectSelectors.findRelatedId('user', projectSelectors.getIdFromLocation),
   ],
   (currentUserId, projectUserId) => {

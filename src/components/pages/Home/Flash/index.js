@@ -26,11 +26,11 @@ export class Flash extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ flash }: Object) => ({
+export const mapStateToProps = ({ flash }: Object) => ({
   flash,
 });
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch: $$dispatch) => ({
   onClose() {
     dispatch(flashActions.close);
   },

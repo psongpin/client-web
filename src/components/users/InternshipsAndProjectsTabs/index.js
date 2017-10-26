@@ -14,8 +14,14 @@ import internshipActions from '@client/actions/internships';
 import projectActions from '@client/actions/projects';
 import userSelectors from '@client/selectors/users';
 
+type $ownProps = {
+  owner: $$id,
+};
+
 type $stateProps = {
-  id: $$id,
+  userId: $$id,
+  internIds: any,
+  projectIds: any,
 };
 
 type $dispatchProps = {
@@ -25,7 +31,7 @@ type $dispatchProps = {
   indexProjects: Function,
 };
 
-type $props = $stateProps & $dispatchProps;
+type $props = $ownProps & $stateProps & $dispatchProps;
 
 export class UserInternshipsAndProjectsTabs extends PureComponent {
   props: $props;

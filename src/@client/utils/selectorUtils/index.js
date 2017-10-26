@@ -1,5 +1,5 @@
 // @flow
-import { OrderedSet, List } from 'immutable';
+import { OrderedSet } from 'immutable';
 // $FlowFixMe
 import ErschemaSelector from 'erschema-selectors';
 import { createSelector } from 'reselect';
@@ -21,7 +21,7 @@ export class PageSelector<X> {
     return (state: $$state) =>
       state.erschema.entities.pages.getIn([this.name]) || this.model;
   };
-  getRelatedIds = (relationshipName: string): $$selector<List<$$id>> => {
+  getRelatedIds = (relationshipName: string): any => {
     return createSelector(
       [
         state => {
@@ -40,7 +40,7 @@ export class PageSelector<X> {
         (relatedIds || new OrderedSet()).toList()
     );
   };
-  findRelatedId = (relationshipName: string): $$selector<$$id> => {
+  findRelatedId = (relationshipName: string): any => {
     return state =>
       state.erschema.relationships.pages[relationshipName].get(this.name);
   };

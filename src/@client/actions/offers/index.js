@@ -7,6 +7,7 @@ import Application from '@client/models/Application';
 import applicationActions from '../applications';
 
 class OfferActions extends Actions {
+  // $FlowFixMe
   create = (offer: Object) => dispatch => {
     return services.create(offer).then(id => {
       return dispatch(

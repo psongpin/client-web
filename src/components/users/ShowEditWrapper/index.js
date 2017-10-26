@@ -13,16 +13,21 @@ import User from '@client/models/User';
 import UserInternshipsAndProjectsTabs from '../InternshipsAndProjectsTabs';
 import { container } from './style.pcss';
 
+type $ownProps = {
+  children?: any,
+};
+
 type $stateProps = {
   id: $$id,
   user: User,
+  canEdit: boolean,
 };
 
 type $dispatchProps = {
   find: (id: $$id) => void,
 };
 
-type $props = $stateProps & $dispatchProps;
+type $props = $ownProps & $stateProps & $dispatchProps;
 
 export class ShowEditWrapperUser extends PureComponent {
   props: $props;

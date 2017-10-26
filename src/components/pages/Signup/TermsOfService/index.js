@@ -5,8 +5,6 @@ import { Markdown, Modal, ModalBody, Button } from 'ui-kit';
 import { container, iAgreeBtn } from './style.pcss';
 
 const content = `
-# Terms of Services
-
 ## Volunteer Intern
 
 When you apply to be a volunteer intern through menternship, you are agreeing to the following conditions
@@ -30,14 +28,14 @@ When you create an active internship, and a person accepts your offer to be a vo
  * You are expected to provide a meaningful experience for the volunteer interns where they can learn the necessary skills that will improve their chances of employment in a job that uses those skills, and if you do not, the volunteer intern can quit at anytime
 `;
 
-type $props = { iAgree: Function };
+type $props = { isOpen: boolean, iAgree: Function };
 
 export default class extends PureComponent {
   props: $props;
   render() {
     const { iAgree, ...props } = this.props;
     return (
-      <Modal {...props}>
+      <Modal title="Terms of Services" {...props}>
         <ModalBody>
           <div className={container}>
             <Markdown content={content} />

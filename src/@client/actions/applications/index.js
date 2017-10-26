@@ -10,6 +10,7 @@ import { locationPush } from '../router';
 class ApplicationActions extends Actions {
   goToApplicants = (id: $$id) => dispatch =>
     dispatch(locationPush(`/applicants/${id}`));
+  // $FlowFixMe
   create = (application: Object, userId: $$id) => dispatch => {
     return services.create(application).then(id => {
       dispatch(

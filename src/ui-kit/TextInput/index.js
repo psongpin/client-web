@@ -6,7 +6,7 @@ import { debounce } from 'lodash';
 
 const noop = () => {};
 type $props = {
-  name: string,
+  name?: string,
   errors?: Map<string, string>,
   onChange: () => void,
   value?: any,
@@ -23,6 +23,7 @@ type $props = {
   verify?: Function,
   onKeyPress?: Function,
   debounce?: boolean | number,
+  type?: string,
 };
 
 export class TextInput extends PureComponent {

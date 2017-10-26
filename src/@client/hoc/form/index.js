@@ -105,6 +105,7 @@ export function form<
         submit: { onClick: () => Promise<*> },
         cancel: { onClick: () => void },
       };
+      entities: Object;
       tokensByKey: Object;
       lastKey: string;
       startTime: number;

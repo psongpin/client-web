@@ -10,7 +10,22 @@ import InternshipGrid from 'components/internships/Grid';
 import projectActions from '@client/actions/projects';
 import projectSelectors from '@client/selectors/projects';
 
-type $props = Object;
+type $ownProps = {
+  id: $$id,
+};
+
+type $stateProps = {
+  currentInternshipIds: any,
+  pastInternshipIds: any,
+};
+
+type $dispatchProps = {
+  find: Function,
+  getInternships: Function,
+  getPastInternships: Function,
+};
+
+type $props = $ownProps & $stateProps & $dispatchProps;
 
 export class ProjectInternshipsTab extends PureComponent {
   props: $props;

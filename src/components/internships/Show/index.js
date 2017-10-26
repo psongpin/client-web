@@ -20,19 +20,24 @@ import projectSelectors from '@client/selectors/projects';
 import sessionSelectors from '@client/selectors/pages/sessions';
 import applicationSelectors from '@client/selectors/applications';
 import Internship from '@client/models/Internship';
+import Project from '@client/models/Project';
 
 type $stateProps = {
   id: $$id,
   internship: Internship,
   currentUserId: $$id,
   projectId: $$id,
+  canEdit: boolean,
+  alreadyApplied: boolean,
+  internExists: boolean,
+  loggedIn: boolean,
+  project: Project,
+  userId: $$id,
 };
 
 type $dispatchProps = {
-  find: (id: $$id) => void,
   goToApplicants: Function,
   goToEdit: Function,
-  findProject: Function,
   apply: Function,
   getApplications: Function,
   deleteInternship: Function,
@@ -145,15 +150,6 @@ export const mapDispatchToProps = (
       });
     },
   };
-};
-
-export const onIdChange = ({ id, find, getApplications }: $props) => {
-  find(id);
-  getApplications(id);
-};
-
-export const onProjectIdChange = ({ projectId, findProject }: $props) => {
-  findProject(projectId);
 };
 
 export default flowRight([

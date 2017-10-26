@@ -12,6 +12,7 @@ import sessionActions from '../pages/session';
 import flashActions from '../flash';
 
 class UserActions extends Actions {
+  // $FlowFixMe
   create = (user: Object) => (dispatch: $$dispatch) =>
     services
       .create(user)
@@ -36,6 +37,7 @@ class UserActions extends Actions {
       }
       return Promise.resolve();
     });
+  // $FlowFixMe
   get = userId => dispatch => {
     return dispatch(this.getUsers([userId]));
   };

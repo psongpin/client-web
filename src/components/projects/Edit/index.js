@@ -33,7 +33,11 @@ type $dispatchProps = {
   goTo: () => void,
 };
 
-type $props = $stateProps & $dispatchProps;
+type $formProps = {
+  fields: any,
+};
+
+type $props = $stateProps & $dispatchProps & $formProps;
 
 export class EditProject extends PureComponent {
   props: $props;

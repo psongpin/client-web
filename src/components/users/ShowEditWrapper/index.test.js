@@ -9,6 +9,7 @@ import { ShowEditWrapperUser } from './';
 describe('ShowUser', () => {
   describe('renders', () => {
     const setup = () => {
+      // $FlowFixMe
       return shallow(<ShowEditWrapperUser user={new User()} />);
     };
     it('InternshipGrid', () => {

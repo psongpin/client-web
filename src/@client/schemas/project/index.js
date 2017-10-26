@@ -1,6 +1,7 @@
 // @flow
 import { standardizeEntity } from '@client/utils/schemaUtils';
 import Model, { properties } from '@client/models/Project';
+// $FlowFixMe
 import { relationshipTypes } from 'erschema';
 
 export default standardizeEntity({

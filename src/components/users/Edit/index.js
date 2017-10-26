@@ -20,7 +20,6 @@ import User from '@client/models/User';
 type $stateProps = {
   id: $$id,
   user: User,
-  fields: any,
 };
 
 type $dispatchProps = {
@@ -28,7 +27,11 @@ type $dispatchProps = {
   goBack: Function,
 };
 
-type $props = $stateProps & $dispatchProps;
+type $formProps = {
+  fields: any,
+};
+
+type $props = $stateProps & $dispatchProps & $formProps;
 
 export class EditUser extends PureComponent {
   props: $props;

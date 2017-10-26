@@ -7,10 +7,6 @@ import { statusTypes } from '@client/models/Internship';
 import { locationPush } from '../router';
 
 class ProjectActions extends Actions {
-  get = (id: $$id) => dispatch =>
-    services.get(id).then(project => {
-      dispatch(this.entities.get(project));
-    });
   goTo = (id: $$id) => dispatch => dispatch(locationPush(`/projects/${id}`));
   goToEdit = (id: $$id) => dispatch =>
     dispatch(locationPush(`/projects/${id}/edit`));
