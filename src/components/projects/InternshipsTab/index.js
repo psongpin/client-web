@@ -17,6 +17,7 @@ type $ownProps = {
 type $stateProps = {
   currentInternshipIds: any,
   pastInternshipIds: any,
+  projectOwner: boolean,
 };
 
 type $dispatchProps = {
@@ -35,7 +36,7 @@ export class ProjectInternshipsTab extends PureComponent {
       <Tabs>
         <Tab label="ACTIVE INTERNSHIPS">
           <InternshipGrid
-            create
+            create={props.projectOwner}
             projectId={props.id}
             ids={props.currentInternshipIds}
           />
@@ -51,6 +52,7 @@ export class ProjectInternshipsTab extends PureComponent {
 export const mapStateToProps: $$selectorExact<
   $stateProps
 > = createStructuredSelector({
+  projectOwner: projectSelectors.currentUserOwnsProject(),
   currentInternshipIds: projectSelectors.getRelatedIds('internships'),
   pastInternshipIds: projectSelectors.getRelatedIds('pastInternships'),
 });

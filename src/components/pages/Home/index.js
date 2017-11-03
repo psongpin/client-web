@@ -13,7 +13,6 @@ import * as panelSelectors from '@client/selectors/panel';
 import sessionActions from '@client/actions/pages/session';
 import flashActions from '@client/actions/flash';
 import panelRoutes from 'components/panels/panelRoutes';
-import SignupUsername from 'components/pages/Signup/Username';
 import Flash from './Flash';
 import Nav from './Nav';
 import Footer from './Footer';
@@ -44,7 +43,6 @@ class MainContainer extends PureComponent {
         <Panel>
           <Nav />
           <div className={mainContent}>{children}</div>
-          <SignupUsername />
           <Footer />
         </Panel>
         <Sidebar className="panel" pinned={pinned} width={12}>

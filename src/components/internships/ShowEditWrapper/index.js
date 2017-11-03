@@ -17,7 +17,6 @@ import projectSelectors from '@client/selectors/projects';
 import sessionSelectors from '@client/selectors/pages/sessions';
 import Internship from '@client/models/Internship';
 import Project from '@client/models/Project';
-import { container } from './style.pcss';
 
 type $ownProps = {
   children: any,
@@ -52,7 +51,7 @@ export class ShowInternship extends PureComponent {
   render() {
     const { props } = this;
     return (
-      <View className={container}>
+      <View>
         <Row>
           <Column xs={12} size={4}>
             {this.props.children}
