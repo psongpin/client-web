@@ -2,12 +2,14 @@
 import React, { PureComponent } from 'react';
 import { TextInput, Tabs, Tab } from 'ui-kit';
 import { connect } from 'react-redux';
+import { List } from 'immutable';
 import { createStructuredSelector } from 'reselect';
 import searchActions from '@client/actions/pages/search';
 import searchSelectors from '@client/selectors/pages/search';
 import InternshipsGrid from 'components/internships/Grid';
-import ProjectsGrid from 'components/projects/Grid';
-import UsersGrid from 'components/users/Grid';
+import projectActions from '@client/actions/projects';
+// import ProjectsGrid from 'components/projects/Grid';
+// import UsersGrid from 'components/users/Grid';
 
 import { textInput, tagLine } from './style.pcss';
 
@@ -23,7 +25,8 @@ export class Search extends PureComponent {
     return (
       <div>
         <p className={tagLine}>
-          Where experienced programmers with <strong>side projects</strong> create internships and connect with beginner programmers
+          Where experienced programmers with <strong>side projects</strong>{' '}
+          create internships and connect with beginner programmers
         </p>
         <TextInput
           className={textInput}
@@ -61,7 +64,13 @@ const mapDispatchToProps = (dispatch: $$dispatch) => {
   return {
     search: ({ value: searchText }) => {
       // dispatch(searchActions.searchUsers(searchText));
-      dispatch(searchActions.searchInternships(searchText));
+      dispatch(
+        searchActions.searchInternships(searchText)
+      ).then(internships => {
+        return dispatch(
+          projectActions.index(new List(internships).map(i => i.projectId))
+        );
+      });
       // dispatch(searchActions.searchProjects(searchText));
     },
   };

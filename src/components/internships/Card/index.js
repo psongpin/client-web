@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
 import internshipSelectors from '@client/selectors/internships';
-import projectSelectors from '@client/selectors/projects';
 import internshipActions from '@client/actions/internships';
 import projectActions from '@client/actions/projects';
+import GoToProject from 'components/projects/GoTo';
 import StandardInternship from '../Standard';
 import InternshipDotX3 from '../DotX3';
 
@@ -21,11 +21,7 @@ class InternshipCard extends PureComponent {
           title={
             <Clickable onClick={props.goTo}>{props.internship.name}</Clickable>
           }
-          subtitle={
-            <Clickable onClick={props.goToProject}>
-              {props.project.name}
-            </Clickable>
-          }
+          subtitle={<GoToProject id={props.projectId} />}
         />
         <CardText>
           <StandardInternship />
@@ -41,10 +37,9 @@ class InternshipCard extends PureComponent {
 }
 
 const mapStateToPropsFactory = () => {
-  const getProjectId = internshipSelectors.findRelatedId('project');
   return createStructuredSelector({
     internship: internshipSelectors.find(),
-    project: projectSelectors.find(getProjectId),
+    projectId: internshipSelectors.findRelatedId('project'),
   });
 };
 

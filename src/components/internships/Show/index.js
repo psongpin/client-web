@@ -20,7 +20,7 @@ import projectSelectors from '@client/selectors/projects';
 import sessionSelectors from '@client/selectors/pages/sessions';
 import applicationSelectors from '@client/selectors/applications';
 import Internship from '@client/models/Internship';
-import Project from '@client/models/Project';
+import GoToProject from 'components/projects/GoTo';
 
 type $stateProps = {
   id: $$id,
@@ -31,7 +31,6 @@ type $stateProps = {
   alreadyApplied: boolean,
   internExists: boolean,
   loggedIn: boolean,
-  project: Project,
   userId: $$id,
 };
 
@@ -51,7 +50,10 @@ export class ShowInternship extends PureComponent {
     const { props } = this;
     return (
       <Card>
-        <CardTitle title={props.internship.name} />
+        <CardTitle
+          title={props.internship.name}
+          subtitle={<GoToProject id={props.projectId} />}
+        />
         <CardText>
           <Markdown content={props.internship.description} />
         </CardText>
@@ -113,7 +115,6 @@ export const mapStateToProps: $$selectorExact<
   loggedIn: sessionSelectors.isLoggedIn(),
   projectId: getProjectId,
   internship: internshipSelectors.find(getInternshipId),
-  project: projectSelectors.find(getProjectId),
   userId: getUserId,
   alreadyApplied,
   canEdit: internshipSelectors.canEdit(getInternshipId),

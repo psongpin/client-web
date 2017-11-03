@@ -1,7 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { createSelector, createStructuredSelector } from 'reselect';
+import { createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
 import { List } from 'immutable';
 
@@ -80,22 +80,14 @@ export class ShowProject extends PureComponent {
   }
 }
 
-const isEditing = createSelector(
-  [
-    sessionSelectors.findRelatedId('user'),
-    projectSelectors.findRelatedId('user', projectSelectors.getIdFromLocation),
-  ],
-  (currentUserId, projectUserId) => {
-    return currentUserId === projectUserId;
-  }
-);
-
 export const mapStateToProps: $$selectorExact<
   $stateProps
 > = createStructuredSelector({
   id: projectSelectors.getIdFromLocation,
   project: projectSelectors.find(projectSelectors.getIdFromLocation),
-  editing: isEditing,
+  editing: projectSelectors.currentUserOwnsProject(
+    projectSelectors.getIdFromLocation
+  ),
   currentUserId: sessionSelectors.getCurrentUserId(),
   internshipIds: projectSelectors.getRelatedIds(
     'internships',
