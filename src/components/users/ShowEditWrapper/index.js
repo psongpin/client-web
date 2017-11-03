@@ -11,7 +11,6 @@ import userSelectors from '@client/selectors/users';
 import sessionSelectors from '@client/selectors/pages/sessions';
 import User from '@client/models/User';
 import UserInternshipsAndProjectsTabs from '../InternshipsAndProjectsTabs';
-import { container } from './style.pcss';
 
 type $ownProps = {
   children?: any,
@@ -34,7 +33,7 @@ export class ShowEditWrapperUser extends PureComponent {
   render() {
     const { id, canEdit } = this.props;
     return (
-      <View className={container}>
+      <View>
         <Row>
           <Column xs={12} size={4}>
             {this.props.children}

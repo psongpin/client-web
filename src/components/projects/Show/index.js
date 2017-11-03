@@ -23,7 +23,6 @@ import projectSelectors from '@client/selectors/projects';
 import sessionSelectors from '@client/selectors/pages/sessions';
 import Project from '@client/models/Project';
 import InternshipsTab from '../InternshipsTab';
-import { container } from './style.pcss';
 
 type $stateProps = {
   id: $$id,
@@ -47,7 +46,7 @@ export class ShowProject extends PureComponent {
   render() {
     const { props } = this;
     return (
-      <View className={container}>
+      <View>
         <Row>
           <Column xs={12} size={4}>
             <Card>

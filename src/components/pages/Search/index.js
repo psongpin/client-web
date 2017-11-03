@@ -9,7 +9,7 @@ import InternshipsGrid from 'components/internships/Grid';
 import ProjectsGrid from 'components/projects/Grid';
 import UsersGrid from 'components/users/Grid';
 
-import { textInput } from './style.pcss';
+import { textInput, tagLine } from './style.pcss';
 
 type $props = Object;
 
@@ -22,6 +22,9 @@ export class Search extends PureComponent {
     const { props } = this;
     return (
       <div>
+        <p className={tagLine}>
+          Where experienced programmers with <strong>side projects</strong> create internships and connect with beginner programmers
+        </p>
         <TextInput
           className={textInput}
           debounce
@@ -32,12 +35,16 @@ export class Search extends PureComponent {
           <Tab label="INTERNSHIPS">
             <InternshipsGrid ids={props.internshipIds} />
           </Tab>
-          <Tab label="PROJECTS">
-            <ProjectsGrid ids={props.projectIds} />
-          </Tab>
-          <Tab label="PEOPLE">
-            <UsersGrid ids={props.userIds} />
-          </Tab>
+          {
+            // <Tab label="PROJECTS">
+            //   <ProjectsGrid ids={props.projectIds} />
+            // </Tab>
+          }
+          {
+            // <Tab label="PEOPLE">
+            //   <UsersGrid ids={props.userIds} />
+            // </Tab>
+          }
         </Tabs>
       </div>
     );
@@ -53,9 +60,9 @@ export const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = (dispatch: $$dispatch) => {
   return {
     search: ({ value: searchText }) => {
-      dispatch(searchActions.searchUsers(searchText));
+      // dispatch(searchActions.searchUsers(searchText));
       dispatch(searchActions.searchInternships(searchText));
-      dispatch(searchActions.searchProjects(searchText));
+      // dispatch(searchActions.searchProjects(searchText));
     },
   };
 };
