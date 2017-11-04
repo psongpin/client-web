@@ -22,6 +22,7 @@ import userActions from '@client/actions/users';
 import projectSelectors from '@client/selectors/projects';
 import sessionSelectors from '@client/selectors/pages/sessions';
 import Project from '@client/models/Project';
+import GoToUser from 'components/users/GoTo';
 import InternshipsTab from '../InternshipsTab';
 
 type $stateProps = {
@@ -31,10 +32,12 @@ type $stateProps = {
   currentUserId: $$id,
   internshipIds: List<$$id>,
   pastInternshipIds: List<$$id>,
+  userId: $$id,
 };
 
 type $dispatchProps = {
-  find: (id: $$id) => void,
+  find: Function,
+  getUser: Function,
   goToEditProject: () => void,
   deleteProject: Function,
 };
@@ -50,7 +53,10 @@ export class ShowProject extends PureComponent {
         <Row>
           <Column xs={12} size={4}>
             <Card>
-              <CardTitle title={props.project.name} />
+              <CardTitle
+                title={props.project.name}
+                subtitle={<GoToUser id={props.userId} />}
+              />
               <CardText>
                 <Markdown content={props.project.description} />
               </CardText>
@@ -85,6 +91,10 @@ export const mapStateToProps: $$selectorExact<
 > = createStructuredSelector({
   id: projectSelectors.getIdFromLocation,
   project: projectSelectors.find(projectSelectors.getIdFromLocation),
+  userId: projectSelectors.findRelatedId(
+    'user',
+    projectSelectors.getIdFromLocation
+  ),
   editing: projectSelectors.currentUserOwnsProject(
     projectSelectors.getIdFromLocation
   ),
@@ -105,7 +115,10 @@ export const mapDispatchToProps = (
 ): $Exact<$dispatchProps> => {
   return {
     find(id) {
-      dispatch(projectActions.get(id));
+      return dispatch(projectActions.get(id));
+    },
+    getUser(id) {
+      return dispatch(userActions.get(id));
     },
     goToEditProject() {
       dispatch(projectActions.goToEdit(props.id));
@@ -118,8 +131,10 @@ export const mapDispatchToProps = (
   };
 };
 
-export const onIdChange = ({ id, find }: $props) => {
-  find(id);
+export const onIdChange = ({ id, find, getUser }: $props) => {
+  find(id).then(project => {
+    getUser(project.userId);
+  });
 };
 
 export default flowRight([
