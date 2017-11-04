@@ -31,7 +31,7 @@ type $props = $stateProps & $dispatchProps;
 export class ShowUser extends PureComponent {
   props: $props;
   goToLinkedInProfile = () => {
-    window.open(this.props.user.linkedInUrl);
+    if (this.props.user.linkedInUrl) window.open(this.props.user.linkedInUrl);
   };
   render() {
     const { user, ...props } = this.props;
