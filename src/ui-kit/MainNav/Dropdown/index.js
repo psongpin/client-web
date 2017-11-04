@@ -4,7 +4,6 @@ import { Menu } from 'react-toolbox/lib/menu';
 import classnames from 'classnames';
 import Button from '../../Button';
 import Micon from '../../Micon';
-import Clickable from '../../Clickable';
 import { style, icon as iconStyle } from './style.pcss';
 
 type $props = {
@@ -35,11 +34,9 @@ export class MainNavDropdown extends PureComponent {
         {caption ? (
           <Button onClick={this.toggleActiveOn}>{caption}</Button>
         ) : (
-          <Clickable onClick={this.toggleActiveOn}>
-            <span className={iconStyle}>
-              <Micon value={icon} />
-            </span>
-          </Clickable>
+          <span className={iconStyle} onClick={this.toggleActiveOn}>
+            <Micon value={icon} />
+          </span>
         )}
         <span onClick={this.toggleActiveOff}>
           <Menu
