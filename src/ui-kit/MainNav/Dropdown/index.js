@@ -10,6 +10,7 @@ type $props = {
   children?: any,
   icon?: any,
   caption?: string,
+  onClick?: Function,
 };
 
 export class MainNavDropdown extends PureComponent {
@@ -18,6 +19,7 @@ export class MainNavDropdown extends PureComponent {
     active: false,
   };
   toggleActiveOn = () => {
+    if (this.props.onClick) this.props.onClick();
     this.setState({
       active: true,
     });
