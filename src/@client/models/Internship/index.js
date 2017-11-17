@@ -6,6 +6,7 @@ export const properties = {
   name: 'Internship Name',
   description: 'Internship Description',
   status: 1,
+  points: 0,
 };
 
 export const statusTypes = {

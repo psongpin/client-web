@@ -1,7 +1,9 @@
 // @flow
+import { List } from 'immutable';
 import { Actions } from '@client/utils/actionUtils';
 import schemaConstants from '@client/schemas/constants';
 import services from '@client/services/internships';
+import pointServices from '@client/services/points';
 import applicationServices from '@client/services/applications';
 import internServices from '@client/services/interns';
 import { statusTypes } from '@client/models/Intern';
@@ -18,6 +20,14 @@ class InternshipActions extends Actions {
       );
     });
   };
+  getPoints = (ids: List<$$id>) => dispatch => {
+    if (!ids.size) {
+      return Promise.resolve([]);
+    }
+    return pointServices.getByInternships(ids).then((internshipPoints) => {
+      dispatch(this.entities.index(internshipPoints));
+    });
+  }
   getInterns = (id: $$id) => dispatch => {
     if (!id) {
       return Promise.resolve([]);

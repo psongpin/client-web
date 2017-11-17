@@ -9,6 +9,7 @@ import internshipSelectors from '@client/selectors/internships';
 import internshipActions from '@client/actions/internships';
 import projectActions from '@client/actions/projects';
 import GoToProject from 'components/projects/GoTo';
+import PointsTotal from 'components/points/Total';
 import StandardInternship from '../Standard';
 import InternshipDotX3 from '../DotX3';
 
@@ -18,6 +19,7 @@ class InternshipCard extends PureComponent {
     return (
       <GridCard>
         <CardTitle
+          avatar={props.internship.points ? <PointsTotal points={props.internship.points} /> : undefined}
           title={
             <Clickable onClick={props.goTo}>{props.internship.name}</Clickable>
           }

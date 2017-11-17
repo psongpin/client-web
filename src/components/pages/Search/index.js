@@ -8,6 +8,7 @@ import searchActions from '@client/actions/pages/search';
 import searchSelectors from '@client/selectors/pages/search';
 import InternshipsGrid from 'components/internships/Grid';
 import projectActions from '@client/actions/projects';
+import internshipActions from '@client/actions/internships';
 // import ProjectsGrid from 'components/projects/Grid';
 // import UsersGrid from 'components/users/Grid';
 
@@ -67,8 +68,11 @@ const mapDispatchToProps = (dispatch: $$dispatch) => {
       dispatch(
         searchActions.searchInternships(searchText)
       ).then(internships => {
-        return dispatch(
+        dispatch(
           projectActions.index(new List(internships).map(i => i.projectId))
+        );
+        return dispatch(
+          internshipActions.getPoints(new List(internships).map(i => i.id))
         );
       });
       // dispatch(searchActions.searchProjects(searchText));
