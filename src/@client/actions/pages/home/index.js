@@ -4,7 +4,6 @@ import schemaConstants from '@client/schemas/pages/constants';
 
 const { home } = schemaConstants;
 
-class HomeActions extends PageActions {
-}
+class HomeActions extends PageActions {}
 
 export default new HomeActions(home);

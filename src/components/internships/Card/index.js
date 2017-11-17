@@ -19,7 +19,13 @@ class InternshipCard extends PureComponent {
     return (
       <GridCard>
         <CardTitle
-          avatar={props.internship.points ? <PointsTotal points={props.internship.points} /> : undefined}
+          avatar={
+            props.internship.points ? (
+              <PointsTotal points={props.internship.points} />
+            ) : (
+              undefined
+            )
+          }
           title={
             <Clickable onClick={props.goTo}>{props.internship.name}</Clickable>
           }

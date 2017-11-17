@@ -24,10 +24,10 @@ class InternshipActions extends Actions {
     if (!ids.size) {
       return Promise.resolve([]);
     }
-    return pointServices.getByInternships(ids).then((internshipPoints) => {
+    return pointServices.getByInternships(ids).then(internshipPoints => {
       dispatch(this.entities.index(internshipPoints));
     });
-  }
+  };
   getInterns = (id: $$id) => dispatch => {
     if (!id) {
       return Promise.resolve([]);
