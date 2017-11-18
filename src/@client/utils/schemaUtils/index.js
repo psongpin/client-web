@@ -19,12 +19,12 @@ export function standardizePage(
 
 export const standardizeEntity = erschemaStandardizeEntity;
 
-export const nullToUndefined = props => {
+export const nullToUndefined = (props: Array<string>) => {
   const propsObject = props.reduce((finalResult, prop) => {
     finalResult[prop] = true;
     return finalResult;
   }, {});
-  return ent => {
+  return (ent: Object) => {
     return Object.keys(ent).reduce((finalResult, prop) => {
       if (ent[prop] !== null || !propsObject[prop]) {
         finalResult[prop] = ent[prop];

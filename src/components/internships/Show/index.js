@@ -19,6 +19,7 @@ import internshipSelectors from '@client/selectors/internships';
 import projectSelectors from '@client/selectors/projects';
 import sessionSelectors from '@client/selectors/pages/sessions';
 import applicationSelectors from '@client/selectors/applications';
+import Project from '@client/models/Project';
 import Internship from '@client/models/Internship';
 import GoToProject from 'components/projects/GoTo';
 
@@ -32,6 +33,7 @@ type $stateProps = {
   internExists: boolean,
   loggedIn: boolean,
   userId: $$id,
+  project: Project,
 };
 
 type $dispatchProps = {
