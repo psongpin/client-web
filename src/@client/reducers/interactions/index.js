@@ -4,7 +4,7 @@ import interactionService from '../../services/interactions';
 
 export default handleActions(
   {
-    ['@@router/LOCATION_CHANGE'](state, { payload }) {
+    ['@@router/LOCATION_CHANGE']: state => {
       // $FlowFixMe
       const left = window.pageXOffset || document.documentElement.scrollLeft;
       // $FlowFixMe
