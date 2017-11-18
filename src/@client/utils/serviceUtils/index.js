@@ -1,9 +1,7 @@
 // @flow
-import prefetch from 'isomorphic-fetch';
 import merge from 'deepmerge';
-
+import { prefetch, getDefaultOptions } from '../fetchUtils';
 import store from '../../../configureStore';
-import * as storage from '../localStorageUtils';
 
 const fetch = function fetch(url, options) {
   return prefetch(url, options).then(resp => {
@@ -33,16 +31,6 @@ const fetch = function fetch(url, options) {
   });
 };
 
-const getDefaultOptions = method => ({
-  method,
-  headers: {
-    Authorization: storage.get('token'),
-    'Content-Type': 'application/json',
-  },
-  mode: 'cors',
-  cache: 'default',
-});
-
 export const get = (url: string, options: Object = {}) =>
   fetch(url, merge(options, getDefaultOptions('GET')));
 export const put = (url: string, options: Object = {}) =>
@@ -70,7 +58,7 @@ export class Services {
     this.prefix = prefix;
     this.host = `${host ||
       process.env.API_CONNECTION ||
-      'https://api.menternship.org'}/`;
+      'https://menternship.org/api'}/`;
   }
   _getUrl(prefix: string, url?: $url) {
     return `${this.host}${prefix}${processUrl(url)}`;
