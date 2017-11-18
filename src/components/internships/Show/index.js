@@ -77,7 +77,15 @@ export class ShowInternship extends PureComponent {
               <Button onClick={props.apply}>Apply</Button>,
             ]}
         </CardActions>
-        <CardText>{props.alreadyApplied && <span>Applied</span>}</CardText>
+        {props.alreadyApplied && (
+          <CardText>
+            <span>Applied</span>
+          </CardText>
+        )}
+        <CardText>
+          <h3>{`About ${props.project.name}:`}</h3>
+          <Markdown content={props.project.description} />
+        </CardText>
       </Card>
     );
   }
@@ -114,6 +122,7 @@ export const mapStateToProps: $$selectorExact<
   currentUserId: sessionSelectors.getCurrentUserId(),
   loggedIn: sessionSelectors.isLoggedIn(),
   projectId: getProjectId,
+  project: projectSelectors.find(getProjectId),
   internship: internshipSelectors.find(getInternshipId),
   userId: getUserId,
   alreadyApplied,

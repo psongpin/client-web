@@ -1,17 +1,15 @@
 // @flow
 // $FlowFixMe
 import { relationshipTypes } from 'erschema';
-import { standardizeEntity } from '@client/utils/schemaUtils';
+import { standardizeEntity, nullToUndefined } from '@client/utils/schemaUtils';
 import Model, { properties } from '@client/models/Internship';
+
+const modifier = nullToUndefined(['name', 'description', 'status']);
 
 export default standardizeEntity({
   properties,
   Model,
-  modifier: ent => {
-    const { name, ...otherProps } = ent;
-    if (!ent.name) return otherProps;
-    return ent;
-  },
+  modifier,
   relationships: [
     {
       name: 'interns',

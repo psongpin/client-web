@@ -7,7 +7,12 @@ import CreateGridCard from 'components/shared/GridCardCreate';
 
 export class CreateProject extends PureComponent {
   render() {
-    return <CreateGridCard onClick={this.props.createProject} />;
+    return (
+      <CreateGridCard
+        description="All internships require a parent project"
+        onClick={this.props.createProject}
+      />
+    );
   }
 }
 

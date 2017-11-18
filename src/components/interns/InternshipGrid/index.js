@@ -9,6 +9,9 @@ class InternInternshipsGrid extends PureComponent {
   render() {
     return (
       <div>
+        {this.props.ids.size === 0 && (
+          <p>This user has not interned with any active projects</p>
+        )}
         {this.props.ids.map(id => {
           return (
             <InternInternshipCard owner={this.props.owner} id={id} index={id} />
