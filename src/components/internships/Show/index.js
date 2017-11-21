@@ -60,7 +60,7 @@ export class ShowInternship extends PureComponent {
           title={props.internship.name}
           subtitle={<GoToProject id={props.projectId} />}
         />
-        {props.internship.status === statusTypes.inactive && (
+        {props.internship.status === statusTypes.INACTIVE && (
           <CardText>
             <p>{statusLabels[props.internship.status]}</p>
           </CardText>
