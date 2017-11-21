@@ -13,11 +13,15 @@ import {
   CardActions,
   Card,
   TextInput,
+  Checkbox,
 } from 'ui-kit';
 import internshipActions from '@client/actions/internships';
 import applicationActions from '@client/actions/applications';
 import internshipSelectors from '@client/selectors/internships';
-import Internship from '@client/models/Internship';
+import Internship, {
+  statusTypes,
+  statusLabels,
+} from '@client/models/Internship';
 
 type $formProps = {
   fields: any,
@@ -38,8 +42,8 @@ type $dispatchProps = {
 type $props = $formProps & $stateProps & $dispatchProps & $formProps;
 
 const statusOptions = [
-  { value: 1, label: 'Active' },
-  { value: 2, label: 'Inactive' },
+  { value: 1, label: statusLabels[statusTypes.ACTIVE] },
+  { value: 2, label: statusLabels[statusTypes.INACTIVE] },
 ];
 
 export class EditInternship extends PureComponent {
@@ -50,6 +54,12 @@ export class EditInternship extends PureComponent {
       <Card>
         <CardText>
           <TextInput {...props.fields.get('name').toObject()} />
+        </CardText>
+        <CardText>
+          <Checkbox {...props.fields.get('remote').toObject()} />
+        </CardText>
+        <CardText>
+          <TextInput {...props.fields.get('location').toObject()} />
         </CardText>
         <CardText>
           <CodeMirror {...props.fields.get('description').toObject()} />
@@ -101,8 +111,10 @@ export const mapDispatchToProps = (
 const fieldsSelector = () => {
   return {
     name: {},
+    location: {},
     description: {},
     status: {},
+    remote: {},
   };
 };
 

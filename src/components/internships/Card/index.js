@@ -12,6 +12,7 @@ import GoToProject from 'components/projects/GoTo';
 import PointsTotal from 'components/points/Total';
 import StandardInternship from '../Standard';
 import InternshipDotX3 from '../DotX3';
+import LocationRemote from '../LocationRemote';
 
 class InternshipCard extends PureComponent {
   render() {
@@ -27,10 +28,14 @@ class InternshipCard extends PureComponent {
             )
           }
           title={
-            <Clickable onClick={props.goTo}>{props.internship.name}</Clickable>
+            <Clickable onClick={props.goTo}>{`${props.internship.name}${props
+              .internship.remote
+              ? ' - Remote'
+              : ''}`}</Clickable>
           }
           subtitle={<GoToProject id={props.projectId} />}
         />
+        <LocationRemote internship={this.props.internship} />
         <CardText>
           <StandardInternship />
         </CardText>

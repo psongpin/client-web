@@ -39,6 +39,7 @@ import SelectSearchable from './Select/Searchable';
 import Pagination from './Pagination';
 import Tabs from './Tabs';
 import Tab from './Tabs/Tab';
+import Checkbox from './Checkbox';
 
 export * from './Container';
 export * from './MainNav';
@@ -95,4 +96,5 @@ export {
   Pagination,
   Tabs,
   Tab,
+  Checkbox,
 };

@@ -7,6 +7,11 @@ export const statusTypes = {
   PREACTIVE: 3,
 };
 
+export const statusLabels = {
+  [1]: 'Active',
+  [2]: 'Inactive',
+};
+
 export const properties = {
   id: 0,
   name: 'Internship Name',
@@ -21,6 +26,8 @@ export const properties = {
   `,
   status: statusTypes.ACTIVE,
   points: 0,
+  location: '',
+  remote: true,
 };
 
 export default class Internship extends Record(properties) {}

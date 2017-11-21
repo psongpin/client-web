@@ -20,8 +20,12 @@ import projectSelectors from '@client/selectors/projects';
 import sessionSelectors from '@client/selectors/pages/sessions';
 import applicationSelectors from '@client/selectors/applications';
 import Project from '@client/models/Project';
-import Internship from '@client/models/Internship';
+import Internship, {
+  statusTypes,
+  statusLabels,
+} from '@client/models/Internship';
 import GoToProject from 'components/projects/GoTo';
+import LocationRemote from '../LocationRemote';
 
 type $stateProps = {
   id: $$id,
@@ -56,6 +60,13 @@ export class ShowInternship extends PureComponent {
           title={props.internship.name}
           subtitle={<GoToProject id={props.projectId} />}
         />
+        {props.internship.status === statusTypes.inactive && (
+          <CardText>
+            <p>{statusLabels[props.internship.status]}</p>
+          </CardText>
+        )}
+        <LocationRemote internship={props.internship} />
+
         <CardText>
           <Markdown content={props.internship.description} />
         </CardText>
