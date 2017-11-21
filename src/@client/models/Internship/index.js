@@ -28,6 +28,7 @@ export const properties = {
   points: 0,
   location: '',
   remote: true,
+  postedAt: '',
 };
 
 export default class Internship extends Record(properties) {}

@@ -5,6 +5,7 @@ import GridCard from 'components/shared/GridCard';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
+import moment from 'moment';
 import internshipSelectors from '@client/selectors/internships';
 import internshipActions from '@client/actions/internships';
 import projectActions from '@client/actions/projects';
@@ -35,10 +36,13 @@ class InternshipCard extends PureComponent {
           }
           subtitle={<GoToProject id={props.projectId} />}
         />
-        <LocationRemote internship={this.props.internship} />
+        <CardText>
+          <p>{moment(props.internship.postedAt).fromNow()}</p>
+        </CardText>
         <CardText>
           <StandardInternship />
         </CardText>
+        <LocationRemote internship={this.props.internship} />
         <CardText>
           <InternshipDotX3>
             <Markdown content={props.internship.description} />

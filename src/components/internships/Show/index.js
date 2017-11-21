@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { flowRight } from 'lodash';
-
+import moment from 'moment';
 import {
   Markdown,
   Button,
@@ -65,8 +65,10 @@ export class ShowInternship extends PureComponent {
             <p>{statusLabels[props.internship.status]}</p>
           </CardText>
         )}
+        <CardText>
+          <p>{moment(props.internship.postedAt).fromNow()}</p>
+        </CardText>
         <LocationRemote internship={props.internship} />
-
         <CardText>
           <Markdown content={props.internship.description} />
         </CardText>
